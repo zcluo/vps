@@ -1,0 +1,15 @@
+https://xxx.vpswiki.info {
+ root /usr/local/caddy/www/file
+ timeouts none
+ tls zhcluo@gmail.com
+ gzip
+ proxy /home http://127.0.0.1:21523 {
+  websocket
+   header_upstream Connection {>Connection}
+       header_upstream Upgrade {>Upgrade}
+       header_upstream Host {Host}
+       fail_timeout 330s
+       max_fails 3
+  }
+}
+
