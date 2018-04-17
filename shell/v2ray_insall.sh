@@ -12,6 +12,7 @@ sed -e "s/xxx\.xxxxxx\.xxx/$1/g" /etc/v2ray/config.json > /etc/v2ray/config.json
 \mv /usr/local/caddy/Caddyfile.new  /usr/local/caddy/Caddyfile
 \mv /etc/v2ray/config.json.new /etc/v2ray/config.json
 systemctl enable caddy &&  systemctl enable v2ray && systemctl restart caddy && systemctl restart v2ray
+\rm -rf caddy_install.sh
 reboot
 
 
