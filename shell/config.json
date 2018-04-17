@@ -33,11 +33,11 @@
         },
 "security": "tls",
             "tlsSettings": {
-                "serverName": "xxx.vpswiki.info",
+                "serverName": "xxx.xxxxxx.xxx",
                 "certificates": [
                     {
-                        "certificateFile": "/.caddy/acme/acme-v02.api.letsencrypt.org/sites/xxx.vpswiki.info/xxx.vpswiki.info.crt",
-                        "keyFile": "/.caddy/acme/acme-v02.api.letsencrypt.org/sites/xxx.vpswiki.info/xxx.vpswiki.info.key"
+                        "certificateFile": "/.caddy/acme/acme-v02.api.letsencrypt.org/sites/xxx.xxxxxx.xxx/xxx.xxxxxx.xxx.crt",
+                        "keyFile": "/.caddy/acme/acme-v02.api.letsencrypt.org/sites/xxx.xxxxxx.xxx/xxx.xxxxxx.xxx.key"
                     }
                 ]
             }
