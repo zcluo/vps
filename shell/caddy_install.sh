@@ -85,7 +85,8 @@ Service_caddy(){
 install_caddy(){
 	if [[ -e ${caddy_file} ]]; then
 		echo && echo -e "${Error_font_prefix}[信息]${Font_suffix} 检测到 Caddy 已安装，是否继续安装(覆盖更新)？[y/N]"
-		stty erase '^H' && read -p "(默认: n):" yn
+		#stty erase '^H' && read -p "(默认: n):" yn
+		yn="y"
 		[[ -z ${yn} ]] && yn="n"
 		if [[ ${yn} == [Nn] ]]; then
 			echo && echo "已取消..." && exit 1
