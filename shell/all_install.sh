@@ -11,6 +11,7 @@ sed -e "s/xxx\.xxxxxx\.xxx/$1/g" /usr/local/caddy/Caddyfile > /usr/local/caddy/C
 sed -e "s/xxx\.xxxxxx\.xxx/$1/g" /etc/v2ray/config.json > /etc/v2ray/config.json.new
 \mv /usr/local/caddy/Caddyfile.new  /usr/local/caddy/Caddyfile
 \mv /etc/v2ray/config.json.new /etc/v2ray/config.json
+chmod -x /etc/systemd/system/v2ray.service
 systemctl enable caddy &&  systemctl enable v2ray && systemctl restart caddy && systemctl restart v2ray
 \rm -rf caddy_install.sh
 wget -N --no-check-certificate https://raw.githubusercontent.com/zcluo/vps/master/shell/v2rayud.sh
