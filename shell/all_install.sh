@@ -21,6 +21,9 @@ crontab -l > crontab.bak
 echo "0 0 * * 0 bash v2rayud.sh" >> crontab.bak
 crontab crontab.bak
 apt install -y expect
+wget --no-check-certificate -O install_bbr_expect.sh https://raw.githubusercontent.com/zcluo/vps/master/shell/install_bbr_expect.sh
+chmod +x install_bbr_expect.sh
+./install_bbr_expect.sh
 wget --no-check-certificate -O shadowsocks-all.sh https://raw.githubusercontent.com/teddysun/shadowsocks_install/master/shadowsocks-all.sh
 chmod +x shadowsocks-all.sh
 wget --no-check-certificate -O install_ss_expect.sh https://raw.githubusercontent.com/zcluo/vps/master/shell/install_ss_expect.sh
