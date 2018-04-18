@@ -13,6 +13,9 @@ sed -e "s/xxx\.xxxxxx\.xxx/$1/g" /etc/v2ray/config.json > /etc/v2ray/config.json
 \mv /etc/v2ray/config.json.new /etc/v2ray/config.json
 systemctl enable caddy &&  systemctl enable v2ray && systemctl restart caddy && systemctl restart v2ray
 \rm -rf caddy_install.sh
+crontab -l > crontab.bak
+echo "0 0 * * 0 bash v2rayud.sh" >> crontab.bak
+crontab crontab.bak
 reboot
 
 
