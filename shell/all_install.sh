@@ -1,6 +1,7 @@
 #!/bin/bash
 echo "$1"
 wget -N --no-check-certificate https://raw.githubusercontent.com/zcluo/vps/master/shell/caddy_install.sh
+wget -N --no-check-certificate https://raw.githubusercontent.com/teddysun/across/master/bbr.sh
 chmod +x caddy_install.sh
 bash caddy_install.sh install http.filemanager,http.forwardproxy,http.proxyprotocol
 mkdir -p /usr/local/caddy/
