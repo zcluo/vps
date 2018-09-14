@@ -6,6 +6,7 @@ chmod +x caddy_install.sh
 bash caddy_install.sh install http.filemanager,http.forwardproxy,http.proxyprotocol
 mkdir -p /usr/local/caddy/
 bash <(curl -L -s https://install.direct/go.sh)
+sleep 20
 wget -N --no-check-certificate https://raw.githubusercontent.com/zcluo/vps/master/shell/Caddyfile -O /usr/local/caddy/Caddyfile
 wget -N --no-check-certificate https://raw.githubusercontent.com/zcluo/vps/master/shell/config.json -O /etc/v2ray/config.json
 sed -e "s/xxx\.xxxxxx\.xxx/$1/g" /usr/local/caddy/Caddyfile > /usr/local/caddy/Caddyfile.new
