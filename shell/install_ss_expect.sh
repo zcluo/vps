@@ -10,7 +10,7 @@ send "31523\r"
 expect "Which cipher you'd select(Default: aes-256-gcm):"
 send   "14\r"
 expect "(default: n):"
-send "y\r"
+send "n\r"
 expect "Which obfs you'd select(Default: http):"
 send "1\r"
 
