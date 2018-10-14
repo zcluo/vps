@@ -31,4 +31,7 @@ chmod +x shadowsocks-all.sh
 wget --no-check-certificate -O install_ss_expect.sh https://raw.githubusercontent.com/zcluo/vps/master/shell/install_ss_expect.sh
 chmod +x install_ss_expect.sh
 ./install_ss_expect.sh
+mkdir -p /usr/local/caddy/www/file
+cd /usr/local/caddy/www/file
+dd if=/dev/zero of=test bs=1M count=100
 reboot
