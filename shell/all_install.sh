@@ -33,5 +33,5 @@ chmod +x install_ss_expect.sh
 ./install_ss_expect.sh
 mkdir -p /usr/local/caddy/www/file
 cd /usr/local/caddy/www/file
-dd if=/dev/zero of=test bs=1M count=100
+dd if=/dev/urandom of=test bs=100M count=1 iflag=fullblock
 reboot
