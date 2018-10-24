@@ -1,10 +1,8 @@
 #!/bin/bash
 echo "$1"
 apt install curl screen net-tools iperf3 -y
-wget -N --no-check-certificate https://raw.githubusercontent.com/zcluo/vps/master/shell/caddy_install.sh
+wget -N --no-check-certificate https://raw.githubusercontent.com/ToyoDAdoubi/doubi/master/caddy_install.sh && chmod +x caddy_install.sh && bash caddy_install.sh install http.filemanager
 wget -N --no-check-certificate https://raw.githubusercontent.com/teddysun/across/master/bbr.sh
-chmod +x caddy_install.sh
-bash caddy_install.sh install http.filemanager,http.forwardproxy,http.proxyprotocol
 mkdir -p /usr/local/caddy/
 bash <(curl -L -s https://install.direct/go.sh)
 sleep 20
