@@ -12,10 +12,12 @@
                 {
                     "id": "38af73a3-ee0c-ce9c-583e-e135d51d9eda",
                     "level": 1,
-                    "alterId": 100
+		    "security": "auto",
+                    "alterId": 16
                 }
             ]
         },
+	"disableInsecureEncryption": true,
         "streamSettings": {
             
         "network": "kcp",
@@ -56,10 +58,12 @@
                     {
                         "id": "105aa3a8-8cc5-cf21-5bed-0e11d0de3aac",
                         "level": 1,
-                        "alterId": 100
+			"security": "auto",
+                        "alterId": 16
                     }
                 ]
             },
+	    "disableInsecureEncryption": true,
             "streamSettings": {
 			"network":"ws",
             "wsSettings":{
