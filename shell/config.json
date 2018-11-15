@@ -1,27 +1,72 @@
 {
-    "log": {
-        "access": "/var/log/v2ray/access.log",
-        "error": "/var/log/v2ray/error.log",
-        "loglevel": "warning"
+  "log": {
+    "access": "/var/log/v2ray/access.log",
+    "error": "/var/log/v2ray/error.log",
+    "loglevel": "warning"
+  },
+  "dns": {},
+  "stats": {},
+  "inbounds": [
+    {
+      "port": 21523,
+      "protocol": "vmess",
+      "settings": {
+        "clients": [
+          {
+            "id": "105aa3a8-8cc5-cf21-5bed-0e11d0de3aac",
+			"level": 1,
+			"security": "auto",
+            "alterId": 16
+          }
+        ]
+      },
+      "tag": "in-0",
+      "streamSettings": {
+        "network": "ws",
+        "security": "none",
+        "wsSettings": {
+          "path": "/home"
+        }
+      },
+      "listen": "127.0.0.1"
     },
-    "inbound": {
-        "port": 21524,
-        "protocol": "vmess",
-        "settings": {
-            "clients": [
-                {
-                    "id": "38af73a3-ee0c-ce9c-583e-e135d51d9eda",
-                    "level": 1,
+	{
+      "port": 31523,
+      "protocol": "shadowsocks",
+      "settings": {
+        "email": "zhcluo@gmail.com",
+        "method": "chacha20-ietf-poly1305",
+        "password": "Luo008051",
+        "level": 1,
+        "ota": false,
+        "network": "tcp,udp"
+      },
+      "tag": "in-1",
+      "streamSettings": {
+        "network": "tcp",
+        "security": "none",
+        "tcpSettings": {}
+      }
+    },
+	{
+      "port": 21524,
+      "protocol": "vmess",
+      "settings": {
+        "clients": [
+          {
+            "id": "38af73a3-ee0c-ce9c-583e-e135d51d9eda",
+			"level": 1,
 		    "security": "auto",
-                    "alterId": 16
-                }
-            ]
-        },
-	"disableInsecureEncryption": true,
-        "streamSettings": {
-            
+            "alterId": 16
+          }
+        ]
+      },
+      "tag": "in-2",
+      "streamSettings": {
         "network": "kcp",
+        "security": "none",
         "kcpSettings": {
+		
             "mtu": 1350,
             "tti": 20,
             "uplinkCapacity": 20,
@@ -32,85 +77,35 @@
             "header": {
                 "type": "wechat-video"
             }
-        },
-"security": "tls",
-            "tlsSettings": {
-                "serverName": "xxx.xxxxxx.xxx",
-                "certificates": [
-                    {
-                        "certificateFile": "/.caddy/acme/acme-v02.api.letsencrypt.org/sites/xxx.xxxxxx.xxx/xxx.xxxxxx.xxx.crt",
-                        "keyFile": "/.caddy/acme/acme-v02.api.letsencrypt.org/sites/xxx.xxxxxx.xxx/xxx.xxxxxx.xxx.key"
-                    }
-                ]
-            }
-        }
-    },
-    "outbound": {
-        "protocol": "freedom",
-        "settings": {}
-    },
-    "inboundDetour": [
-        {
-            "port": 21523,
-            "protocol": "vmess",
-            "settings": {
-                "clients": [
-                    {
-                        "id": "105aa3a8-8cc5-cf21-5bed-0e11d0de3aac",
-                        "level": 1,
-			"security": "auto",
-                        "alterId": 16
-                    }
-                ]
-            },
-	    "disableInsecureEncryption": true,
-            "streamSettings": {
-			"network":"ws",
-            "wsSettings":{
-            	"connectionReuse":true,
-		"path":"/home/"
 		}
-            }
-        }
-    ],
-    "outboundDetour": [
-        {
-            "protocol": "blackhole",
-            "settings": {},
-            "tag": "blocked"
-        }
-    ],
-    "routing": {
-        "strategy": "rules",
-        "settings": {
-            "rules": [
-                {
-                    "type": "field",
-                    "ip": [
-                        "0.0.0.0/8",
-                        "10.0.0.0/8",
-                        "100.64.0.0/10",
-                        "127.0.0.0/8",
-                        "169.254.0.0/16",
-                        "172.16.0.0/12",
-                        "192.0.0.0/24",
-                        "192.0.2.0/24",
-                        "192.168.0.0/16",
-                        "198.18.0.0/15",
-                        "198.51.100.0/24",
-                        "203.0.113.0/24",
-                        "::1/128",
-                        "fc00::/7",
-                        "fe80::/10"
-                    ],
-                    "outboundTag": "blocked"
-                }
-            ]
-        }
+      }
     }
+  ],
+  "outbounds": [
+    {
+      "tag": "direct",
+      "protocol": "freedom",
+      "settings": {}
+    },
+    {
+      "tag": "blocked",
+      "protocol": "blackhole",
+      "settings": {}
+    }
+  ],
+  "routing": {
+    "domainStrategy": "AsIs",
+    "rules": [
+      {
+        "type": "field",
+        "ip": [
+          "geoip:private"
+        ],
+        "outboundTag": "blocked"
+      }
+    ]
+  },
+  "policy": {},
+  "reverse": {},
+  "transport": {}
 }
-
-
-
-
-
