@@ -19,6 +19,7 @@ wget -N --no-check-certificate https://raw.githubusercontent.com/zcluo/vps/maste
 chmod +x v2rayud.sh
 crontab -l > crontab.bak
 echo "0 2 * * * bash v2rayud.sh" >> crontab.bak
+echo "0 1 * * * apt update && apt upgrade -y" >> crontab.bak
 crontab crontab.bak
 apt install -y expect
 wget --no-check-certificate -O install_bbr_expect.sh https://raw.githubusercontent.com/zcluo/vps/master/shell/install_bbr_expect.sh
