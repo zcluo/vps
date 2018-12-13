@@ -16,7 +16,7 @@ wget -N --no-check-certificate https://raw.githubusercontent.com/zcluo/vps/maste
 sed -e "s/xxx\.xxxxxx\.xxx/$1/g" /etc/trojan/trojan.cfg > /etc/trojan/trojan.cfg.new
 \mv /etc/trojan/trojan.cfg.new /etc/trojan/trojan.cfg
 
-sed '$i nohup trojan -c /etc/trojan/trojan.cfg -l /var/log/trojan.log > trojan.out 2>&1 &'  > /etc/rc.local.new
-\mv /etc/rc.local.new /etc/rc.local
+
+sed -i '/exit 0/i nohup trojan -c /etc/trojan/trojan.cfg -l /var/log/trojan.log > trojan.out 2>&1 &' /etc/rc.local
 
 reboot
