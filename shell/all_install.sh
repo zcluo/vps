@@ -53,7 +53,7 @@ chmod +x /etc/rc.local
 systemctl start rc-local
 
 #增加trojan安装
-apt update && apt -y install build-essential cmake libboost-system-dev libboost-program-options-dev libssl-dev default-libmysqlclient-dev
+apt update && apt -y install git build-essential cmake libboost-system-dev libboost-program-options-dev libssl-dev default-libmysqlclient-dev
 cd
 git clone https://github.com/trojan-gfw/trojan.git
 cd trojan/
