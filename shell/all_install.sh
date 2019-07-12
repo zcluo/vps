@@ -4,7 +4,7 @@ apt install curl screen net-tools iperf3 -y
 wget -N --no-check-certificate https://raw.githubusercontent.com/zcluo/vps/master/shell/caddy_install.sh && chmod +x caddy_install.sh && bash caddy_install.sh install
 wget -N --no-check-certificate https://raw.githubusercontent.com/zcluo/across/master/bbr.sh
 mkdir -p /usr/local/caddy/
-bash <(curl -L -s https://install.direct/go.sh)
+bash <(curl -L -s https://install.direct/go.sh) --version v4.18.0
 sleep 20
 wget -N --no-check-certificate https://raw.githubusercontent.com/zcluo/vps/master/shell/Caddyfile -O /usr/local/caddy/Caddyfile
 wget -N --no-check-certificate https://raw.githubusercontent.com/zcluo/vps/master/shell/config.json -O /etc/v2ray/config.json
@@ -18,7 +18,7 @@ systemctl enable caddy &&  systemctl enable v2ray && systemctl restart caddy && 
 wget -N --no-check-certificate https://raw.githubusercontent.com/zcluo/vps/master/shell/v2rayud.sh
 chmod +x v2rayud.sh
 crontab -l > crontab.bak
-echo "0 2 * * * bash v2rayud.sh" >> crontab.bak
+
 echo "0 1 * * * apt update && apt upgrade -y" >> crontab.bak
 crontab crontab.bak
 apt install -y expect
