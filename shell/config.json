@@ -28,7 +28,23 @@
                     "path": "/home"
                 }
             }
-        }
+        },
+	 {
+      "streamSettings": {
+        "network": "ws",
+        "wsSettings": {
+          "path": "/ss"
+        },
+        "security": "auto"
+      },
+      "protocol": "shadowsocks",
+      "port": 31523,
+      "settings": {
+        "method": "chacha20-ietf-poly1305",
+        "password": "Luo008051",
+        "network": "tcp,udp"
+      }
+    }
     ],
     "outbounds": [
         {
