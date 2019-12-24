@@ -54,23 +54,13 @@ systemctl start rc-local
 
 #增加trojan安装
 apt update && apt -y install git build-essential cmake libboost-system-dev libboost-program-options-dev libssl-dev default-libmysqlclient-dev
-cd
-git clone https://github.com/trojan-gfw/trojan.git
-cd trojan/
-mkdir build
-cd build/
-cmake ..
-make
-ctest
-make install
 
-mkdir -p /etc/trojan/
-wget -N --no-check-certificate https://raw.githubusercontent.com/zcluo/vps/master/shell/trojan.cfg -O /etc/trojan/trojan.cfg
-sed -e "s/xxx\.xxxxxx\.xxx/$1/g" /etc/trojan/trojan.cfg > /etc/trojan/trojan.cfg.new
-\mv /etc/trojan/trojan.cfg.new /etc/trojan/trojan.cfg
+bash -c "$(curl -fsSL https://raw.githubusercontent.com/trojan-gfw/trojan-quickstart/master/trojan-quickstart.sh)"
 
-
-sed -i '/exit 0/i nohup trojan -c /etc/trojan/trojan.cfg -l /var/log/trojan.log > trojan.out 2>&1 &' /etc/rc.local
+wget -N --no-check-certificate https://raw.githubusercontent.com/zcluo/vps/master/shell/trojan.cfg -O /usr/local/etc/trojan/config.json
+sed -e "s/xxx\.xxxxxx\.xxx/$1/g" /usr/local/etc/trojan/config.json > /usr/local/etc/trojan/config.json.new
+\mv /usr/local/etc/trojan/config.json.new /usr/local/etc/trojan/config.json
+systemctl enable trojan && systemctl restart trojan
 #cd
 #wget -N --no-check-certificate https://raw.githubusercontent.com/zcluo/vps/master/shell/snell.sh
 #chmod +x snell.sh
