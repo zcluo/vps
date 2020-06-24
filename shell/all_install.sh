@@ -56,16 +56,7 @@ systemctl start rc-local
 #增加trojan安装
 
 apt install build-essential devscripts debhelper cmake libboost-system-dev libboost-program-options-dev libssl-dev default-libmysqlclient-dev python3 curl openssl -y
-
-cd
-git clone https://github.com/trojan-gfw/trojan.git
-cd trojan/
-mkdir build
-cd build/
-cmake ..
-make
-ctest
-make install
+bash -c "$(curl -fsSL https://raw.githubusercontent.com/trojan-gfw/trojan-quickstart/master/trojan-quickstart.sh)"
 
 wget -N --no-check-certificate https://raw.githubusercontent.com/zcluo/vps/master/shell/trojan.cfg -O /usr/local/etc/trojan/config.json
 sed -e "s/xxx\.xxxxxx\.xxx/$1/g" /usr/local/etc/trojan/config.json > /usr/local/etc/trojan/config.json.new
