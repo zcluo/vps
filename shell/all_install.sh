@@ -1,17 +1,20 @@
 #!/bin/bash
 echo "$1"
 apt install curl screen net-tools iperf3 -y
-wget -N --no-check-certificate https://raw.githubusercontent.com/zcluo/vps/master/shell/caddy_install.sh && chmod +x caddy_install.sh && bash caddy_install.sh install
+#wget -N --no-check-certificate https://raw.githubusercontent.com/zcluo/vps/master/shell/caddy_install.sh && chmod +x caddy_install.sh && bash caddy_install.sh install
 #wget -N --no-check-certificate https://raw.githubusercontent.com/zcluo/across/master/bbr.sh
+echo "deb [trusted=yes] https://apt.fury.io/caddy/ /" |  tee -a /etc/apt/sources.list.d/caddy-fury.list
+apt update
+apt install caddy
 wget -N --no-check-certificate https://raw.githubusercontent.com/teddysun/across/master/bbr.sh
-mkdir -p /usr/local/caddy/
+#mkdir -p /usr/local/caddy/
 bash <(curl -L -s https://install.direct/go.sh) 
 sleep 20
-wget -N --no-check-certificate https://raw.githubusercontent.com/zcluo/vps/master/shell/Caddyfile -O /usr/local/caddy/Caddyfile
+wget -N --no-check-certificate https://raw.githubusercontent.com/zcluo/vps/master/shell/Caddyfile -O /etc/caddy/Caddyfile
 wget -N --no-check-certificate https://raw.githubusercontent.com/zcluo/vps/master/shell/config.json -O /etc/v2ray/config.json
-sed -e "s/xxx\.xxxxxx\.xxx/$1/g" /usr/local/caddy/Caddyfile > /usr/local/caddy/Caddyfile.new
+sed -e "s/xxx\.xxxxxx\.xxx/$1/g" /etc/caddy/Caddyfile > /etc/caddy/Caddyfile.new
 sed -e "s/xxx\.xxxxxx\.xxx/$1/g" /etc/v2ray/config.json > /etc/v2ray/config.json.new
-\mv /usr/local/caddy/Caddyfile.new  /usr/local/caddy/Caddyfile
+\mv /etc/caddy/Caddyfile.new  /etc/caddy/Caddyfile
 \mv /etc/v2ray/config.json.new /etc/v2ray/config.json
 chmod -x /etc/systemd/system/v2ray.service
 systemctl enable caddy &&  systemctl enable v2ray && systemctl restart caddy && systemctl restart v2ray
