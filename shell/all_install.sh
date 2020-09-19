@@ -8,14 +8,18 @@ apt update
 apt install caddy
 wget -N --no-check-certificate https://raw.githubusercontent.com/teddysun/across/master/bbr.sh
 #mkdir -p /usr/local/caddy/
-bash <(curl -L -s https://install.direct/go.sh) 
+\mkdir -p /var/log/v2ray/
+\chmod -R 777  /var/log/v2ray/
+curl -O https://raw.githubusercontent.com/v2fly/fhs-install-v2ray/master/install-release.sh
+chmod +x install-release.sh
+bash install-release.sh
 sleep 20
 wget -N --no-check-certificate https://raw.githubusercontent.com/zcluo/vps/master/shell/Caddyfile -O /etc/caddy/Caddyfile
-wget -N --no-check-certificate https://raw.githubusercontent.com/zcluo/vps/master/shell/config.json -O /etc/v2ray/config.json
+wget -N --no-check-certificate https://raw.githubusercontent.com/zcluo/vps/master/shell/config.json -O /usr/local/etc/v2ray/config.json
 sed -e "s/xxx\.xxxxxx\.xxx/$1/g" /etc/caddy/Caddyfile > /etc/caddy/Caddyfile.new
-sed -e "s/xxx\.xxxxxx\.xxx/$1/g" /etc/v2ray/config.json > /etc/v2ray/config.json.new
+sed -e "s/xxx\.xxxxxx\.xxx/$1/g" /usr/local/etc/v2ray/config.json > /usr/local/etc/v2ray/config.json.new
 \mv /etc/caddy/Caddyfile.new  /etc/caddy/Caddyfile
-\mv /etc/v2ray/config.json.new /etc/v2ray/config.json
+\mv /usr/local/etc/v2ray/config.json.new /usr/local/etc/v2ray/config.json
 chmod -x /etc/systemd/system/v2ray.service
 systemctl enable caddy &&  systemctl enable v2ray && systemctl restart caddy && systemctl restart v2ray
 \rm -rf caddy_install.sh
