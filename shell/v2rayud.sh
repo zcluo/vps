@@ -1,2 +1,2 @@
 #!/bin/bash
-bash <(curl -L -s https://install.direct/go.sh)
+bash install-release.sh
