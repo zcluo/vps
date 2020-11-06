@@ -13,4 +13,3 @@ cd /root/lede
 git pull
 ./scripts/feeds update -a && ./scripts/feeds install -a
 make -j3 V=s
-#test
