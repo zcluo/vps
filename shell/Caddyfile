@@ -7,5 +7,14 @@ xxx.xxxxxx.xxx {
   reverse_proxy /ss localhost:31523 {
     header_up -Origin
   }
+  route {
+  forward_proxy {
+    basic_auth user pass
+    hide_ip
+    hide_via
+    probe_resistance
+  }
+  file_server { root /usr/local/caddy/www/file }
+}
 }
 
