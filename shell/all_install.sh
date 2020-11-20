@@ -38,6 +38,7 @@ wget -N --no-check-certificate https://raw.githubusercontent.com/zcluo/vps/maste
 sed -e "s/xxx\.xxxxxx\.xxx/$1/g" /etc/caddy/Caddyfile > /etc/caddy/Caddyfile.new
 sed -e "s/user/$2/g" /etc/caddy/Caddyfile.new > /etc/caddy/Caddyfile
 sed -e "s/pass/$3/g" /etc/caddy/Caddyfile > /etc/caddy/Caddyfile.new
+wget -N --no-check-certificate https://raw.githubusercontent.com/zcluo/vps/master/shell/caddy.service -O /lib/systemd/system/caddy.service
 sed -e "s/xxx\.xxxxxx\.xxx/$1/g" /usr/local/etc/v2ray/config.json > /usr/local/etc/v2ray/config.json.new
 \mv /etc/caddy/Caddyfile.new  /etc/caddy/Caddyfile
 \mv /usr/local/etc/v2ray/config.json.new /usr/local/etc/v2ray/config.json
