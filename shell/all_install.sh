@@ -97,5 +97,5 @@ systemctl enable trojan && systemctl restart trojan
 #wget -N --no-check-certificate https://raw.githubusercontent.com/zcluo/vps/master/shell/snell.sh
 #chmod +x snell.sh
 #./snell.sh
-
+\chmod -R 777  /var/log/
 reboot
