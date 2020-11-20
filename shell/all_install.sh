@@ -5,7 +5,7 @@ apt install curl screen net-tools iperf3 ca-certificates git lsof  -y
 #wget -N --no-check-certificate https://raw.githubusercontent.com/zcluo/across/master/bbr.sh
 echo "deb [trusted=yes] https://apt.fury.io/caddy/ /" |  tee -a /etc/apt/sources.list.d/caddy-fury.list
 apt update
-#apt install caddy
+apt install caddy
 SYSTEM_ARCH="$(uname -m)"
 SYSTEM_ARCH="${SYSTEM_ARCH/x86_64/amd64}"
 GO_LATEST_VER="$(curl -sL --retry "5" --retry-delay "3" "https://github.com/golang/go/releases" | grep -Eo "go1\.14\.[0-9]+" | sed -n "1p")"
@@ -32,13 +32,13 @@ curl -O https://raw.githubusercontent.com/v2fly/fhs-install-v2ray/master/install
 chmod +x install-release.sh
 bash install-release.sh
 sleep 20
-\mkdir -p /etc/caddy/
+#\mkdir -p /etc/caddy/
 wget -N --no-check-certificate https://raw.githubusercontent.com/zcluo/vps/master/shell/Caddyfile -O /etc/caddy/Caddyfile
 wget -N --no-check-certificate https://raw.githubusercontent.com/zcluo/vps/master/shell/config.json -O /usr/local/etc/v2ray/config.json
 sed -e "s/xxx\.xxxxxx\.xxx/$1/g" /etc/caddy/Caddyfile > /etc/caddy/Caddyfile.new
 sed -e "s/user/$2/g" /etc/caddy/Caddyfile.new > /etc/caddy/Caddyfile
 sed -e "s/pass/$3/g" /etc/caddy/Caddyfile > /etc/caddy/Caddyfile.new
-wget -N --no-check-certificate https://raw.githubusercontent.com/zcluo/vps/master/shell/caddy.service -O /lib/systemd/system/caddy.service
+#wget -N --no-check-certificate https://raw.githubusercontent.com/zcluo/vps/master/shell/caddy.service -O /lib/systemd/system/caddy.service
 sed -e "s/xxx\.xxxxxx\.xxx/$1/g" /usr/local/etc/v2ray/config.json > /usr/local/etc/v2ray/config.json.new
 \mv /etc/caddy/Caddyfile.new  /etc/caddy/Caddyfile
 \mv /usr/local/etc/v2ray/config.json.new /usr/local/etc/v2ray/config.json
