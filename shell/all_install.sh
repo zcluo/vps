@@ -32,6 +32,7 @@ curl -O https://raw.githubusercontent.com/v2fly/fhs-install-v2ray/master/install
 chmod +x install-release.sh
 bash install-release.sh
 sleep 20
+\mkdir -p /etc/caddy/
 wget -N --no-check-certificate https://raw.githubusercontent.com/zcluo/vps/master/shell/Caddyfile -O /etc/caddy/Caddyfile
 wget -N --no-check-certificate https://raw.githubusercontent.com/zcluo/vps/master/shell/config.json -O /usr/local/etc/v2ray/config.json
 sed -e "s/xxx\.xxxxxx\.xxx/$1/g" /etc/caddy/Caddyfile > /etc/caddy/Caddyfile.new
