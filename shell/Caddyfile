@@ -14,6 +14,12 @@ xxx.xxxxxx.xxx {
     hide_via
     probe_resistance
   }
+  reverse_proxy /home localhost:21523 {
+    header_up -Origin
+  }
+  reverse_proxy /ss localhost:31523 {
+    header_up -Origin
+  }
   file_server { root /usr/local/caddy/www/file }
 }
 }
