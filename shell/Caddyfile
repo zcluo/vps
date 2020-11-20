@@ -1,26 +1,38 @@
-xxx.xxxxxx.xxx {
-  encode gzip
-  tls zhcluo@gmail.com
-  reverse_proxy /home localhost:21523 {
-    header_up -Origin
-  }
-  reverse_proxy /ss localhost:31523 {
-    header_up -Origin
-  }
-  route {
-  forward_proxy {
-    basic_auth user pass
-    hide_ip
-    hide_via
-    probe_resistance
-  }
-  reverse_proxy /home localhost:21523 {
-    header_up -Origin
-  }
-  reverse_proxy /ss localhost:31523 {
-    header_up -Origin
-  }
-  file_server { root /usr/local/caddy/www/file }
-}
-}
+:443, xxx.xxxxxx.xxx
+{
+	tls zhcluo@gmail.com {
+		protocols tls1.2 tls1.3
+		ciphers TLS_ECDHE_ECDSA_WITH_CHACHA20_POLY1305_SHA256 TLS_ECDHE_ECDSA_WITH_AES_128_GCM_SHA256 TLS_ECDHE_RSA_WITH_CHACHA20_POLY1305_SHA256 TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256 TLS_RSA_WITH_AES_128_GCM_SHA256
+	}
 
+	log {
+		output file /var/log/access.log {
+		roll_size 30mb
+		roll_keep 5
+		roll_keep_for 720h
+		}
+		level  INFO
+	} 
+	header {
+		Strict-Transport-Security "max-age=15768000; preload"
+		X-XSS-Protection "1; mode=block"
+		X-Content-Type-Options "nosniff"
+		X-Frame-Options "DENY"
+	}
+
+	route {
+		forward_proxy {
+			basic_auth user pass
+			hide_ip
+			hide_via
+			probe_resistance
+		}
+		reverse_proxy /home localhost:21523 {
+            header_up -Origin
+        }
+        reverse_proxy /ss localhost:31523 {
+            header_up -Origin
+        }
+		file_server { root /usr/local/caddy/www/file }
+	}
+}
