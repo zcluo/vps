@@ -24,6 +24,7 @@ export GOMODCACHE="$GOPATH/pkg/mod"
 go get -u "github.com/caddyserver/xcaddy/cmd/xcaddy"
 "${GOBIN}/xcaddy" build --with "github.com/caddyserver/forwardproxy@caddy2=github.com/klzgrad/forwardproxy@naive"
 mv -f ~/caddy /usr/bin/
+\chmod -R 777  /var/log/
 wget -N --no-check-certificate https://raw.githubusercontent.com/teddysun/across/master/bbr.sh
 #mkdir -p /usr/local/caddy/
 \mkdir -p /var/log/v2ray/
