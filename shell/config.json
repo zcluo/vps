@@ -44,6 +44,29 @@
         "password": "Luo008051",
         "network": "tcp,udp"
       }
+    },
+    {
+        "port": 41523,
+        "listen": "127.0.0.1",
+        "protocol": "vless",
+        "settings": {
+            "clients": [
+                {
+                    "id": "105aa3a8-8cc5-cf21-5bed-0e11d0de3aac", 
+                    "level": 1,
+                    "email": "zhcluo@gmail.com"
+                }
+            ],
+            "decryption": "none"
+        },
+        "streamSettings": {
+            "network": "ws",
+            "security": "none",
+            "wsSettings": {
+                
+                "path": "/vless" 
+            }
+        }
     }
     ],
     "outbounds": [
