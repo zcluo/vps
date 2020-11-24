@@ -33,6 +33,9 @@
         reverse_proxy /ss localhost:31523 {
             header_up -Origin
         }
+	reverse_proxy /vless localhost:41523 {
+            header_up -Origin
+        }
 		file_server { root /usr/local/caddy/www/file }
 	}
 }
