@@ -91,7 +91,7 @@ bash -c "$(curl -fsSL https://raw.githubusercontent.com/trojan-gfw/trojan-quicks
 
 wget -N --no-check-certificate https://raw.githubusercontent.com/zcluo/vps/master/shell/trojan.cfg -O /usr/local/etc/trojan/config.json
 sed -e "s/xxx\.xxxxxx\.xxx/$1/g" /usr/local/etc/trojan/config.json > /usr/local/etc/trojan/config.json.new
-\mv /usr/local/etc/trojan/config.json.new /usr/local/etc/trojan/config.json
+\mv -f /usr/local/etc/trojan/config.json.new /usr/local/etc/trojan/config.json
 systemctl enable trojan && systemctl restart trojan
 #cd
 #wget -N --no-check-certificate https://raw.githubusercontent.com/zcluo/vps/master/shell/snell.sh
