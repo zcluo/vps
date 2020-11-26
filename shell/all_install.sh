@@ -27,31 +27,32 @@ mv -f ~/caddy /usr/bin/
 \chmod -R 777  /var/log/
 wget -N --no-check-certificate https://raw.githubusercontent.com/teddysun/across/master/bbr.sh
 #mkdir -p /usr/local/caddy/
-\mkdir -p /var/log/v2ray/
-\chmod -R 777  /var/log/v2ray/
-curl -O https://raw.githubusercontent.com/v2fly/fhs-install-v2ray/master/install-release.sh
-chmod +x install-release.sh
-bash install-release.sh
+\mkdir -p /var/log/xray/
+\chmod -R 777  /var/log/xray/
+# curl -O https://raw.githubusercontent.com/v2fly/fhs-install-v2ray/master/install-release.sh
+# chmod +x install-release.sh
+# bash install-release.sh
+bash <(curl -L https://raw.githubusercontent.com/XTLS/Xray-install/main/install-release.sh)
 sleep 20
 #\mkdir -p /etc/caddy/
 wget -N --no-check-certificate https://raw.githubusercontent.com/zcluo/vps/master/shell/Caddyfile -O /etc/caddy/Caddyfile
-wget -N --no-check-certificate https://raw.githubusercontent.com/zcluo/vps/master/shell/config.json -O /usr/local/etc/v2ray/config.json
+wget -N --no-check-certificate https://raw.githubusercontent.com/zcluo/vps/master/shell/config.json -O /usr/local/etc/xray/config.json
 sed -e "s/xxx\.xxxxxx\.xxx/$1/g" /etc/caddy/Caddyfile > /etc/caddy/Caddyfile.new
 sed -e "s/user/$2/g" /etc/caddy/Caddyfile.new > /etc/caddy/Caddyfile
 sed -e "s/pass/$3/g" /etc/caddy/Caddyfile > /etc/caddy/Caddyfile.new
 #wget -N --no-check-certificate https://raw.githubusercontent.com/zcluo/vps/master/shell/caddy.service -O /lib/systemd/system/caddy.service
-sed -e "s/xxx\.xxxxxx\.xxx/$1/g" /usr/local/etc/v2ray/config.json > /usr/local/etc/v2ray/config.json.new
+sed -e "s/xxx\.xxxxxx\.xxx/$1/g" /usr/local/etc/xray/config.json > /usr/local/etc/xray/config.json.new
 \mv /etc/caddy/Caddyfile.new  /etc/caddy/Caddyfile
-\mv /usr/local/etc/v2ray/config.json.new /usr/local/etc/v2ray/config.json
-chmod -x /etc/systemd/system/v2ray.service
-systemctl enable caddy &&  systemctl enable v2ray && systemctl restart caddy && systemctl restart v2ray
+\mv /usr/local/etc/xray/config.json.new /usr/local/etc/xray/config.json
+chmod -x /etc/systemd/system/xray.service
+systemctl enable caddy &&  systemctl enable xray && systemctl restart caddy && systemctl restart xray
 \rm -rf caddy_install.sh
-wget -N --no-check-certificate https://raw.githubusercontent.com/zcluo/vps/master/shell/v2rayud.sh
-chmod +x v2rayud.sh
+wget -N --no-check-certificate https://raw.githubusercontent.com/zcluo/vps/master/shell/xrayud.sh
+chmod +x xrayud.sh
 crontab -l > crontab.bak
 
 echo "0 1 * * * apt update && apt upgrade -y" >> crontab.bak
-echo "0 1 * * * bash v2rayud.sh" >> crontab.bak
+echo "0 1 * * * bash xrayud.sh" >> crontab.bak
 crontab crontab.bak
 apt install -y expect
 wget --no-check-certificate -O install_bbr_expect.sh https://raw.githubusercontent.com/zcluo/vps/master/shell/install_bbr_expect.sh
