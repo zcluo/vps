@@ -8,6 +8,57 @@
     "stats": {},
     "inbounds": [
         {
+            "port": 6443,
+            "protocol": "vless",
+            "settings": {
+                "clients": [
+                    {
+                        "id": "105aa3a8-8cc5-cf21-5bed-0e11d0de3aac",
+                        "flow": "xtls-rprx-direct",
+                        "level": 0,
+                        "email": "love@example.com"
+                    }
+                ],
+                "decryption": "none",
+                "fallbacks": [
+                    {
+                        "dest": 9443,
+                        "xver": 1
+                    },
+                    {
+                        "path": "/vless", 
+                        "dest": 41523,
+                        "xver": 1
+                    },
+                    {
+                        "path": "/ss",
+                        "dest": 443,
+                        "xver": 1
+                    },
+                    {
+                        "path": "/home", 
+                        "dest": 443,
+                        "xver": 1
+                    }
+                ]
+            },
+            "streamSettings": {
+                "network": "tcp",
+                "security": "xtls",
+                "xtlsSettings": {
+                    "alpn": [
+                        "http/1.1"
+                    ],
+                    "certificates": [
+                        {
+                             "certificateFile": "/var/lib/caddy/.local/share/caddy/certificates/acme-v02.api.letsencrypt.org-directory/xxx.xxxxxx.xxx/xxx.xxxxxx.xxx.crt", 
+                            "keyFile": "/var/lib/caddy/.local/share/caddy/certificates/acme-v02.api.letsencrypt.org-directory/xxx.xxxxxx.xxx/xxx.xxxxxx.xxx.key" 
+                        }
+                    ]
+                }
+            }
+        },
+        {
             "port": 21523,
             "protocol": "vmess",
             "settings": {
