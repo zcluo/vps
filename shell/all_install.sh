@@ -45,7 +45,11 @@ sed -e "s/xxx\.xxxxxx\.xxx/$1/g" /usr/local/etc/xray/config.json > /usr/local/et
 \mv /etc/caddy/Caddyfile.new  /etc/caddy/Caddyfile
 \mv /usr/local/etc/xray/config.json.new /usr/local/etc/xray/config.json
 chmod -x /etc/systemd/system/xray.service
-systemctl enable caddy &&  systemctl enable xray && systemctl restart caddy && systemctl restart xray
+systemctl enable caddy && systemctl restart caddy 
+sleep 20
+cd /var/lib/caddy
+chmod -R 755 .local/
+systemctl enable xray && systemctl restart xray
 \rm -rf caddy_install.sh
 wget -N --no-check-certificate https://raw.githubusercontent.com/zcluo/vps/master/shell/xrayud.sh
 chmod +x xrayud.sh
