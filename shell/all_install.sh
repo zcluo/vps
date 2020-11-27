@@ -32,7 +32,10 @@ wget -N --no-check-certificate https://raw.githubusercontent.com/teddysun/across
 # curl -O https://raw.githubusercontent.com/v2fly/fhs-install-v2ray/master/install-release.sh
 # chmod +x install-release.sh
 # bash install-release.sh
-bash <(curl -L https://raw.githubusercontent.com/XTLS/Xray-install/main/install-release.sh)
+# bash <(curl -L https://raw.githubusercontent.com/XTLS/Xray-install/main/install-release.sh)
+curl -O https://raw.githubusercontent.com/XTLS/Xray-install/main/install-release.sh
+chmod +x install-release.sh
+bash install-release.sh
 sleep 20
 #\mkdir -p /etc/caddy/
 wget -N --no-check-certificate https://raw.githubusercontent.com/zcluo/vps/master/shell/Caddyfile -O /etc/caddy/Caddyfile
