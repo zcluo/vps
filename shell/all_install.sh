@@ -3,6 +3,7 @@ echo "$1" "$2" "$3"
 apt install curl screen net-tools iperf3 ca-certificates git lsof  -y
 #wget -N --no-check-certificate https://raw.githubusercontent.com/zcluo/vps/master/shell/caddy_install.sh && chmod +x caddy_install.sh && bash caddy_install.sh install
 #wget -N --no-check-certificate https://raw.githubusercontent.com/zcluo/across/master/bbr.sh
+>/etc/apt/sources.list.d/caddy-fury.list
 echo "deb [trusted=yes] https://apt.fury.io/caddy/ /" |  tee -a /etc/apt/sources.list.d/caddy-fury.list
 apt update
 apt install caddy
