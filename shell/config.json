@@ -8,7 +8,7 @@
     "stats": {},
     "inbounds": [
         {
-            "port": 6443,
+            "port": 443,
             "protocol": "vless",
             "settings": {
                 "clients": [
@@ -27,17 +27,17 @@
                     },
                     {
                         "path": "/vless", 
-                        "dest": 41523,
+                        "dest": 8443,
                         "xver": 1
                     },
                     {
                         "path": "/ss",
-                        "dest": 443,
+                        "dest": 8443,
                         "xver": 1
                     },
                     {
                         "path": "/home", 
-                        "dest": 443,
+                        "dest": 8443,
                         "xver": 1
                     }
                 ]
