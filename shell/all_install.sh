@@ -59,7 +59,7 @@ wget -N --no-check-certificate https://raw.githubusercontent.com/zcluo/vps/maste
 chmod +x xrayud.sh
 crontab -l > crontab.bak
 
-echo "0 1 * * * apt update && apt upgrade -y" >> crontab.bak
+#echo "0 1 * * * apt update && apt upgrade -y" >> crontab.bak
 echo "0 1 * * * bash xrayud.sh" >> crontab.bak
 crontab crontab.bak
 apt install -y expect
