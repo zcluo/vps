@@ -56,6 +56,7 @@ cd /var/lib/caddy
 chmod -R 755 .local/
 systemctl enable xray && systemctl restart xray
 \rm -rf caddy_install.sh
+cd ~
 wget -N --no-check-certificate https://raw.githubusercontent.com/zcluo/vps/master/shell/xrayud.sh
 chmod +x xrayud.sh
 crontab -l > crontab.bak
