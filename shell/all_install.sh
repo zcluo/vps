@@ -7,25 +7,7 @@ apt install curl screen net-tools iperf3 ca-certificates git lsof  -y
 echo "deb [trusted=yes] https://apt.fury.io/caddy/ /" |  tee -a /etc/apt/sources.list.d/caddy-fury.list
 apt update
 apt install caddy
-SYSTEM_ARCH="$(uname -m)"
-SYSTEM_ARCH="${SYSTEM_ARCH/x86_64/amd64}"
-GO_LATEST_VER="$(curl -sL --retry "5" --retry-delay "3" "https://github.com/golang/go/releases" | grep -Eo "go1\.14\.[0-9]+" | sed -n "1p")"
-GO_LATEST_VER="${GO_LATEST_VER:-go1.14.10}"
-curl --retry "5" --retry-delay "3" -L "https://golang.org/dl/${GO_LATEST_VER}.linux-${SYSTEM_ARCH}.tar.gz" -o "golang.${GO_LATEST_VER}.tar.gz"
-tar -zxf "golang.${GO_LATEST_VER}.tar.gz"
-rm -f "golang.${GO_LATEST_VER}.tar.gz"
-[ ! -f "./go/bin/go" ] && { __error_msg "Failed to download go binary."; popd; rm -rf "${INSTALL_TEMP_DIR}"; exit 1; }
-PATH="$PWD/go/bin:$PATH"
-export GOROOT="$PWD/go"
-export GOTOOLDIR="$PWD/go/pkg/tool/linux_amd64"
-export GOBIN="$PWD/gopath/bin"
-export GOCACHE="$PWD/go-cache"
-export GOPATH="$PWD/gopath"
-export GOMODCACHE="$GOPATH/pkg/mod"
-go get -u "github.com/caddyserver/xcaddy/cmd/xcaddy"
-"${GOBIN}/xcaddy" build --with "github.com/caddyserver/forwardproxy@caddy2=github.com/klzgrad/forwardproxy@naive"
-mv -f ~/caddy /usr/bin/
-\rm -f /etc/apt/sources.list.d/caddy-fury.list
+#\rm -f /etc/apt/sources.list.d/caddy-fury.list
 \chmod -R 777  /var/log/
 wget -N --no-check-certificate https://raw.githubusercontent.com/teddysun/across/master/bbr.sh
 #mkdir -p /usr/local/caddy/
