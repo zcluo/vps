@@ -21,13 +21,8 @@
 	}
 
 	route {
-		forward_proxy {
-			basic_auth user pass
-			hide_ip
-			hide_via
-			probe_resistance
-		}
-		reverse_proxy /home localhost:21523 {
+		
+	reverse_proxy /home localhost:21523 {
             header_up -Origin
         }
         reverse_proxy /ss localhost:31523 {
