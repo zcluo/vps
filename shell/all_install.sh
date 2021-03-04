@@ -29,7 +29,7 @@ sed -e "s/user/$2/g" /etc/caddy/Caddyfile.new > /etc/caddy/Caddyfile
 sed -e "s/pass/$3/g" /etc/caddy/Caddyfile > /etc/caddy/Caddyfile.new
 #wget -N --no-check-certificate https://raw.githubusercontent.com/zcluo/vps/master/shell/caddy.service -O /lib/systemd/system/caddy.service
 sed -e "s/xxx\.xxxxxx\.xxx/$1/g" /usr/local/etc/xray/config.json > /usr/local/etc/xray/config.json.new
-sed -e "s/pass/$3/g" /usr/local/etc/xray/config.json.new > /usr/local/etc/xray/config.json.new.new
+sed -e "s/trojanpass/$3/g" /usr/local/etc/xray/config.json.new > /usr/local/etc/xray/config.json.new.new
 \mv /etc/caddy/Caddyfile.new  /etc/caddy/Caddyfile
 \mv /usr/local/etc/xray/config.json.new.new /usr/local/etc/xray/config.json
 chmod -x /etc/systemd/system/xray.service
@@ -80,13 +80,13 @@ systemctl start rc-local
 
 #增加trojan安装
 
-apt install build-essential devscripts debhelper cmake libboost-system-dev libboost-program-options-dev libssl-dev default-libmysqlclient-dev python3 curl openssl -y
-bash -c "$(curl -fsSL https://raw.githubusercontent.com/trojan-gfw/trojan-quickstart/master/trojan-quickstart.sh)"
+#apt install build-essential devscripts debhelper cmake libboost-system-dev libboost-program-options-dev libssl-dev default-libmysqlclient-dev python3 curl openssl -y
+#bash -c "$(curl -fsSL https://raw.githubusercontent.com/trojan-gfw/trojan-quickstart/master/trojan-quickstart.sh)"
 
-wget -N --no-check-certificate https://raw.githubusercontent.com/zcluo/vps/master/shell/trojan.cfg -O /usr/local/etc/trojan/config.json
-sed -e "s/xxx\.xxxxxx\.xxx/$1/g" /usr/local/etc/trojan/config.json > /usr/local/etc/trojan/config.json.new
-\mv -f /usr/local/etc/trojan/config.json.new /usr/local/etc/trojan/config.json
-systemctl enable trojan && systemctl restart trojan
+#wget -N --no-check-certificate https://raw.githubusercontent.com/zcluo/vps/master/shell/trojan.cfg -O /usr/local/etc/trojan/config.json
+#sed -e "s/xxx\.xxxxxx\.xxx/$1/g" /usr/local/etc/trojan/config.json > /usr/local/etc/trojan/config.json.new
+#\mv -f /usr/local/etc/trojan/config.json.new /usr/local/etc/trojan/config.json
+#systemctl enable trojan && systemctl restart trojan
 #cd
 #wget -N --no-check-certificate https://raw.githubusercontent.com/zcluo/vps/master/shell/snell.sh
 #chmod +x snell.sh
