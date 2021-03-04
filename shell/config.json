@@ -125,7 +125,7 @@
             "settings": {
                 "clients": [
                     {
-                        "password":"pass",
+                        "password":"trojanpass",
                         "email": "zhcluo@gmail.com"
                     }
                 ]
