@@ -118,7 +118,34 @@
                 "path": "/vless" 
             }
         }
-    }
+    },
+	    {
+            "port": 9443,
+            "protocol": "trojan",
+            "settings": {
+                "clients": [
+                    {
+                        "password":"pass",
+                        "email": "zhcluo@gmail.com"
+                    }
+                ]
+            },
+            "streamSettings": {
+                "network": "tcp",
+                "security": "tls",
+                "tlsSettings": {
+                    "alpn": [
+                        "http/1.1"
+                    ],
+                    "certificates": [
+                        {
+                            "certificateFile": "/var/lib/caddy/.local/share/caddy/certificates/acme-v02.api.letsencrypt.org-directory/xxx.xxxxxx.xxx/xxx.xxxxxx.xxx.crt",
+                            "keyFile": "/var/lib/caddy/.local/share/caddy/certificates/acme-v02.api.letsencrypt.org-directory/xxx.xxxxxx.xxx/xxx.xxxxxx.xxx.key"
+                        }
+                    ]
+                }
+            }
+        }
     ],
     "outbounds": [
         {
