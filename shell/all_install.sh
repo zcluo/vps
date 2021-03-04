@@ -29,8 +29,9 @@ sed -e "s/user/$2/g" /etc/caddy/Caddyfile.new > /etc/caddy/Caddyfile
 sed -e "s/pass/$3/g" /etc/caddy/Caddyfile > /etc/caddy/Caddyfile.new
 #wget -N --no-check-certificate https://raw.githubusercontent.com/zcluo/vps/master/shell/caddy.service -O /lib/systemd/system/caddy.service
 sed -e "s/xxx\.xxxxxx\.xxx/$1/g" /usr/local/etc/xray/config.json > /usr/local/etc/xray/config.json.new
+sed -e "s/pass/$3/g" /usr/local/etc/xray/config.json.new > /usr/local/etc/xray/config.json.new.new
 \mv /etc/caddy/Caddyfile.new  /etc/caddy/Caddyfile
-\mv /usr/local/etc/xray/config.json.new /usr/local/etc/xray/config.json
+\mv /usr/local/etc/xray/config.json.new.new /usr/local/etc/xray/config.json
 chmod -x /etc/systemd/system/xray.service
 systemctl enable caddy && systemctl restart caddy 
 sleep 20
