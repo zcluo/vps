@@ -21,7 +21,11 @@
 	}
 
 	route {
-		
+	@grpc {
+        	protocol grpc
+        	path  /grpc/*
+    	}
+    	reverse_proxy @grpc h2c://127.0.0.1:51523
 	reverse_proxy /home localhost:21523 {
             header_up -Origin
         }
