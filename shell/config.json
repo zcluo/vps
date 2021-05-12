@@ -145,7 +145,26 @@
                     ]
                 }
             }
+        },
+		{
+      "port": 51523,
+      "listen": "0.0.0.0",
+      "protocol": "vless",
+      "settings": {
+        "clients": [
+          {
+            "id": "105aa3a8-8cc5-cf21-5bed-0e11d0de3aac" 
+          }
+        ],
+        "decryption": "none"
+      },
+      "streamSettings": {
+        "network": "grpc",
+        "grpcSettings": {
+          "serviceName": "grpc" 
         }
+      }
+    }
     ],
     "outbounds": [
         {
