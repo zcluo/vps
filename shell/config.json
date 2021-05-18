@@ -92,7 +92,7 @@
       "port": 31523,
       "settings": {
         "method": "chacha20-ietf-poly1305",
-        "password": "Luo008051",
+        "password": "trojanpass",
         "network": "tcp,udp"
       }
     },
