@@ -16,7 +16,7 @@
                         "id": "105aa3a8-8cc5-cf21-5bed-0e11d0de3aac",
                         "flow": "xtls-rprx-direct",
                         "level": 0,
-                        "email": "love@example.com"
+                        "email": "xxx@xxx.xxx"
                     }
                 ],
                 "decryption": "none",
@@ -105,7 +105,7 @@
                 {
                     "id": "105aa3a8-8cc5-cf21-5bed-0e11d0de3aac", 
                     "level": 1,
-                    "email": "zhcluo@gmail.com"
+                    "email": "xxx@xxx.xxx"
                 }
             ],
             "decryption": "none"
@@ -126,7 +126,7 @@
                 "clients": [
                     {
                         "password":"trojanpass",
-                        "email": "zhcluo@gmail.com"
+                        "email": "xxx@xxx.xxx"
                     }
                 ]
             },
