@@ -1,5 +1,5 @@
 #!/bin/bash
-echo "$1" "$2" "$3"
+echo "$1" "$2" "$3" "$4"
 apt install curl screen net-tools iperf3 ca-certificates git lsof apt-transport-https ca-certificates  -y
 #wget -N --no-check-certificate https://raw.githubusercontent.com/zcluo/vps/master/shell/caddy_install.sh && chmod +x caddy_install.sh && bash caddy_install.sh install
 #wget -N --no-check-certificate https://raw.githubusercontent.com/zcluo/across/master/bbr.sh
@@ -27,11 +27,13 @@ wget -N --no-check-certificate https://raw.githubusercontent.com/zcluo/vps/maste
 sed -e "s/xxx\.xxxxxx\.xxx/$1/g" /etc/caddy/Caddyfile > /etc/caddy/Caddyfile.new
 sed -e "s/user/$2/g" /etc/caddy/Caddyfile.new > /etc/caddy/Caddyfile
 sed -e "s/pass/$3/g" /etc/caddy/Caddyfile > /etc/caddy/Caddyfile.new
+sed -e "s/xxx\@xxx\.xxx/$4/g" /etc/caddy/Caddyfile.new > /etc/caddy/Caddyfile
 #wget -N --no-check-certificate https://raw.githubusercontent.com/zcluo/vps/master/shell/caddy.service -O /lib/systemd/system/caddy.service
 sed -e "s/xxx\.xxxxxx\.xxx/$1/g" /usr/local/etc/xray/config.json > /usr/local/etc/xray/config.json.new
-sed -e "s/trojanpass/$3/g" /usr/local/etc/xray/config.json.new > /usr/local/etc/xray/config.json.new.new
-\mv /etc/caddy/Caddyfile.new  /etc/caddy/Caddyfile
-\mv /usr/local/etc/xray/config.json.new.new /usr/local/etc/xray/config.json
+sed -e "s/trojanpass/$3/g" /usr/local/etc/xray/config.json.new > /usr/local/etc/xray/config.json
+sed -e "s/xxx\@xxx\.xxx/$4/g"   /usr/local/etc/xray/config.json > /usr/local/etc/xray/config.json.new
+#\mv /etc/caddy/Caddyfile.new  /etc/caddy/Caddyfile
+\mv /usr/local/etc/xray/config.json.new /usr/local/etc/xray/config.json
 chmod -x /etc/systemd/system/xray.service
 systemctl enable caddy && systemctl restart caddy 
 sleep 20
