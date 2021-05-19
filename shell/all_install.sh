@@ -29,7 +29,7 @@ curl -O https://raw.githubusercontent.com/XTLS/Xray-install/main/install-release
 chmod +x install-release.sh
 bash install-release.sh
 sleep 20
-install-release.sh
+
 #\mkdir -p /etc/caddy/
 wget -N --no-check-certificate https://raw.githubusercontent.com/zcluo/vps/master/shell/Caddyfile -O /etc/caddy/Caddyfile
 wget -N --no-check-certificate https://raw.githubusercontent.com/zcluo/vps/master/shell/config.json -O /usr/local/etc/xray/config.json
