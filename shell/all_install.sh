@@ -1,6 +1,6 @@
 #!/bin/bash
 if [ $# != 5 ] ; then
-echo "USAGE: $0 from to"
+echo "USAGE: $0 domain_name username password emailaddress uuid"
 echo " e.g.: $0 domain_name username password emailaddress uuid"
 exit 1;
 fi
