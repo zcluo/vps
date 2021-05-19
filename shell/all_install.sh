@@ -91,7 +91,7 @@ exit 0
 EOF
 chmod +x /etc/rc.local
 systemctl start rc-local
-\rm -rf crontab.bak* bbr.sh install-release.sh caddy_install.sh install_bbr_expect.sh
+
 
 #增加trojan安装
 
