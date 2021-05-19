@@ -13,7 +13,7 @@
             "settings": {
                 "clients": [
                     {
-                        "id": "105aa3a8-8cc5-cf21-5bed-0e11d0de3aac",
+                        "id": "xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx",
                         "flow": "xtls-rprx-direct",
                         "level": 0,
                         "email": "xxx@xxx.xxx"
@@ -64,7 +64,7 @@
             "settings": {
                 "clients": [
                     {
-                        "id": "105aa3a8-8cc5-cf21-5bed-0e11d0de3aac",
+                        "id": "xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx",
                         "level": 1,
                         "security": "auto",
                         "alterId": 16
@@ -103,7 +103,7 @@
         "settings": {
             "clients": [
                 {
-                    "id": "105aa3a8-8cc5-cf21-5bed-0e11d0de3aac", 
+                    "id": "xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx", 
                     "level": 1,
                     "email": "xxx@xxx.xxx"
                 }
@@ -153,7 +153,7 @@
       "settings": {
         "clients": [
           {
-            "id": "105aa3a8-8cc5-cf21-5bed-0e11d0de3aac" 
+            "id": "xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx" 
           }
         ],
         "decryption": "none"
