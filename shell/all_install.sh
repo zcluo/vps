@@ -4,6 +4,8 @@ echo "USAGE: $0 from to"
 echo " e.g.: $0 domain_name username password emailaddress uuid"
 exit 1;
 fi
+#used for uuid replacement
+uuid=$(cat /proc/sys/kernel/random/uuid)
 echo "$1" "$2" "$3" "$4" "$5"
 apt install curl screen net-tools iperf3 ca-certificates git lsof apt-transport-https ca-certificates  -y
 #wget -N --no-check-certificate https://raw.githubusercontent.com/zcluo/vps/master/shell/caddy_install.sh && chmod +x caddy_install.sh && bash caddy_install.sh install
@@ -37,8 +39,9 @@ sed -e "s/xxx\@xxx\.xxx/$4/g" /etc/caddy/Caddyfile.new > /etc/caddy/Caddyfile
 sed -e "s/xxx\.xxxxxx\.xxx/$1/g" /usr/local/etc/xray/config.json > /usr/local/etc/xray/config.json.new
 sed -e "s/trojanpass/$3/g" /usr/local/etc/xray/config.json.new > /usr/local/etc/xray/config.json
 sed -e "s/xxx\@xxx\.xxx/$4/g"   /usr/local/etc/xray/config.json > /usr/local/etc/xray/config.json.new
+sed -e "s/xxxxxxxx\-xxxx\-xxxx\-xxxx\-xxxxxxxxxxxx/$5/g"   /usr/local/etc/xray/config.json.new > /usr/local/etc/xray/config.json
 #\mv /etc/caddy/Caddyfile.new  /etc/caddy/Caddyfile
-\mv /usr/local/etc/xray/config.json.new /usr/local/etc/xray/config.json
+#\mv /usr/local/etc/xray/config.json.new /usr/local/etc/xray/config.json
 chmod -x /etc/systemd/system/xray.service
 systemctl enable caddy && systemctl restart caddy 
 sleep 20
@@ -52,8 +55,9 @@ chmod +x xrayud.sh
 crontab -l > crontab.bak
 
 #echo "0 1 * * * apt update && apt upgrade -y" >> crontab.bak
-echo "0 1 * * * bash xrayud.sh" >> crontab.bak
-crontab crontab.bak
+sed -e '/xrayud/d' crontab.bak > crontab.bak.new
+echo "0 1 * * * bash xrayud.sh" >> crontab.bak.new
+crontab crontab.bak.new
 apt install -y expect
 wget --no-check-certificate -O install_bbr_expect.sh https://raw.githubusercontent.com/zcluo/vps/master/shell/install_bbr_expect.sh
 chmod +x install_bbr_expect.sh
