@@ -1,5 +1,10 @@
 #!/bin/bash
-echo "$1" "$2" "$3" "$4"
+if [ $# != 5 ] ; then
+echo "USAGE: $0 from to"
+echo " e.g.: $0 domain_name username password emailaddress uuid"
+exit 1;
+fi
+echo "$1" "$2" "$3" "$4" "$5"
 apt install curl screen net-tools iperf3 ca-certificates git lsof apt-transport-https ca-certificates  -y
 #wget -N --no-check-certificate https://raw.githubusercontent.com/zcluo/vps/master/shell/caddy_install.sh && chmod +x caddy_install.sh && bash caddy_install.sh install
 #wget -N --no-check-certificate https://raw.githubusercontent.com/zcluo/across/master/bbr.sh
