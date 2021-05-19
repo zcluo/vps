@@ -109,4 +109,4 @@ systemctl start rc-local
 \chmod -R 777  /var/log/
 #reboot
 cd ~
-trap "rm -rf crontab* bbr.sh install-release.sh caddy_install.sh install_bbr_expect.sh all_install.sh;reboot" EXIT
+trap "rm -rf crontab* bbr.sh install-release.sh caddy_install.sh install_bbr_expect.sh all_install.sh install_bbr.log;reboot" EXIT
