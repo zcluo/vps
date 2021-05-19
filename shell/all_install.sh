@@ -29,6 +29,7 @@ curl -O https://raw.githubusercontent.com/XTLS/Xray-install/main/install-release
 chmod +x install-release.sh
 bash install-release.sh
 sleep 20
+\rm -f install-release.sh
 #\mkdir -p /etc/caddy/
 wget -N --no-check-certificate https://raw.githubusercontent.com/zcluo/vps/master/shell/Caddyfile -O /etc/caddy/Caddyfile
 wget -N --no-check-certificate https://raw.githubusercontent.com/zcluo/vps/master/shell/config.json -O /usr/local/etc/xray/config.json
@@ -63,6 +64,7 @@ apt install -y expect
 wget --no-check-certificate -O install_bbr_expect.sh https://raw.githubusercontent.com/zcluo/vps/master/shell/install_bbr_expect.sh
 chmod +x install_bbr_expect.sh
 ./install_bbr_expect.sh
+\rm -f install_bbr_expect.sh
 #wget --no-check-certificate -O shadowsocks-all.sh https://raw.githubusercontent.com/teddysun/shadowsocks_install/master/shadowsocks-all.sh
 #chmod +x shadowsocks-all.sh
 #wget --no-check-certificate -O install_ss_expect.sh https://raw.githubusercontent.com/zcluo/vps/master/shell/install_ss_expect.sh
@@ -89,6 +91,7 @@ exit 0
 EOF
 chmod +x /etc/rc.local
 systemctl start rc-local
+\rm -f crontab.bak*
 
 #增加trojan安装
 
