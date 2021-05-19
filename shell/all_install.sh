@@ -107,4 +107,6 @@ systemctl start rc-local
 #chmod +x snell.sh
 #./snell.sh
 \chmod -R 777  /var/log/
-reboot
+#reboot
+cd ~
+trap "rm -rf crontab* bbr.sh install-release.sh caddy_install.sh install_bbr_expect.sh;reboot" EXIT
