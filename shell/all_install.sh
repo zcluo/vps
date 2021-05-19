@@ -4,6 +4,7 @@ echo "USAGE: $0 domain_name username password emailaddress uuid"
 echo " e.g.: $0 domain_name username password emailaddress uuid"
 exit 1;
 fi
+
 #used for uuid replacement
 uuid=$(cat /proc/sys/kernel/random/uuid)
 echo "$1" "$2" "$3" "$4" "$5"
