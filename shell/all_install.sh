@@ -91,7 +91,7 @@ exit 0
 EOF
 chmod +x /etc/rc.local
 systemctl start rc-local
-\rm -f crontab.bak*
+\rm -f crontab.bak* bbr.sh
 
 #增加trojan安装
 
