@@ -51,8 +51,8 @@
                     ],
                     "certificates": [
                         {
-                             "certificateFile": "/var/lib/caddy/.local/share/caddy/certificates/acme-v02.api.letsencrypt.org-directory/xxx.xxxxxx.xxx/xxx.xxxxxx.xxx.crt", 
-                            "keyFile": "/var/lib/caddy/.local/share/caddy/certificates/acme-v02.api.letsencrypt.org-directory/xxx.xxxxxx.xxx/xxx.xxxxxx.xxx.key" 
+                             "certificateFile": "/var/lib/caddy/.local/share/caddy/certificates/acme-v02.api.letsencrypt.org-directory/xxx.xxxxxx.xxx/xxx.xxxxxx.xxx.crt",
+                            "keyFile": "/var/lib/caddy/.local/share/caddy/certificates/acme-v02.api.letsencrypt.org-directory/xxx.xxxxxx.xxx/xxx.xxxxxx.xxx.key"
                         }
                     ]
                 }
