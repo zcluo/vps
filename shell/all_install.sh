@@ -72,9 +72,9 @@ chmod +x install_bbr_expect.sh
 #./install_ss_expect.sh
 # caddy伪装网页
 mkdir -p /var/www/html
-wget -q -P https://raw.githubusercontent.com/mack-a/v2ray-agent/master/fodder/blog/unable/html1.zip >/dev/null
-unzip -o html4.zip -d /var/www/html >/dev/null
-rm -f html.zip*
+wget -q -P https://raw.githubusercontent.com/zcluo/vps/master/shell/html1.zip >/dev/null
+unzip -o html1.zip -d /var/www/html >/dev/null
+rm -f html1.zip*
 cat <<EOF >/etc/rc.local
 #!/bin/sh -e
 #
