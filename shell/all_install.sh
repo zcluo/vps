@@ -71,10 +71,11 @@ chmod +x install_bbr_expect.sh
 #chmod +x install_ss_expect.sh
 #./install_ss_expect.sh
 # caddy伪装网页
+cd ~
 mkdir -p /var/www/html
-wget -q -P https://raw.githubusercontent.com/zcluo/vps/master/shell/html1.zip >/dev/null
-unzip -o html1.zip -d /var/www/html >/dev/null
-rm -f html1.zip*
+wget  -N --no-check-certificate  https://raw.githubusercontent.com/zcluo/vps/master/shell/html1.zip
+unzip -o html1.zip -d /var/www/html
+
 dd if=/dev/urandom of=/var/www/html/test bs=100M count=1 iflag=fullblock
 cat <<EOF >/etc/rc.local
 #!/bin/sh -e
@@ -112,4 +113,4 @@ systemctl start rc-local
 \chmod -R 777  /var/log/
 #reboot
 cd ~
-trap "rm -rf crontab* bbr.sh install-release.sh caddy_install.sh install_bbr_expect.sh all_install.sh install_bbr.log;reboot" EXIT
+trap "rm -rf crontab* bbr.sh install-release.sh caddy_install.sh install_bbr_expect.sh all_install.sh install_bbr.log html1.zip;reboot" EXIT
