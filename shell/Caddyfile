@@ -1,4 +1,4 @@
-:443, xxx.xxxxxx.xxx:443
+xxx.xxxxxx.xxx
 {
 	tls xxx@xxx.xxx {
 		protocols tls1.2 tls1.3
@@ -35,6 +35,6 @@
 	reverse_proxy /vless localhost:41523 {
             header_up -Origin
         }
-		file_server { root /usr/local/caddy/www/file }
+		file_server { root /var/www/html }
 	}
 }
