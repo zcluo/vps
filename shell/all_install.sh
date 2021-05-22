@@ -70,9 +70,11 @@ chmod +x install_bbr_expect.sh
 #wget --no-check-certificate -O install_ss_expect.sh https://raw.githubusercontent.com/zcluo/vps/master/shell/install_ss_expect.sh
 #chmod +x install_ss_expect.sh
 #./install_ss_expect.sh
-mkdir -p /usr/local/caddy/www/file
-cd /usr/local/caddy/www/file
-dd if=/dev/urandom of=test bs=100M count=1 iflag=fullblock
+# caddy伪装网页
+mkdir -p /var/www/html
+wget -q -P https://raw.githubusercontent.com/mack-a/v2ray-agent/master/fodder/blog/unable/html1.zip >/dev/null
+unzip -o html4.zip -d /var/www/html >/dev/null
+rm -f html.zip*
 cat <<EOF >/etc/rc.local
 #!/bin/sh -e
 #
