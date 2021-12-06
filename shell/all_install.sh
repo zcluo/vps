@@ -25,31 +25,31 @@ wget -N --no-check-certificate https://raw.githubusercontent.com/teddysun/across
 # chmod +x install-release.sh
 # bash install-release.sh
 # bash <(curl -L https://raw.githubusercontent.com/XTLS/Xray-install/main/install-release.sh)
-curl -O https://raw.githubusercontent.com/XTLS/Xray-install/main/install-release.sh
+curl -O https://raw.githubusercontent.com/v2fly/fhs-install-v2ray/master/install-release.sh
 chmod +x install-release.sh
 bash install-release.sh
 sleep 20
 
 #\mkdir -p /etc/caddy/
 wget -N --no-check-certificate https://raw.githubusercontent.com/zcluo/vps/master/shell/Caddyfile -O /etc/caddy/Caddyfile
-wget -N --no-check-certificate https://raw.githubusercontent.com/zcluo/vps/master/shell/config.json -O /usr/local/etc/xray/config.json
+wget -N --no-check-certificate https://raw.githubusercontent.com/zcluo/vps/master/shell/config.json -O /usr/local/etc/v2ray/config.json
 sed -e "s/xxx\.xxxxxx\.xxx/$1/g" /etc/caddy/Caddyfile > /etc/caddy/Caddyfile.new
 sed -e "s/user/$2/g" /etc/caddy/Caddyfile.new > /etc/caddy/Caddyfile
 sed -e "s/pass/$3/g" /etc/caddy/Caddyfile > /etc/caddy/Caddyfile.new
 sed -e "s/xxx\@xxx\.xxx/$4/g" /etc/caddy/Caddyfile.new > /etc/caddy/Caddyfile
 #wget -N --no-check-certificate https://raw.githubusercontent.com/zcluo/vps/master/shell/caddy.service -O /lib/systemd/system/caddy.service
-sed -e "s/xxx\.xxxxxx\.xxx/$1/g" /usr/local/etc/xray/config.json > /usr/local/etc/xray/config.json.new
-sed -e "s/trojanpass/$3/g" /usr/local/etc/xray/config.json.new > /usr/local/etc/xray/config.json
-sed -e "s/xxx\@xxx\.xxx/$4/g"   /usr/local/etc/xray/config.json > /usr/local/etc/xray/config.json.new
-sed -e "s/xxxxxxxx\-xxxx\-xxxx\-xxxx\-xxxxxxxxxxxx/$5/g"   /usr/local/etc/xray/config.json.new > /usr/local/etc/xray/config.json
+sed -e "s/xxx\.xxxxxx\.xxx/$1/g" /usr/local/etc/v2ray/config.json > /usr/local/etc/v2ray/config.json.new
+sed -e "s/trojanpass/$3/g" /usr/local/etc/v2ray/config.json.new > /usr/local/etc/v2ray/config.json
+sed -e "s/xxx\@xxx\.xxx/$4/g"   /usr/local/etc/v2ray/config.json > /usr/local/etc/v2ray/config.json.new
+sed -e "s/xxxxxxxx\-xxxx\-xxxx\-xxxx\-xxxxxxxxxxxx/$5/g"   /usr/local/etc/v2ray/config.json.new > /usr/local/etc/v2ray/config.json
 #\mv /etc/caddy/Caddyfile.new  /etc/caddy/Caddyfile
 #\mv /usr/local/etc/xray/config.json.new /usr/local/etc/xray/config.json
-chmod -x /etc/systemd/system/xray.service
+chmod -x /etc/systemd/system/v2ray.service
 systemctl enable caddy && systemctl restart caddy 
 sleep 20
 cd /var/lib/caddy
 chmod -R 755 .local/
-systemctl enable xray && systemctl restart xray
+systemctl enable v2ray && systemctl restart v2ray
 
 cd ~
 wget -N --no-check-certificate https://raw.githubusercontent.com/zcluo/vps/master/shell/xrayud.sh
