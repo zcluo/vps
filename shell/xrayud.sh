@@ -1,2 +1,2 @@
 #!/bin/bash
-bash <(curl -L https://raw.githubusercontent.com/XTLS/Xray-install/main/install-release.sh) --beta
+bash <(curl -L https://raw.githubusercontent.com/v2fly/fhs-install-v2ray/master/install-release.sh)
