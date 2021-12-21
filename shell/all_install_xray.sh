@@ -5,6 +5,8 @@ echo " e.g.: $0 domain_name username password emailaddress uuid"
 exit 1;
 fi
 
+systemctl stop v2ray
+systemctl disable  v2ray
 #used for uuid replacement
 uuid=$(cat /proc/sys/kernel/random/uuid)
 echo "$1" "$2" "$3" "$4" "$5"
@@ -25,7 +27,7 @@ wget -N --no-check-certificate https://raw.githubusercontent.com/teddysun/across
 # chmod +x install-release.sh
 # bash install-release.sh
 # bash <(curl -L https://raw.githubusercontent.com/XTLS/Xray-install/main/install-release.sh)
-curl -O https://raw.githubusercontent.com/v2fly/fhs-install-v2ray/master/install-release.sh
+curl -O https://raw.githubusercontent.com/XTLS/Xray-install/main/install-release.sh
 chmod +x install-release.sh
 bash install-release.sh
 sleep 20
@@ -38,18 +40,18 @@ sed -e "s/user/$2/g" /etc/caddy/Caddyfile.new > /etc/caddy/Caddyfile
 sed -e "s/pass/$3/g" /etc/caddy/Caddyfile > /etc/caddy/Caddyfile.new
 sed -e "s/xxx\@xxx\.xxx/$4/g" /etc/caddy/Caddyfile.new > /etc/caddy/Caddyfile
 #wget -N --no-check-certificate https://raw.githubusercontent.com/zcluo/vps/master/shell/caddy.service -O /lib/systemd/system/caddy.service
-sed -e "s/xxx\.xxxxxx\.xxx/$1/g" /usr/local/etc/v2ray/config.json > /usr/local/etc/v2ray/config.json.new
-sed -e "s/trojanpass/$3/g" /usr/local/etc/v2ray/config.json.new > /usr/local/etc/v2ray/config.json
-sed -e "s/xxx\@xxx\.xxx/$4/g"   /usr/local/etc/v2ray/config.json > /usr/local/etc/v2ray/config.json.new
-sed -e "s/xxxxxxxx\-xxxx\-xxxx\-xxxx\-xxxxxxxxxxxx/$5/g"   /usr/local/etc/v2ray/config.json.new > /usr/local/etc/v2ray/config.json
+sed -e "s/xxx\.xxxxxx\.xxx/$1/g" /usr/local/etc/v2ray/config_xray.json > /usr/local/etc/v2ray/config_xray.json.new
+sed -e "s/trojanpass/$3/g" /usr/local/etc/v2ray/config_xray.json.new > /usr/local/etc/v2ray/config_xray.json
+sed -e "s/xxx\@xxx\.xxx/$4/g"   /usr/local/etc/v2ray/config_xray.json > /usr/local/etc/v2ray/config_xray.json.new
+sed -e "s/xxxxxxxx\-xxxx\-xxxx\-xxxx\-xxxxxxxxxxxx/$5/g"   /usr/local/etc/v2ray/config_xray.json.new > /usr/local/etc/xray/config.json
 #\mv /etc/caddy/Caddyfile.new  /etc/caddy/Caddyfile
 #\mv /usr/local/etc/xray/config.json.new /usr/local/etc/xray/config.json
-chmod -x /etc/systemd/system/v2ray.service
+chmod -x /etc/systemd/system/xray.service
 systemctl enable caddy && systemctl restart caddy 
 sleep 20
 cd /var/lib/caddy
 chmod -R 755 .local/
-systemctl enable v2ray && systemctl restart v2ray
+systemctl enable xray && systemctl restart xray
 
 cd ~
 wget -N --no-check-certificate https://raw.githubusercontent.com/zcluo/vps/master/shell/xrayud.sh
@@ -113,4 +115,4 @@ systemctl start rc-local
 \chmod -R 777  /var/log/
 #reboot
 cd ~
-trap "rm -rf crontab* bbr.sh install-release.sh caddy_install.sh install_bbr_expect.sh all_install.sh install_bbr.log html1.zip;reboot" EXIT
+trap "rm -rf crontab* bbr.sh install-release.sh caddy_install.sh install_bbr_expect.sh all_install_xray.sh install_bbr.log html1.zip;reboot" EXIT
