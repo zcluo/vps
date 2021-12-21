@@ -5,6 +5,7 @@ echo " e.g.: $0 domain_name username password emailaddress uuid"
 exit 1;
 fi
 
+systemctl stop xray && systemctl disable xray
 #used for uuid replacement
 uuid=$(cat /proc/sys/kernel/random/uuid)
 echo "$1" "$2" "$3" "$4" "$5"
@@ -52,13 +53,13 @@ chmod -R 755 .local/
 systemctl enable v2ray && systemctl restart v2ray
 
 cd ~
-wget -N --no-check-certificate https://raw.githubusercontent.com/zcluo/vps/master/shell/xrayud.sh
-chmod +x xrayud.sh
+wget -N --no-check-certificate https://raw.githubusercontent.com/zcluo/vps/master/shell/v2rayud.sh
+chmod +x v2rayud.sh
 crontab -l > crontab.bak
 
 #echo "0 1 * * * apt update && apt upgrade -y" >> crontab.bak
-sed -e '/xrayud/d' crontab.bak > crontab.bak.new
-echo "0 1 * * * bash xrayud.sh" >> crontab.bak.new
+sed -e '/v2rayud/d' crontab.bak > crontab.bak.new
+echo "0 1 * * * bash v2rayud.sh" >> crontab.bak.new
 crontab crontab.bak.new
 apt install -y expect
 wget --no-check-certificate -O install_bbr_expect.sh https://raw.githubusercontent.com/zcluo/vps/master/shell/install_bbr_expect.sh
