@@ -1,0 +1,229 @@
+{
+    "log": {
+        "access": "/var/log/xray/access.log",
+        "error": "/var/log/xray/error.log",
+        "loglevel": "warning"
+    },
+    "dns": {},
+    "stats": {},
+    "inbounds": [
+        {
+            "port": 6443,
+            "protocol": "vless",
+            "settings": {
+                "clients": [
+                    {
+                        "id": "xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx",
+                        "flow": "xtls-rprx-direct",
+                        "level": 0,
+                        "email": "xxx@xxx.xxx"
+                    }
+                ],
+                "decryption": "none",
+                "fallbacks": [
+                    {
+                        "dest": 9443,
+                        "xver": 1
+                    },
+                    {
+                        "path": "/vless", 
+                        "dest": 443,
+                        "xver": 1
+                    },
+                    {
+                        "path": "/ss",
+                        "dest": 443,
+                        "xver": 1
+                    },
+                    {
+                        "path": "/home", 
+                        "dest": 443,
+                        "xver": 1
+                    },
+			
+                    {
+                        "path": "/", 
+                        "dest": 443,
+                        "xver": 1
+                    }
+                ]
+            },
+            "streamSettings": {
+                "network": "tcp",
+                "security": "xtls",
+                "xtlsSettings": {
+                    "alpn": [
+                        "http/1.1"
+                    ],
+                    "certificates": [
+                        {
+                             "certificateFile": "/var/lib/caddy/.local/share/caddy/certificates/acme-v02.api.letsencrypt.org-directory/xxx.xxxxxx.xxx/xxx.xxxxxx.xxx.crt",
+                            "keyFile": "/var/lib/caddy/.local/share/caddy/certificates/acme-v02.api.letsencrypt.org-directory/xxx.xxxxxx.xxx/xxx.xxxxxx.xxx.key"
+                        }
+                    ]
+                }
+            }
+        },
+        {
+            "port": 21523,
+            "protocol": "vmess",
+            "settings": {
+                "clients": [
+                    {
+                        "id": "xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx",
+                        "level": 1,
+                        "security": "auto",
+                        "alterId": 16
+                    }
+                ]
+            },
+            "tag": "in-0",
+            "streamSettings": {
+                "network": "ws",
+                "security": "none",
+                "wsSettings": {
+                    "path": "/home"
+                }
+            }
+        },
+	 {
+      "streamSettings": {
+        "network": "ws",
+        "wsSettings": {
+          "path": "/ss"
+        },
+        "security": "auto"
+      },
+      "protocol": "shadowsocks",
+      "port": 31523,
+      "settings": {
+        "method": "chacha20-ietf-poly1305",
+        "password": "trojanpass",
+        "network": "tcp,udp"
+      }
+    },
+    {
+        "port": 41523,
+        "listen": "127.0.0.1",
+        "protocol": "vless",
+        "settings": {
+            "clients": [
+                {
+                    "id": "xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx", 
+                    "level": 1,
+                    "email": "xxx@xxx.xxx"
+                }
+            ],
+            "decryption": "none"
+        },
+        "streamSettings": {
+            "network": "ws",
+            "security": "none",
+            "wsSettings": {
+                
+                "path": "/vless" 
+            }
+        }
+    },
+	    {
+            "port": 9443,
+            "protocol": "trojan",
+            "settings": {
+                "clients": [
+                    {
+                        "password":"trojanpass",
+                        "email": "xxx@xxx.xxx"
+                    }
+                ]
+            },
+            "streamSettings": {
+                "network": "tcp",
+                "security": "tls",
+                "tlsSettings": {
+                    "alpn": [
+                        "http/1.1"
+                    ],
+                    "certificates": [
+                        {
+                            "certificateFile": "/var/lib/caddy/.local/share/caddy/certificates/acme-v02.api.letsencrypt.org-directory/xxx.xxxxxx.xxx/xxx.xxxxxx.xxx.crt",
+                            "keyFile": "/var/lib/caddy/.local/share/caddy/certificates/acme-v02.api.letsencrypt.org-directory/xxx.xxxxxx.xxx/xxx.xxxxxx.xxx.key"
+                        }
+                    ]
+                }
+            }
+        },
+		{
+      "port": 51523,
+      "listen": "0.0.0.0",
+      "protocol": "vless",
+      "settings": {
+        "clients": [
+          {
+            "id": "xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx" 
+          }
+        ],
+        "decryption": "none",
+	 "fallbacks": [
+                    {
+                        "dest": 9443,
+                        "xver": 1
+                    },
+                    {
+                        "path": "/vless", 
+                        "dest": 6443,
+                        "xver": 1
+                    },
+                    {
+                        "path": "/ss",
+                        "dest": 443,
+                        "xver": 1
+                    },
+                    {
+                        "path": "/home", 
+                        "dest": 443,
+                        "xver": 1
+                    },
+			
+                    {
+                        "path": "/", 
+                        "dest": 443,
+                        "xver": 1
+                    }
+                ]
+      },
+      "streamSettings": {
+        "network": "grpc",
+        "grpcSettings": {
+          "serviceName": "grpc" 
+        }
+      }
+    }
+    ],
+    "outbounds": [
+        {
+            "tag": "direct",
+            "protocol": "freedom",
+            "settings": {}
+        },
+        {
+            "tag": "blocked",
+            "protocol": "blackhole",
+            "settings": {}
+        }
+    ],
+    "routing": {
+        "domainStrategy": "AsIs",
+        "rules": [
+            {
+                "type": "field",
+                "ip": [
+                    "geoip:private"
+                ],
+                "outboundTag": "blocked"
+            }
+        ]
+    },
+    "policy": {},
+    "reverse": {},
+    "transport": {}
+}
