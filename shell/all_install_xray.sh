@@ -32,7 +32,7 @@ wget -N --no-check-certificate https://raw.githubusercontent.com/teddysun/across
 # bash <(curl -L https://raw.githubusercontent.com/XTLS/Xray-install/main/install-release.sh)
 curl -O https://raw.githubusercontent.com/XTLS/Xray-install/main/install-release.sh
 chmod +x install-release.sh
-bash install-release.sh
+bash install-release.sh --beta
 sleep 20
 
 #\mkdir -p /etc/caddy/
