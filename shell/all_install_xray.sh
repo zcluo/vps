@@ -34,7 +34,7 @@ sleep 20
 
 #\mkdir -p /etc/caddy/
 wget -N --no-check-certificate https://raw.githubusercontent.com/zcluo/vps/master/shell/Caddyfile -O /etc/caddy/Caddyfile
-wget -N --no-check-certificate https://raw.githubusercontent.com/zcluo/vps/master/shell/config.json -O /usr/local/etc/xray/config_xray.json
+wget -N --no-check-certificate https://raw.githubusercontent.com/zcluo/vps/master/shell/config_xray.json -O /usr/local/etc/xray/config_xray.json
 sed -e "s/xxx\.xxxxxx\.xxx/$1/g" /etc/caddy/Caddyfile > /etc/caddy/Caddyfile.new
 sed -e "s/user/$2/g" /etc/caddy/Caddyfile.new > /etc/caddy/Caddyfile
 sed -e "s/pass/$3/g" /etc/caddy/Caddyfile > /etc/caddy/Caddyfile.new
