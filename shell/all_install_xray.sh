@@ -7,6 +7,9 @@ fi
 
 systemctl stop v2ray
 systemctl disable  v2ray
+systemctl stop xray
+systemctl disable  xray
+\rm -f /usr/local/etc/xray/*
 #used for uuid replacement
 uuid=$(cat /proc/sys/kernel/random/uuid)
 echo "$1" "$2" "$3" "$4" "$5"
