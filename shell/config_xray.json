@@ -72,8 +72,8 @@
                     {
                         "id": "xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx",
                         "level": 1,
-                        "security": "auto",
-                        "alterId": 16
+                        "security": "auto"
+                        
                     }
                 ]
             },
