@@ -15,7 +15,7 @@
                     {
                         "id": "xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx",
                         "flow": "xtls-rprx-direct",
-                        "level": 0,
+                        
                         "email": "xxx@xxx.xxx"
                     }
                 ],
@@ -71,7 +71,8 @@
                 "clients": [
                     {
                         "id": "xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx",
-                        "level": 1,
+                        
+			    "alterId": 0,
                         "security": "auto"
                         
                     }
@@ -110,7 +111,7 @@
             "clients": [
                 {
                     "id": "xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx", 
-                    "level": 1,
+                    
                     "email": "xxx@xxx.xxx"
                 }
             ],
@@ -194,7 +195,11 @@
       "streamSettings": {
         "network": "grpc",
         "grpcSettings": {
-          "serviceName": "grpc" 
+          "serviceName": "grpc",
+	  "multiMode": false,
+  "idle_timeout": 10,
+  "health_check_timeout": 20,
+  "permit_without_stream": false
         }
       }
     }
