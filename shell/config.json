@@ -14,9 +14,8 @@
                 "clients": [
                     {
                         "id": "xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx",
-                        "level": 1,
                         "security": "auto",
-                        "alterId": 16
+                        "alterId": 0
                     }
                 ]
             },
@@ -53,7 +52,6 @@
                 "clients": [
                     {
                         "id": "xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx",
-                        "level": 1,
                         "email": "xxx@xxx.xxx"
                     }
                 ],
@@ -97,7 +95,7 @@
         {
             "port": 51523,
             "listen": "0.0.0.0",
-            "protocol": "vless",
+            "protocol": "vmess",
             "settings": {
                 "clients": [
                     {
@@ -135,7 +133,11 @@
             "streamSettings": {
                 "network": "grpc",
                 "grpcSettings": {
-                    "serviceName": "grpc"
+                    "serviceName": "grpc",
+                    "multiMode": false,
+                    "idle_timeout": 10,
+                    "health_check_timeout": 20,
+                    "permit_without_stream": false
                 }
             }
         }
