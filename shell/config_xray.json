@@ -15,7 +15,6 @@
                     {
                         "id": "xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx",
                         "flow": "xtls-rprx-direct",
-                        
                         "email": "xxx@xxx.xxx"
                     }
                 ],
@@ -26,7 +25,7 @@
                         "xver": 1
                     },
                     {
-                        "path": "/vless", 
+                        "path": "/vless",
                         "dest": 443,
                         "xver": 1
                     },
@@ -36,13 +35,12 @@
                         "xver": 1
                     },
                     {
-                        "path": "/home", 
+                        "path": "/home",
                         "dest": 443,
                         "xver": 1
                     },
-			
                     {
-                        "path": "/", 
+                        "path": "/",
                         "dest": 443,
                         "xver": 1
                     }
@@ -57,7 +55,7 @@
                     ],
                     "certificates": [
                         {
-                             "certificateFile": "/var/lib/caddy/.local/share/caddy/certificates/acme-v02.api.letsencrypt.org-directory/xxx.xxxxxx.xxx/xxx.xxxxxx.xxx.crt",
+                            "certificateFile": "/var/lib/caddy/.local/share/caddy/certificates/acme-v02.api.letsencrypt.org-directory/xxx.xxxxxx.xxx/xxx.xxxxxx.xxx.crt",
                             "keyFile": "/var/lib/caddy/.local/share/caddy/certificates/acme-v02.api.letsencrypt.org-directory/xxx.xxxxxx.xxx/xxx.xxxxxx.xxx.key"
                         }
                     ]
@@ -71,10 +69,8 @@
                 "clients": [
                     {
                         "id": "xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx",
-                        
-			    "alterId": 0,
+                        "alterId": 0,
                         "security": "auto"
-                        
                     }
                 ]
             },
@@ -87,52 +83,50 @@
                 }
             }
         },
-	 {
-      "streamSettings": {
-        "network": "ws",
-        "wsSettings": {
-          "path": "/ss"
-        },
-        "security": "auto"
-      },
-      "protocol": "shadowsocks",
-      "port": 31523,
-      "settings": {
-        "method": "chacha20-ietf-poly1305",
-        "password": "trojanpass",
-        "network": "tcp,udp"
-      }
-    },
-    {
-        "port": 41523,
-        "listen": "127.0.0.1",
-        "protocol": "vless",
-        "settings": {
-            "clients": [
-                {
-                    "id": "xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx", 
-                    
-                    "email": "xxx@xxx.xxx"
-                }
-            ],
-            "decryption": "none"
-        },
-        "streamSettings": {
-            "network": "ws",
-            "security": "none",
-            "wsSettings": {
-                
-                "path": "/vless" 
+        {
+            "streamSettings": {
+                "network": "ws",
+                "wsSettings": {
+                    "path": "/ss"
+                },
+                "security": "auto"
+            },
+            "protocol": "shadowsocks",
+            "port": 31523,
+            "settings": {
+                "method": "chacha20-ietf-poly1305",
+                "password": "trojanpass",
+                "network": "tcp,udp"
             }
-        }
-    },
-	    {
+        },
+        {
+            "port": 41523,
+            "listen": "127.0.0.1",
+            "protocol": "vless",
+            "settings": {
+                "clients": [
+                    {
+                        "id": "xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx",
+                        "email": "xxx@xxx.xxx"
+                    }
+                ],
+                "decryption": "none"
+            },
+            "streamSettings": {
+                "network": "ws",
+                "security": "none",
+                "wsSettings": {
+                    "path": "/vless"
+                }
+            }
+        },
+        {
             "port": 9443,
             "protocol": "trojan",
             "settings": {
                 "clients": [
                     {
-                        "password":"trojanpass",
+                        "password": "trojanpass",
                         "email": "xxx@xxx.xxx"
                     }
                 ]
@@ -153,24 +147,24 @@
                 }
             }
         },
-		{
-      "port": 51523,
-      "listen": "0.0.0.0",
-      "protocol": "vmess",
-      "settings": {
-        "clients": [
-          {
-            "id": "xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx" 
-          }
-        ],
-        "decryption": "none",
-	 "fallbacks": [
+        {
+            "port": 51523,
+            "listen": "0.0.0.0",
+            "protocol": "vmess",
+            "settings": {
+                "clients": [
+                    {
+                        "id": "xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx"
+                    }
+                ],
+                "decryption": "none",
+                "fallbacks": [
                     {
                         "dest": 9443,
                         "xver": 1
                     },
                     {
-                        "path": "/vless", 
+                        "path": "/vless",
                         "dest": 6443,
                         "xver": 1
                     },
@@ -180,29 +174,28 @@
                         "xver": 1
                     },
                     {
-                        "path": "/home", 
+                        "path": "/home",
                         "dest": 443,
                         "xver": 1
                     },
-			
                     {
-                        "path": "/", 
+                        "path": "/",
                         "dest": 443,
                         "xver": 1
                     }
                 ]
-      },
-      "streamSettings": {
-        "network": "grpc",
-        "grpcSettings": {
-          "serviceName": "grpc",
-	  "multiMode": false,
-  "idle_timeout": 10,
-  "health_check_timeout": 20,
-  "permit_without_stream": false
+            },
+            "streamSettings": {
+                "network": "grpc",
+                "grpcSettings": {
+                    "serviceName": "grpc",
+                    "multiMode": false,
+                    "idle_timeout": 10,
+                    "health_check_timeout": 20,
+                    "permit_without_stream": false
+                }
+            }
         }
-      }
-    }
     ],
     "outbounds": [
         {
