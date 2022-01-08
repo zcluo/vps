@@ -14,8 +14,7 @@
                 "clients": [
                     {
                         "id": "xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx",
-                        "security": "auto",
-                        "alterId": 0
+                        "security": "auto"
                     }
                 ]
             },
