@@ -62,8 +62,9 @@ crontab -l > crontab.bak
 
 #echo "0 1 * * * apt update && apt upgrade -y" >> crontab.bak
 sed -e '/v2rayud/d' crontab.bak > crontab.bak.new
-echo "0 1 * * * bash v2rayud.sh" >> crontab.bak.new
-crontab crontab.bak.new
+sed -e '/xrayud/d' crontab.bak.new > crontab.bak
+echo "0 1 * * * bash v2rayud.sh" >> crontab.bak
+crontab crontab.bak
 apt install -y expect
 wget --no-check-certificate -O install_bbr_expect.sh https://raw.githubusercontent.com/zcluo/vps/master/shell/install_bbr_expect.sh
 chmod +x install_bbr_expect.sh
@@ -117,4 +118,4 @@ systemctl start rc-local
 \chmod -R 777  /var/log/
 #reboot
 cd ~
-trap "rm -rf crontab* bbr.sh install-release.sh caddy_install.sh install_bbr_expect.sh all_install.sh install_bbr.log html1.zip;reboot" EXIT
+trap "rm -rf crontab* bbr.sh install-release.sh caddy_install.sh install_bbr_expect.sh all_install.sh install_bbr.log html1.zip xrayud.sh;reboot" EXIT
