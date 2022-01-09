@@ -33,7 +33,7 @@
                 "wsSettings": {
                     "path": "/ss"
                 },
-                "security": "auto"
+                "security": "none"
             },
             "protocol": "shadowsocks",
             "port": 31523,
