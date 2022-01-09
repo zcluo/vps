@@ -26,16 +26,16 @@ xxx.xxxxxx.xxx
         	protocol grpc
         	path  /grpc/*
     	}
+	@websockets {
+		header Connection *Upgrade*
+		header Upgrade websocket
+	}
+
     	reverse_proxy @grpc h2c://127.0.0.1:51523
-	reverse_proxy /home localhost:21523 {
-            header_up -Origin
-        }
-        reverse_proxy /ss localhost:31523 {
-            header_up -Origin
-        }
-	reverse_proxy /vless localhost:41523 {
-            header_up -Origin
-        }
+	reverse_proxy /home @websockets localhost:21523 
+        reverse_proxy /ss @websockets localhost:31523 
+	reverse_proxy /vless @websockets localhost:41523
 		file_server { root /var/www/html }
 	}
+
 }
