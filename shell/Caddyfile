@@ -35,7 +35,7 @@ xxx.xxxxxx.xxx
 	reverse_proxy /home @websockets localhost:21523 
         reverse_proxy /ss @websockets localhost:31523 
 	reverse_proxy /vless @websockets localhost:41523
-		file_server { root /var/www/html }
+	file_server { root /var/www/html }
 	}
 
 }
