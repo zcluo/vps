@@ -78,9 +78,6 @@
                                                                     "handler": "reverse_proxy",
                                                                     "upstreams": [
                                                                         {
-                                                                            "dial": "@websockets:80"
-                                                                        },
-                                                                        {
                                                                             "dial": "localhost:21523"
                                                                         }
                                                                     ]
@@ -88,241 +85,14 @@
                                                             ],
                                                             "match": [
                                                                 {
-                                                                    "path": [
-                                                                        "/home"
-                                                                    ]
-                                                                }
-                                                            ]
-                                                        },
-                                                        {
-                                                            "handle": [
-                                                                {
-                                                                    "handler": "reverse_proxy",
-                                                                    "upstreams": [
-                                                                        {
-                                                                            "dial": "@websockets:80"
-                                                                        },
-                                                                        {
-                                                                            "dial": "localhost:31523"
-                                                                        }
-                                                                    ]
-                                                                }
-                                                            ],
-                                                            "match": [
-                                                                {
-                                                                    "path": [
-                                                                        "/ss"
-                                                                    ]
-                                                                }
-                                                            ]
-                                                        },
-                                                        {
-                                                            "handle": [
-                                                                {
-                                                                    "handler": "reverse_proxy",
-                                                                    "upstreams": [
-                                                                        {
-                                                                            "dial": "@websockets:80"
-                                                                        },
-                                                                        {
-                                                                            "dial": "localhost:41523"
-                                                                        }
-                                                                    ]
-                                                                }
-                                                            ],
-                                                            "match": [
-                                                                {
-                                                                    "path": [
-                                                                        "/vless"
-                                                                    ]
-                                                                }
-                                                            ]
-                                                        },
-                                                        {
-                                                            "handle": [
-                                                                {
-                                                                    "handler": "file_server",
-                                                                    "hide": [
-                                                                        "/etc/caddy/Caddyfile"
-                                                                    ],
-                                                                    "root": "/var/www/html"
-                                                                }
-                                                            ]
-                                                        }
-                                                    ]
-                                                }
-                                            ]
-                                        }
-                                    ]
-                                }
-                            ],
-                            "match": [
-                                {
-                                    "host": [
-                                        "xxx.xxxxxx.xxx"
-                                    ]
-                                }
-                            ],
-                            "terminal": true
-                        }
-                    ],
-                    "tls_connection_policies": [
-                        {
-                            "cipher_suites": [
-                                "TLS_ECDHE_ECDSA_WITH_CHACHA20_POLY1305_SHA256",
-                                "TLS_ECDHE_ECDSA_WITH_AES_128_GCM_SHA256",
-                                "TLS_ECDHE_RSA_WITH_CHACHA20_POLY1305_SHA256",
-                                "TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256",
-                                "TLS_RSA_WITH_AES_128_GCM_SHA256"
-                            ],
-                            "match": {
-                                "sni": [
-                                    "xxx.xxxxxx.xxx"
-                                ]
-                            },
-                            "protocol_max": "tls1.3",
-                            "protocol_min": "tls1.2"
-                        },
-                        {}
-                    ]
-                }
-            }
-        },
-        "tls": {
-            "automation": {
-                "policies": [
-                    {
-                        "issuers": [
-                            {
-                                "email": "xxx@xxx.xxx",
-                                "module": "acme"
-                            },
-                            {
-                                "email": "xxx@xxx.xxx",
-                                "module": "zerossl"
-                            }
-                        ],
-                        "subjects": [
-                            "xxx.xxxxxx.xxx"
-                        ]
-                    }
-                ]
-            }
-        }
-    },
-    "logging": {
-        "logs": {
-            "default": {
-                "exclude": [
-                    "http.log.access.log0"
-                ]
-            },
-            "log0": {
-                "include": [
-                    "http.log.access.log0"
-                ],
-                "level": "INFO",
-                "writer": {
-                    "filename": "/var/log/access.log",
-                    "output": "file",
-                    "roll_keep": 5,
-                    "roll_keep_days": 30,
-                    "roll_size_mb": 29
-                }
-            }
-        }
-    }
-}
-{
-    "apps": {
-        "http": {
-            "servers": {
-                "srv0": {
-                    "listen": [
-                        ":443"
-                    ],
-                    "logs": {
-                        "logger_names": {
-                            "xxx.xxxxxx.xxx": "log0"
-                        }
-                    },
-                    "routes": [
-                        {
-                            "handle": [
-                                {
-                                    "handler": "subroute",
-                                    "routes": [
-                                        {
-                                            "handle": [
-                                                {
-                                                    "handler": "vars",
-                                                    "root": "/var/www/html"
-                                                },
-                                                {
-                                                    "handler": "headers",
-                                                    "response": {
-                                                        "set": {
-                                                            "Strict-Transport-Security": [
-                                                                "max-age=15768000; preload"
-                                                            ],
-                                                            "X-Content-Type-Options": [
-                                                                "nosniff"
-                                                            ],
-                                                            "X-Frame-Options": [
-                                                                "DENY"
-                                                            ],
-                                                            "X-Xss-Protection": [
-                                                                "1; mode=block"
-                                                            ]
-                                                        }
-                                                    }
-                                                },
-                                                {
-                                                    "handler": "subroute",
-                                                    "routes": [
-                                                        {
-                                                            "handle": [
-                                                                {
-                                                                    "handler": "reverse_proxy",
-                                                                    "transport": {
-                                                                        "protocol": "http",
-                                                                        "versions": [
-                                                                            "h2c",
-                                                                            "2"
+                                                                    "header": {
+                                                                        "Connection": [
+                                                                            "*Upgrade*"
+                                                                        ],
+                                                                        "Upgrade": [
+                                                                            "websocket"
                                                                         ]
                                                                     },
-                                                                    "upstreams": [
-                                                                        {
-                                                                            "dial": "127.0.0.1:51523"
-                                                                        }
-                                                                    ]
-                                                                }
-                                                            ],
-                                                            "match": [
-                                                                {
-                                                                    "path": [
-                                                                        "/grpc/*"
-                                                                    ],
-                                                                    "protocol": "grpc"
-                                                                }
-                                                            ]
-                                                        },
-                                                        {
-                                                            "handle": [
-                                                                {
-                                                                    "handler": "reverse_proxy",
-                                                                    "upstreams": [
-                                                                        {
-                                                                            "dial": "@websockets:80"
-                                                                        },
-                                                                        {
-                                                                            "dial": "localhost:21523"
-                                                                        }
-                                                                    ]
-                                                                }
-                                                            ],
-                                                            "match": [
-                                                                {
                                                                     "path": [
                                                                         "/home"
                                                                     ]
@@ -335,9 +105,6 @@
                                                                     "handler": "reverse_proxy",
                                                                     "upstreams": [
                                                                         {
-                                                                            "dial": "@websockets:80"
-                                                                        },
-                                                                        {
                                                                             "dial": "localhost:31523"
                                                                         }
                                                                     ]
@@ -345,6 +112,14 @@
                                                             ],
                                                             "match": [
                                                                 {
+                                                                    "header": {
+                                                                        "Connection": [
+                                                                            "*Upgrade*"
+                                                                        ],
+                                                                        "Upgrade": [
+                                                                            "websocket"
+                                                                        ]
+                                                                    },
                                                                     "path": [
                                                                         "/ss"
                                                                     ]
@@ -357,9 +132,6 @@
                                                                     "handler": "reverse_proxy",
                                                                     "upstreams": [
                                                                         {
-                                                                            "dial": "@websockets:80"
-                                                                        },
-                                                                        {
                                                                             "dial": "localhost:41523"
                                                                         }
                                                                     ]
@@ -367,6 +139,14 @@
                                                             ],
                                                             "match": [
                                                                 {
+                                                                    "header": {
+                                                                        "Connection": [
+                                                                            "*Upgrade*"
+                                                                        ],
+                                                                        "Upgrade": [
+                                                                            "websocket"
+                                                                        ]
+                                                                    },
                                                                     "path": [
                                                                         "/vless"
                                                                     ]
