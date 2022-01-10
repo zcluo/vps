@@ -42,9 +42,9 @@ xxx.xxxxxx.xxx
 		path /vless
 	}
     	reverse_proxy  @grpc h2c://127.0.0.1:51523
-	reverse_proxy  @vmessws localhost:21523 
-        reverse_proxy  @ssws localhost:31523
-	reverse_proxy  @vlessws localhost:41523
+	reverse_proxy  @vmessws 127.0.0.1:21523 
+        reverse_proxy  @ssws 127.0.0.1:31523
+	reverse_proxy  @vlessws 127.0.0.1:41523
 	file_server { root /var/www/html }
 	}
 
