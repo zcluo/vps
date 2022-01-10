@@ -1,0 +1,152 @@
+{
+    "log": {
+      "access": {
+        "type": "File",
+        "path": "/var/log/xray/access.log",
+        "level": "Info"
+      },
+      "error": {
+        "type": "File",
+        "path": "/var/log/xray/error.log",
+        "level": "Error"
+      }
+    },
+    "dns": {},
+    "inbounds": [
+      {
+        "port": "21523",
+        "listen": "0.0.0.0",
+        "protocol": "vmess",
+        "settings": {
+          "users": [
+            "xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx"
+          ]
+        },
+        "tag": "in-0",
+        "streamSettings": {
+          "network": "ws",
+          "security": "none",
+          "wsSettings": {
+            "path": "/home",
+            "headers": {
+              "Host": "xxx.xxxxxx.xxx"
+            },
+            "maxEarlyData": 1024,
+            "earlyDataHeaderName": "xxx.xxxxxx.xxx"
+          }
+        }
+      },
+      {
+        "streamSettings": {
+          "network": "ws",
+          "wsSettings": {
+            "path": "/ss",
+            "headers": {
+              "Host": "xxx.xxxxxx.xxx"
+            },
+            "maxEarlyData": 1024,
+            "earlyDataHeaderName": "xxx.xxxxxx.xxx"
+          },
+          "security": "none"
+        },
+        "protocol": "shadowsocks",
+        "port": 31523,
+        "listen": "0.0.0.0",
+        "settings": {
+          "method": "chacha20-ietf-poly1305",
+          "password": "trojanpass",
+          "network": "tcp,udp"
+        }
+      },
+      {
+        "port": 41523,
+        "listen": "0.0.0.0",
+        "protocol": "vless",
+        "settings": {
+          "users": [
+            "xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx"
+          ]
+        },
+        "streamSettings": {
+          "network": "ws",
+          "security": "none",
+          "wsSettings": {
+            "path": "/vless",
+            "headers": {
+              "Host": "xxx.xxxxxx.xxx"
+            },
+            "maxEarlyData": 1024,
+            "earlyDataHeaderName": "xxx.xxxxxx.xxx"
+          }
+        }
+      },
+      {
+        "port": 9443,
+        "protocol": "trojan",
+        "settings": {
+          "users": [
+            "trojanpass"
+          ]
+        },
+        "streamSettings": {
+          "network": "tcp",
+          "security": "tls",
+          "tlsSettings": {
+            "alpn": [
+              "http/1.1"
+            ],
+            "certificates": [
+              {
+                "certificateFile": "/var/lib/caddy/.local/share/caddy/certificates/acme-v02.api.letsencrypt.org-directory/xxx.xxxxxx.xxx/xxx.xxxxxx.xxx.crt",
+                "keyFile": "/var/lib/caddy/.local/share/caddy/certificates/acme-v02.api.letsencrypt.org-directory/xxx.xxxxxx.xxx/xxx.xxxxxx.xxx.key"
+              }
+            ]
+          }
+        }
+      },
+      {
+        "port": 51523,
+        "listen": "0.0.0.0",
+        "protocol": "vmess",
+        "settings": {
+          "users": [
+            "xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx"
+          ]
+        },
+        "streamSettings": {
+          "network": "grpc",
+          "grpcSettings": {
+            "serviceName": "grpc",
+            "multiMode": false,
+            "idle_timeout": 10,
+            "health_check_timeout": 20,
+            "permit_without_stream": false
+          }
+        }
+      }
+    ],
+    "outbounds": [
+      {
+        "tag": "direct",
+        "protocol": "freedom",
+        "settings": {}
+      },
+      {
+        "tag": "blocked",
+        "protocol": "blackhole",
+        "settings": {}
+      }
+    ],
+    "routing": {
+      "domainStrategy": "AsIs",
+      "rules": [
+        {
+          "type": "field",
+          "ip": [
+            "geoip:private"
+          ],
+          "outboundTag": "blocked"
+        }
+      ]
+    }
+  }
