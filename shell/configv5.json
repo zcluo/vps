@@ -24,7 +24,7 @@
         },
         "tag": "in-0",
         "streamSettings": {
-          "network": "ws",
+          "transport": "ws",
           "security": "none",
           "wsSettings": {
             "path": "/home",
@@ -38,7 +38,7 @@
       },
       {
         "streamSettings": {
-          "network": "ws",
+          "transport": "ws",
           "wsSettings": {
             "path": "/ss",
             "headers": {
@@ -68,7 +68,7 @@
           ]
         },
         "streamSettings": {
-          "network": "ws",
+          "transport": "ws",
           "security": "none",
           "wsSettings": {
             "path": "/vless",
@@ -89,13 +89,13 @@
           ]
         },
         "streamSettings": {
-          "network": "tcp",
+          "transport": "tcp",
           "security": "tls",
           "tlsSettings": {
-            "alpn": [
-              "http/1.1"
+            "nextProtocol": [
+              "h2", "http/1.1"
             ],
-            "certificates": [
+            "securitySettings": [
               {
                 "certificateFile": "/var/lib/caddy/.local/share/caddy/certificates/acme-v02.api.letsencrypt.org-directory/xxx.xxxxxx.xxx/xxx.xxxxxx.xxx.crt",
                 "keyFile": "/var/lib/caddy/.local/share/caddy/certificates/acme-v02.api.letsencrypt.org-directory/xxx.xxxxxx.xxx/xxx.xxxxxx.xxx.key"
@@ -114,7 +114,8 @@
           ]
         },
         "streamSettings": {
-          "network": "grpc",
+          "transport": "grpc",
+          "security": "none",
           "grpcSettings": {
             "serviceName": "grpc",
             "multiMode": false,
