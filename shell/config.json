@@ -9,6 +9,7 @@
   "inbounds": [
     {
       "port": 21523,
+      "listen": "127.0.0.1",
       "protocol": "vmess",
       "settings": {
         "clients": [
@@ -47,6 +48,7 @@
       },
       "protocol": "shadowsocks",
       "port": 31523,
+      "listen": "127.0.0.1",
       "settings": {
         "method": "chacha20-ietf-poly1305",
         "password": "trojanpass",
@@ -81,6 +83,7 @@
     },
     {
       "port": 9443,
+      "listen": "127.0.0.1",
       "protocol": "trojan",
       "settings": {
         "clients": [
@@ -108,7 +111,7 @@
     },
     {
       "port": 51523,
-      "listen": "0.0.0.0",
+      "listen": "127.0.0.1",
       "protocol": "vmess",
       "settings": {
         "clients": [
