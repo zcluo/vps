@@ -29,7 +29,8 @@
             "Host": "xxx.xxxxxx.xxx"
           },
           "maxEarlyData": 1024,
-          "earlyDataHeaderName": "xxx.xxxxxx.xxx"
+          "useBrowserForwarding": false,
+          "earlyDataHeaderName": ""
         }
       }
     },
@@ -42,7 +43,8 @@
             "Host": "xxx.xxxxxx.xxx"
           },
           "maxEarlyData": 1024,
-          "earlyDataHeaderName": "xxx.xxxxxx.xxx"
+          "useBrowserForwarding": false,
+          "earlyDataHeaderName": ""
         },
         "security": "none"
       },
@@ -77,7 +79,8 @@
             "Host": "xxx.xxxxxx.xxx"
           },
           "maxEarlyData": 1024,
-          "earlyDataHeaderName": "xxx.xxxxxx.xxx"
+          "useBrowserForwarding": false,
+          "earlyDataHeaderName": ""
         }
       }
     },
