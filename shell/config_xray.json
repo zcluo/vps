@@ -84,7 +84,8 @@
             "Host": "xxx.xxxxxx.xxx"
           },
           "maxEarlyData": 1024,
-          "earlyDataHeaderName": "xxx.xxxxxx.xxx"
+          "useBrowserForwarding": false,
+          "earlyDataHeaderName": ""
         }
       }
     },
@@ -97,7 +98,8 @@
             "Host": "xxx.xxxxxx.xxx"
           },
           "maxEarlyData": 1024,
-          "earlyDataHeaderName": "xxx.xxxxxx.xxx"
+          "useBrowserForwarding": false,
+          "earlyDataHeaderName": ""
         },
         "security": "none"
       },
@@ -131,7 +133,8 @@
             "Host": "xxx.xxxxxx.xxx"
           },
           "maxEarlyData": 1024,
-          "earlyDataHeaderName": "xxx.xxxxxx.xxx"
+          "useBrowserForwarding": false,
+          "earlyDataHeaderName": ""
         }
       }
     },
@@ -204,7 +207,7 @@
         "network": "grpc",
         "grpcSettings": {
           "serviceName": "grpc",
-          "multiMode": false,
+          "multiMode": true,
           "idle_timeout": 10,
           "health_check_timeout": 20,
           "permit_without_stream": false
