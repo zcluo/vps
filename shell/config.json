@@ -27,10 +27,7 @@
                     "path": "/home",
                     "headers": {
                         "Host": "xxx.xxxxxx.xxx"
-                    },
-                    "maxEarlyData": 1024,
-                    "useBrowserForwarding": false,
-                    "earlyDataHeaderName": ""
+                    }
                 }
             },
             "sniffing": {
@@ -51,10 +48,7 @@
                     "path": "/ss",
                     "headers": {
                         "Host": "xxx.xxxxxx.xxx"
-                    },
-                    "maxEarlyData": 1024,
-                    "useBrowserForwarding": false,
-                    "earlyDataHeaderName": ""
+                    }
                 },
                 "security": "none"
             },
@@ -97,10 +91,7 @@
                     "path": "/vless",
                     "headers": {
                         "Host": "xxx.xxxxxx.xxx"
-                    },
-                    "maxEarlyData": 1024,
-                    "useBrowserForwarding": false,
-                    "earlyDataHeaderName": ""
+                    }
                 }
             },
             "sniffing": {
@@ -131,6 +122,7 @@
                 "security": "tls",
                 "tlsSettings": {
                     "alpn": [
+                        "h2",
                         "http/1.1"
                     ],
                     "certificates": [
