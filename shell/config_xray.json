@@ -83,37 +83,6 @@
             }
         },
         {
-            "port": 61523, 
-            "protocol": "vmess",
-            "settings": {
-                "clients": [
-                    {
-                        "id": "xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx"
-                    }
-                ]
-            },
-            "streamSettings": {
-                "network": "quic",
-                "security": "aes-128-gcm",
-                "key": "trojanpass",
-                "quicSettings": {
-                    "header": {
-                        "type": "srtp" 
-                    }
-                }
-            },
-            "sniffing": {
-                "enabled": true,
-                "destOverride": [
-                    "http",
-                    "tls",
-                    "fakedns",
-                    "fakedns+others"
-                ],
-                "metadataOnly": false
-            }
-        },
-        {
             "streamSettings": {
                 "network": "ws",
                 "wsSettings": {
