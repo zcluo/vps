@@ -21,10 +21,6 @@
                 "decryption": "none",
                 "fallbacks": [
                     {
-                        "dest": 9443,
-                        "xver": 1
-                    },
-                    {
                         "path": "/vless",
                         "dest": 443,
                         "xver": 1
@@ -93,7 +89,7 @@
                     "path": "/ss",
                     "headers": {
                         "Host": "xxx.xxxxxx.xxx"
-                    },
+                    }
                 },
                 "security": "none"
             },
@@ -130,34 +126,6 @@
             }
         },
         {
-            "port": 9443,
-            "protocol": "trojan",
-            "settings": {
-                "clients": [
-                    {
-                        "password": "trojanpass",
-                        "email": "xxx@xxx.xxx"
-                    }
-                ]
-            },
-            "streamSettings": {
-                "network": "tcp",
-                "security": "tls",
-                "tlsSettings": {
-                    "alpn": [
-                        "h2",
-                        "http/1.1"
-                    ],
-                    "certificates": [
-                        {
-                            "certificateFile": "/var/lib/caddy/.local/share/caddy/certificates/acme-v02.api.letsencrypt.org-directory/xxx.xxxxxx.xxx/xxx.xxxxxx.xxx.crt",
-                            "keyFile": "/var/lib/caddy/.local/share/caddy/certificates/acme-v02.api.letsencrypt.org-directory/xxx.xxxxxx.xxx/xxx.xxxxxx.xxx.key"
-                        }
-                    ]
-                }
-            }
-        },
-        {
             "port": 51523,
             "listen": "0.0.0.0",
             "protocol": "vmess",
@@ -169,10 +137,6 @@
                 ],
                 "decryption": "none",
                 "fallbacks": [
-                    {
-                        "dest": 9443,
-                        "xver": 1
-                    },
                     {
                         "path": "/vless",
                         "dest": 6443,
