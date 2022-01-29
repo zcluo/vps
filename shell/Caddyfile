@@ -41,15 +41,12 @@ xxx.xxxxxx.xxx
 		header Upgrade websocket
 		path /vless
 	}
-	@quic {
-		header Connection *Upgrade*
-		path /
-	}
+
     	reverse_proxy  @grpc h2c://127.0.0.1:51523
 	reverse_proxy  @vmessws 127.0.0.1:21523 
         reverse_proxy  @ssws 127.0.0.1:31523
 	reverse_proxy  @vlessws 127.0.0.1:41523
-	reverse_proxy  @quic 127.0.0.1:61523
+
 	file_server { root /var/www/html }
 	}
 
