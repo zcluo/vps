@@ -52,7 +52,7 @@ xxx.xxxxxx.xxx
         reverse_proxy  @ssws 127.0.0.1:31523
 	reverse_proxy  @vlessws 127.0.0.1:41523
 
-	file_server { root /var/www/html }
+	
 	}
 
 }
