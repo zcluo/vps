@@ -83,6 +83,7 @@ wget  -N --no-check-certificate  https://raw.githubusercontent.com/zcluo/vps/mas
 unzip -o html1.zip -d /var/www/html
 
 dd if=/dev/urandom of=/var/www/html/test bs=100M count=1 iflag=fullblock
+>/etc/rc.local
 cat <<EOF >/etc/rc.local
 #!/bin/sh -e
 #
