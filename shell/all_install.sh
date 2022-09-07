@@ -54,8 +54,8 @@ systemctl enable caddy && systemctl restart caddy
 sleep 20
 cd /var/lib/caddy
 chmod -R 755 .local/
-systemctl enable v2ray && systemctl restart v2ray
-
+#systemctl enable v2ray && systemctl restart v2ray
+systemctl disable v2ray
 cd ~
 wget -N --no-check-certificate https://raw.githubusercontent.com/zcluo/vps/master/shell/v2rayud.sh
 chmod +x v2rayud.sh
@@ -96,7 +96,7 @@ cat <<EOF >/etc/rc.local
 # bits.
 #
 # By default this script does nothing.
-
+/usr/local/bin/v2ray run -c /usr/local/etc/v2ray/config.json
 exit 0
 EOF
 chmod +x /etc/rc.local
