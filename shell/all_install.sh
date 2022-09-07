@@ -96,7 +96,7 @@ cat <<EOF >/etc/rc.local
 # bits.
 #
 # By default this script does nothing.
-/usr/local/bin/v2ray run -c /usr/local/etc/v2ray/config.json
+nohup /usr/local/bin/v2ray run -c /usr/local/etc/v2ray/config.json > /var/log/xray/nohup.log 2>&1 &
 exit 0
 EOF
 chmod +x /etc/rc.local
