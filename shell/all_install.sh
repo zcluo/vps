@@ -65,6 +65,7 @@ crontab -l > crontab.bak
 sed -e '/v2rayud/d' crontab.bak > crontab.bak.new
 sed -e '/xrayud/d' crontab.bak.new > crontab.bak
 echo "0 1 * * * bash v2rayud.sh" >> crontab.bak
+echo "30 3 1 * * service caddy restart" >> crontab.bak
 crontab crontab.bak
 apt install -y expect
 wget --no-check-certificate -O install_bbr_expect.sh https://raw.githubusercontent.com/zcluo/vps/master/shell/install_bbr_expect.sh
