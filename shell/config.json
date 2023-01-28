@@ -115,29 +115,7 @@
                         "id": "xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx"
                     }
                 ],
-                "decryption": "none",
-                "fallbacks": [
-                    {
-                        "path": "/vless",
-                        "dest": 6443,
-                        "xver": 1
-                    },
-                    {
-                        "path": "/ss",
-                        "dest": 443,
-                        "xver": 1
-                    },
-                    {
-                        "path": "/home",
-                        "dest": 443,
-                        "xver": 1
-                    },
-                    {
-                        "path": "/",
-                        "dest": 443,
-                        "xver": 1
-                    }
-                ]
+                "decryption": "none"
             },
             "streamSettings": {
                 "network": "grpc",
