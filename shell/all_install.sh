@@ -10,7 +10,7 @@ systemctl stop v2ray && systemctl disable v2ray
 #used for uuid replacement
 uuid=$(cat /proc/sys/kernel/random/uuid)
 echo "$1" "$2" "$3" "$4" "$5"
-apt install curl screen net-tools iperf3 ca-certificates git lsof apt-transport-https ca-certificates  -y
+apt install curl screen net-tools iperf3 ca-certificates git lsof apt-transport-https ca-certificates neofetch  -y
 #wget -N --no-check-certificate https://raw.githubusercontent.com/zcluo/vps/master/shell/caddy_install.sh && chmod +x caddy_install.sh && bash caddy_install.sh install
 #wget -N --no-check-certificate https://raw.githubusercontent.com/zcluo/across/master/bbr.sh
 >/etc/apt/sources.list.d/caddy-fury.list
@@ -121,4 +121,6 @@ systemctl start rc-local
 \chmod -R 777  /var/log/
 #reboot
 cd ~
+echo "clear" >> .bashrc
+echo "neofetch" >> .bashrc
 trap "rm -rf crontab* bbr.sh install-release.sh caddy_install.sh install_bbr_expect.sh all_install.sh install_bbr.log html1.zip xrayud.sh;reboot" EXIT
