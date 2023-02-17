@@ -10,7 +10,7 @@ systemctl stop v2ray && systemctl disable v2ray
 #used for uuid replacement
 uuid=$(cat /proc/sys/kernel/random/uuid)
 echo "$1" "$2" "$3" "$4" "$5"
-apt install curl screen net-tools iperf3 ca-certificates git lsof apt-transport-https ca-certificates neofetch  -y
+apt install curl screen net-tools iperf3 ca-certificates git lsof apt-transport-https ca-certificates neofetch unzip  -y
 #wget -N --no-check-certificate https://raw.githubusercontent.com/zcluo/vps/master/shell/caddy_install.sh && chmod +x caddy_install.sh && bash caddy_install.sh install
 #wget -N --no-check-certificate https://raw.githubusercontent.com/zcluo/across/master/bbr.sh
 >/etc/apt/sources.list.d/caddy-fury.list
@@ -20,6 +20,7 @@ apt install caddy
 #\rm -f /etc/apt/sources.list.d/caddy-fury.list
 \chmod -R 777  /var/log/
 wget -N --no-check-certificate https://raw.githubusercontent.com/teddysun/across/master/bbr.sh
+wget -N --no-check-certificate https://raw.githubusercontent.com/zcluo/vps/master/shell/install_ohmyposh.sh
 #mkdir -p /usr/local/caddy/
 \mkdir -p /var/log/xray/
 \chmod -R 777  /var/log/xray/
@@ -121,6 +122,7 @@ systemctl start rc-local
 \chmod -R 777  /var/log/
 #reboot
 cd ~
+bash install_ohmyposh.sh
 echo "clear" >> .bashrc
 echo "neofetch" >> .bashrc
-trap "rm -rf crontab* bbr.sh install-release.sh caddy_install.sh install_bbr_expect.sh all_install.sh install_bbr.log html1.zip xrayud.sh;reboot" EXIT
+trap "rm -rf install_ohmyposh.sh crontab* bbr.sh install-release.sh caddy_install.sh install_bbr_expect.sh all_install.sh install_bbr.log html1.zip xrayud.sh;reboot" EXIT
