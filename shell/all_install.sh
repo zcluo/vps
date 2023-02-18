@@ -20,7 +20,7 @@ apt install caddy
 #\rm -f /etc/apt/sources.list.d/caddy-fury.list
 \chmod -R 777  /var/log/
 wget -N --no-check-certificate https://raw.githubusercontent.com/teddysun/across/master/bbr.sh
-wget -N --no-check-certificate https://raw.githubusercontent.com/zcluo/vps/master/shell/install_ohmyposh.sh
+#wget -N --no-check-certificate https://raw.githubusercontent.com/zcluo/vps/master/shell/install_ohmyposh.sh
 #mkdir -p /usr/local/caddy/
 \mkdir -p /var/log/xray/
 \chmod -R 777  /var/log/xray/
@@ -122,7 +122,17 @@ systemctl start rc-local
 \chmod -R 777  /var/log/
 #reboot
 cd ~
-bash install_ohmyposh.sh
+#bash install_ohmyposh.sh
+wget https://github.com/JanDeDobbeleer/oh-my-posh/releases/latest/download/posh-linux-amd64 -O /usr/local/bin/oh-my-posh
+chmod +x /usr/local/bin/oh-my-posh
+
+mkdir ~/.poshthemes
+wget https://github.com/JanDeDobbeleer/oh-my-posh/releases/latest/download/themes.zip -O ~/.poshthemes/themes.zip
+unzip ~/.poshthemes/themes.zip -d ~/.poshthemes
+chmod u+rw ~/.poshthemes/*.omp.*
+rm ~/.poshthemes/themes.zip
+echo 'eval "$(oh-my-posh --init --shell bash --config /root/.poshthemes/1_shell.omp.json)"' >> .bashrc
+
 echo "clear" >> .bashrc
 echo "neofetch" >> .bashrc
-trap "rm -rf install_ohmyposh.sh crontab* bbr.sh install-release.sh caddy_install.sh install_bbr_expect.sh all_install.sh install_bbr.log html1.zip xrayud.sh;reboot" EXIT
+trap "rm -rf crontab* bbr.sh install-release.sh caddy_install.sh install_bbr_expect.sh all_install.sh install_bbr.log html1.zip xrayud.sh;reboot" EXIT
