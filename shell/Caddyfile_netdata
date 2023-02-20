@@ -70,7 +70,7 @@ https://SITE_X_TELEX_APP_TLS:8443
 
 	root * /var/www/html
 	basicauth /* {
-        zcluo XXXXXXXXXXXXXXXXXXXXXXXXXXX
+        username XXXXXXXXXXXXXXXXXXXXXXXXXXX
     }
 
 	log {
