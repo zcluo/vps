@@ -1,0 +1,98 @@
+{
+	http_port 80
+	https_port 5017
+}
+(SITE_X_TELEX_APP_TLS) {
+    tls xxx@xxx.xxx {
+		protocols tls1.2 tls1.3
+		ciphers TLS_ECDHE_ECDSA_WITH_CHACHA20_POLY1305_SHA256 TLS_ECDHE_ECDSA_WITH_AES_128_GCM_SHA256 TLS_ECDHE_RSA_WITH_CHACHA20_POLY1305_SHA256 TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256 TLS_RSA_WITH_AES_128_GCM_SHA256
+	}
+}
+xxx.xxxxxx.xxx
+{
+	import SITE_X_TELEX_APP_TLS
+
+	root * /var/www/html
+	log {
+		output file /var/log/access.log {
+		roll_size 30mb
+		roll_keep 5
+		roll_keep_for 720h
+		}
+		level  INFO
+	} 
+	header {
+		Strict-Transport-Security "max-age=15768000; preload"
+		X-XSS-Protection "1; mode=block"
+		X-Content-Type-Options "nosniff"
+		X-Frame-Options "DENY"
+	}
+
+	route {
+	@grpc {
+        	protocol grpc
+        	path  /grpc/*
+    	}
+	@vmessws {
+		header Connection *Upgrade*
+		header Upgrade websocket
+		path /home
+	}
+	@ssws {
+		header Connection *Upgrade*
+		header Upgrade websocket
+		path /ss
+	}
+	@vlessws {
+		header Connection *Upgrade*
+		header Upgrade websocket
+		path /vless
+	}
+	@vmesswslower {
+		header Connection *upgrade*
+		header Upgrade websocket
+		path /home
+	}
+	reverse_proxy  @vmesswslower 127.0.0.1:21523
+    	reverse_proxy  @grpc h2c://127.0.0.1:51523
+	reverse_proxy  @vmessws 127.0.0.1:21523 
+        reverse_proxy  @ssws 127.0.0.1:31523
+	reverse_proxy  @vlessws 127.0.0.1:41523
+        reverse_proxy  127.0.0.1:19999
+
+	
+	}
+
+}
+https://SITE_X_TELEX_APP_TLS:8443
+{
+	import SITE_X_TELEX_APP_TLS
+
+	root * /var/www/html
+	basicauth /* {
+        zcluo XXXXXXXXXXXXXXXXXXXXXXXXXXX
+    }
+
+	log {
+		output file /var/log/netdata_access.log {
+		roll_size 30mb
+		roll_keep 5
+		roll_keep_for 720h
+		}
+		level  INFO
+	} 
+	header {
+		Strict-Transport-Security "max-age=15768000; preload"
+		X-XSS-Protection "1; mode=block"
+		X-Content-Type-Options "nosniff"
+		X-Frame-Options "DENY"
+	}
+
+	route {
+	
+        reverse_proxy  127.0.0.1:19999
+
+	
+	}
+
+}
