@@ -33,15 +33,11 @@ sleep 20
 
 #\mkdir -p /etc/caddy/
 \rm -rf /usr/local/etc/v2ray/*
-\rm -rf /etc/caddy/*
-wget -N --no-check-certificate https://raw.githubusercontent.com/zcluo/vps/master/shell/Caddyfile -O /etc/caddy/Caddyfile
-#wget -N --no-check-certificate https://raw.githubusercontent.com/zcluo/vps/master/shell/caddy.json -O /etc/caddy/Caddyfile
+
+
 wget -N --no-check-certificate https://raw.githubusercontent.com/zcluo/vps/master/shell/config.json -O /usr/local/etc/v2ray/config.json
 wget -N --no-check-certificate https://raw.githubusercontent.com/zcluo/vps/master/shell/nginx-template.conf -O /etc/nginx/nginx.conf
-#sed -e "s/xxx\.xxxxxx\.xxx/$1/g" /etc/caddy/Caddyfile > /etc/caddy/Caddyfile.new
-#sed -e "s/user/$2/g" /etc/caddy/Caddyfile.new > /etc/caddy/Caddyfile
-#sed -e "s/pass/$3/g" /etc/caddy/Caddyfile > /etc/caddy/Caddyfile.new
-#sed -e "s/xxx\@xxx\.xxx/$4/g" /etc/caddy/Caddyfile.new > /etc/caddy/Caddyfile
+
 
 
 certbot certonly --standalone -d  $1 -m $4 --agree-tos -n
@@ -52,13 +48,11 @@ sed -e "s/xxx\.xxxxxx\.xxx/$1/g" /usr/local/etc/v2ray/config.json > /usr/local/e
 sed -e "s/trojanpass/$3/g" /usr/local/etc/v2ray/config.json.new > /usr/local/etc/v2ray/config.json
 sed -e "s/xxx\@xxx\.xxx/$4/g"   /usr/local/etc/v2ray/config.json > /usr/local/etc/v2ray/config.json.new
 sed -e "s/xxxxxxxx\-xxxx\-xxxx\-xxxx\-xxxxxxxxxxxx/$5/g"   /usr/local/etc/v2ray/config.json.new > /usr/local/etc/v2ray/config.json
-#\mv /etc/caddy/Caddyfile.new  /etc/caddy/Caddyfile
-#\mv /usr/local/etc/xray/config.json.new /usr/local/etc/xray/config.json
+
 chmod -x /etc/systemd/system/v2ray.service
-systemctl enable caddy && systemctl restart caddy 
+
 sleep 20
-cd /var/lib/caddy
-chmod -R 755 .local/
+
 #systemctl enable v2ray && systemctl restart v2ray
 systemctl disable v2ray
 cd ~
@@ -77,11 +71,7 @@ wget --no-check-certificate -O install_bbr_expect.sh https://raw.githubuserconte
 chmod +x install_bbr_expect.sh
 ./install_bbr_expect.sh
 
-#wget --no-check-certificate -O shadowsocks-all.sh https://raw.githubusercontent.com/teddysun/shadowsocks_install/master/shadowsocks-all.sh
-#chmod +x shadowsocks-all.sh
-#wget --no-check-certificate -O install_ss_expect.sh https://raw.githubusercontent.com/zcluo/vps/master/shell/install_ss_expect.sh
-#chmod +x install_ss_expect.sh
-#./install_ss_expect.sh
+
 # caddy伪装网页
 cd ~
 mkdir -p /var/www/html
@@ -110,19 +100,7 @@ chmod +x /etc/rc.local
 systemctl start rc-local
 systemctl start nginx
 
-#增加trojan安装
 
-#apt install build-essential devscripts debhelper cmake libboost-system-dev libboost-program-options-dev libssl-dev default-libmysqlclient-dev python3 curl openssl -y
-#bash -c "$(curl -fsSL https://raw.githubusercontent.com/trojan-gfw/trojan-quickstart/master/trojan-quickstart.sh)"
-
-#wget -N --no-check-certificate https://raw.githubusercontent.com/zcluo/vps/master/shell/trojan.cfg -O /usr/local/etc/trojan/config.json
-#sed -e "s/xxx\.xxxxxx\.xxx/$1/g" /usr/local/etc/trojan/config.json > /usr/local/etc/trojan/config.json.new
-#\mv -f /usr/local/etc/trojan/config.json.new /usr/local/etc/trojan/config.json
-#systemctl enable trojan && systemctl restart trojan
-#cd
-#wget -N --no-check-certificate https://raw.githubusercontent.com/zcluo/vps/master/shell/snell.sh
-#chmod +x snell.sh
-#./snell.sh
 \chmod -R 777  /var/log/
 #reboot
 cd ~
