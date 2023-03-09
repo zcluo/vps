@@ -21,7 +21,9 @@ wget -N --no-check-certificate https://raw.githubusercontent.com/teddysun/across
 #wget -N --no-check-certificate https://raw.githubusercontent.com/zcluo/vps/master/shell/install_ohmyposh.sh
 #mkdir -p /usr/local/caddy/
 \mkdir -p /var/log/xray/
+\mkdir -p /var/log/nginx
 \chmod -R 777  /var/log/xray/
+\chmod -R 777 /var/log/nginx
 # curl -O https://raw.githubusercontent.com/v2fly/fhs-install-v2ray/master/install-release.sh
 # chmod +x install-release.sh
 # bash install-release.sh
