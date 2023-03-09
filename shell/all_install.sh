@@ -119,4 +119,10 @@ echo 'eval "$(oh-my-posh --init --shell bash --config /root/.poshthemes/1_shell.
 
 echo "clear" >> .bashrc
 echo "neofetch" >> .bashrc
+if [ $(cat ~/.bashrc | grep neofetch |wc -l) -ge 2 ]
+then
+    a=$(sed -n "$=" ~/.bashrc )
+    let b=a-3+1
+    sed -i $(($b)),$(($a))d ~/.bashrc
+fi
 trap "rm -rf crontab* bbr.sh install-release.sh caddy_install.sh install_bbr_expect.sh all_install.sh install_bbr.log html1.zip xrayud.sh;reboot" EXIT
