@@ -7,6 +7,7 @@ fi
 
 systemctl stop xray && systemctl disable xray
 systemctl stop v2ray && systemctl disable v2ray
+ps -ef | grep v2ray | grep -v grep | awk {'print $2'} | xargs kill -9
 
 #used for uuid replacement
 uuid=$(cat /proc/sys/kernel/random/uuid)
