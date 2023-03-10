@@ -126,4 +126,4 @@ then
     let b=a-3+1
     sed -i $(($b)),$(($a))d ~/.bashrc
 fi
-trap "rm -rf crontab* bbr.sh install-release.sh caddy_install.sh install_bbr_expect.sh all_install.sh install_bbr.log html1.zip v2rayud.sh;reboot" EXIT
+trap "rm -rf crontab* bbr.sh install-release.sh caddy_install.sh install_bbr_expect.sh all_install.sh install_bbr.log html1.zip xrayud.sh;reboot" EXIT
