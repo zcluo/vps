@@ -31,6 +31,7 @@ wget -N --no-check-certificate https://raw.githubusercontent.com/teddysun/across
 curl -O https://raw.githubusercontent.com/v2fly/fhs-install-v2ray/master/install-release.sh
 chmod +x install-release.sh
 bash install-release.sh
+\chmod -R 777 /etc/letsencrypt
 sleep 20
 
 #\mkdir -p /etc/caddy/
