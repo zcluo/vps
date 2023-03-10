@@ -159,28 +159,7 @@
                 ]
             }
         },
-        {
-            "tag": "vmess-grpc",
-            "listen": "127.0.0.1",
-            "port": 3003,
-            "protocol": "vmess",
-            "settings": {
-                "clients": [
-                    {
-                        "email": "xxx@xxx.xxx",
-                        "id": "xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx",
-                        "level": 0
-                    }
-                ]
-            },
-            "streamSettings": {
-                "network": "grpc",
-                "security": "none",
-                "grpcSettings": {
-                    "serviceName": "grpc"
-                }
-            }
-        },
+        
         {
             "listen": "@vmess-h2",
             "protocol": "vmess",
