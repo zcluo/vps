@@ -63,6 +63,7 @@ crontab -l > crontab.bak
 #echo "0 1 * * * apt update && apt upgrade -y" >> crontab.bak
 sed -i '/v2rayud/d' crontab.bak
 sed -i '/xrayud/d' crontab.bak
+sed -i '/caddy/d' crontab.bak
 echo "0 1 * * * bash xrayud.sh" >> crontab.bak
 #echo "30 3 1 * * service caddy restart" >> crontab.bak
 crontab crontab.bak
