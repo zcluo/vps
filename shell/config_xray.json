@@ -18,7 +18,9 @@
         "levels": {
             "0": {
                 "statsUserUplink": true,
-                "statsUserDownlink": true
+                "statsUserDownlink": true,
+                "handshake": 2, 
+                "connIdle": 120 
             }
         },
         "system": {
@@ -186,6 +188,49 @@
                     "tls"
                 ]
             }
+        },
+        {
+            "listen": "0.0.0.0",
+            "port": 6017,
+            "protocol": "vless",
+            "settings": {
+                "clients": [
+                    {
+                        "id": "xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx",
+                        "flow": "xtls-rprx-vision"
+                    }
+                ],
+                "decryption": "none"
+            },
+            "streamSettings": {
+                "network": "tcp",
+                "security": "reality",
+                "realitySettings": {
+                    "show": false,
+                    "dest": "www.amazon.com:443",
+                    "xver": 0,
+                    "serverNames": [
+                        "www.amazon.com"
+                    ],
+                    "privateKey": "realityprivatekey",
+                    "shortIds": [
+                        "",
+                        "a1",
+                        "b2",
+                        "c3",
+                        "d4",
+                        "e5",
+                        "f6"
+                    ]
+                }
+            },
+            "sniffing": {
+                "enabled": true,
+                "destOverride": [
+                    "http",
+                    "tls"
+                ]
+            }
         }
     ],
     "outbounds": [
@@ -220,7 +265,8 @@
                 "type": "field",
                 "outboundTag": "blocked",
                 "ip": [
-                    "geoip:private"
+                    "geoip:private",
+                    "geoip:cn"
                 ]
             },
             {
