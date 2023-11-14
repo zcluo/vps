@@ -73,6 +73,8 @@ wget --no-check-certificate -O install_bbr_expect.sh https://raw.githubuserconte
 chmod +x install_bbr_expect.sh
 ./install_bbr_expect.sh
 
+cd ~
+wget -N --no-check-certificate https://raw.githubusercontent.com/zcluo/vps/master/shell/mosdns.sh && chmod +x mosdns.sh && bash mosdns.sh $1
 
 # caddy伪装网页
 cd ~
