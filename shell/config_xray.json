@@ -246,7 +246,7 @@
                 "clients": [
                     {
                         "id": "xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx",
-                        "flow": "xtls-rprx-vision"
+                        "flow": ""
                     }
                 ],
                 "decryption": "none"
