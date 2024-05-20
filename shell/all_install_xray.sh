@@ -12,7 +12,9 @@ ps -ef | grep v2ray | grep -v grep | awk {'print $2'} | xargs kill -9
 #used for uuid replacement
 uuid=$(cat /proc/sys/kernel/random/uuid)
 echo "$1" "$2" "$3" "$4" "$5"
-apt install curl screen net-tools iperf3 ca-certificates git lsof apt-transport-https ca-certificates neofetch unzip certbot nginx  -y
+add-apt-repository ppa:zhangsongcui3371/fastfetch
+apt update
+apt install curl screen net-tools iperf3 ca-certificates git lsof apt-transport-https ca-certificates fastfetch unzip certbot nginx  -y
 #wget -N --no-check-certificate https://raw.githubusercontent.com/zcluo/vps/master/shell/caddy_install.sh && chmod +x caddy_install.sh && bash caddy_install.sh install
 #wget -N --no-check-certificate https://raw.githubusercontent.com/zcluo/across/master/bbr.sh
 systemctl stop nginx
