@@ -12,9 +12,11 @@ ps -ef | grep v2ray | grep -v grep | awk {'print $2'} | xargs kill -9
 #used for uuid replacement
 uuid=$(cat /proc/sys/kernel/random/uuid)
 echo "$1" "$2" "$3" "$4" "$5"
-add-apt-repository ppa:zhangsongcui3371/fastfetch
-apt update
-apt install curl screen net-tools iperf3 ca-certificates git lsof apt-transport-https ca-certificates fastfetch unzip certbot nginx  -y
+
+curl -s https://api.github.com/repos/fastfetch-cli/fastfetch/releases/latest | grep "browser_download_url.*fastfetch-linux-amd64.deb\"$" | cut -d '"' -f 4 | xargs curl --connect-timeout 5 -fSL -o /root/fastfetch-linux-amd64.deb
+dpkg -i /root/fastfetch-linux-amd64.deb
+
+apt install curl screen net-tools iperf3 ca-certificates git lsof apt-transport-https ca-certificates unzip certbot nginx  -y
 #wget -N --no-check-certificate https://raw.githubusercontent.com/zcluo/vps/master/shell/caddy_install.sh && chmod +x caddy_install.sh && bash caddy_install.sh install
 #wget -N --no-check-certificate https://raw.githubusercontent.com/zcluo/across/master/bbr.sh
 systemctl stop nginx
@@ -75,10 +77,10 @@ wget --no-check-certificate -O install_bbr_expect.sh https://raw.githubuserconte
 chmod +x install_bbr_expect.sh
 ./install_bbr_expect.sh
 
-cd ~
-wget --no-check-certificate -O mosdns.sh https://raw.githubusercontent.com/zcluo/vps/master/shell/mosdns.sh
-chmod +x mosdns.sh
-bash mosdns.sh $1
+#cd ~
+#wget --no-check-certificate -O mosdns.sh https://raw.githubusercontent.com/zcluo/vps/master/shell/mosdns.sh
+#chmod +x mosdns.sh
+#bash mosdns.sh $1
 
 # caddy伪装网页
 cd ~
@@ -131,4 +133,4 @@ then
     let b=a-3+1
     sed -i $(($b)),$(($a))d ~/.bashrc
 fi
-trap "rm -rf mosdns.sh crontab* bbr.sh install-release.sh caddy_install.sh install_bbr_expect.sh all_install.sh all_install_xray.sh install_bbr.log html1.zip v2rayud.sh;reboot" EXIT
+trap "rm -rf fastfetch-linux-amd64.deb crontab* bbr.sh install-release.sh caddy_install.sh install_bbr_expect.sh all_install.sh all_install_xray.sh install_bbr.log html1.zip v2rayud.sh;reboot" EXIT
