@@ -114,12 +114,12 @@ cd ~
 wget https://github.com/JanDeDobbeleer/oh-my-posh/releases/latest/download/posh-linux-amd64 -O /usr/local/bin/oh-my-posh
 chmod +x /usr/local/bin/oh-my-posh
 
-mkdir ~/.poshthemes
-wget https://github.com/JanDeDobbeleer/oh-my-posh/releases/latest/download/themes.zip -O ~/.poshthemes/themes.zip
-unzip -o ~/.poshthemes/themes.zip -d  ~/.poshthemes
-chmod u+rw ~/.poshthemes/*.omp.*
-rm ~/.poshthemes/themes.zip
-echo 'eval "$(oh-my-posh --init --shell bash --config /root/.poshthemes/1_shell.omp.json)"' >> .bashrc
+mkdir ~/themes
+wget https://github.com/JanDeDobbeleer/oh-my-posh/releases/latest/download/themes.zip -O ~/themes/themes.zip
+unzip -o ~/themes/themes.zip -d  ~/themes
+chmod u+rw ~/themes/*.omp.*
+rm ~/themes/themes.zip
+echo 'eval "$(oh-my-posh --init --shell bash --config /root/themes/1_shell.omp.json)"' >> .bashrc
 
 echo "clear" >> .bashrc
 echo "neofetch" >> .bashrc
