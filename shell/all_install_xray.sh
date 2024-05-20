@@ -124,8 +124,8 @@ rm ~/themes/themes.zip
 echo 'eval "$(oh-my-posh --init --shell bash --config /root/themes/1_shell.omp.json)"' >> .bashrc
 
 echo "clear" >> .bashrc
-echo "neofetch" >> .bashrc
-if [ $(cat ~/.bashrc | grep neofetch |wc -l) -ge 2 ]
+echo "fastfetch" >> .bashrc
+if [ $(cat ~/.bashrc | grep fastfetch |wc -l) -ge 2 ]
 then
     a=$(sed -n "$=" ~/.bashrc )
     let b=a-3+1
