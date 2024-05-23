@@ -83,7 +83,7 @@ chmod +x install_bbr_expect.sh
 #bash mosdns.sh $1
 
 cd ~
-wget --no-check-certificate -O mosdns.sh https://raw.githubusercontent.com/zcluo/vps/master/shell/smartdns.sh
+wget --no-check-certificate -O smartdns.sh https://raw.githubusercontent.com/zcluo/vps/master/shell/smartdns.sh
 chmod +x smartdns.sh
 bash smartdns.sh $1
 
