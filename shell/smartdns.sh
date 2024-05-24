@@ -15,6 +15,7 @@ chmod +x ./install
 ./install -i
 
 mkdir -p /etc/smartdns
+mkdir -p /root/smartdnscache
 wget -N --no-check-certificate https://raw.githubusercontent.com/zcluo/vps/master/shell/smartdns.conf -O /etc/smartdns/smartdns.conf
 sed -i "s/xxx\.xxxxxx\.xxx/$1/g" /etc/smartdns/smartdns.conf
 
