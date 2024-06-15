@@ -191,7 +191,7 @@
         },
         {
             "listen": "0.0.0.0",
-            "port": 6017,
+            "port": $port_tcp$,
             "protocol": "vless",
             "settings": {
                 "clients": [
@@ -226,7 +226,7 @@
                         "d4",
                         "e5",
                         "f6",
-                        "5d2e3ed92cf8a73b"
+                        "g7"
                     ]
                 }
             },
@@ -240,7 +240,7 @@
         },
         {
             "listen": "0.0.0.0",
-            "port": 8017,
+            "port": $port_grpc$,
             "protocol": "vless",
             "settings": {
                 "clients": [
@@ -275,7 +275,7 @@
                         "d4",
                         "e5",
                         "f6",
-                        "5d2e3ed92cf8a73b"
+                        "g7"
                     ]
                 },
                 "grpcSettings": {
