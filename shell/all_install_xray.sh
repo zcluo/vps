@@ -53,8 +53,8 @@ sed -i "s/trojanpass/$3/g" /usr/local/etc/xray/config.json
 sed -i "s/xxx\@xxx\.xxx/$4/g"   /usr/local/etc/xray/config.json
 sed -i "s/xxxxxxxx\-xxxx\-xxxx\-xxxx\-xxxxxxxxxxxx/$5/g"   /usr/local/etc/xray/config.json
 sed -i "s/realityprivatekey/$6/g"   /usr/local/etc/xray/config.json
-sed -i "s/\$port_grpc\$/$7/g"   /usr/local/etc/xray/config.json
-sed -i "s/\$port_tcp\$/$8/g"   /usr/local/etc/xray/config.json
+sed -i "s/port_grpc/$7/g"   /usr/local/etc/xray/config.json
+sed -i "s/port_tcp/$8/g"   /usr/local/etc/xray/config.json
 
 #chmod -x /etc/systemd/system/xray.service
 \chmod -R 777 /etc/letsencrypt
