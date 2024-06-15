@@ -1,7 +1,7 @@
 #!/bin/bash
-if [ $# != 6 ] ; then
-echo "USAGE: $0 domain_name username password emailaddress uuid realityprivkey"
-echo " e.g.: $0 domain_name username password emailaddress uuid realityprivkey"
+if [ $# != 8 ] ; then
+echo "USAGE: $0 domain_name username password emailaddress uuid realityprivkey grpc_port tcp_port"
+echo " e.g.: $0 domain_name username password emailaddress uuid realityprivkey  grpc_port tcp_port"
 exit 1;
 fi
 
@@ -10,8 +10,8 @@ systemctl stop v2ray && systemctl disable v2ray
 ps -ef | grep v2ray | grep -v grep | awk {'print $2'} | xargs kill -9
 
 #used for uuid replacement
-uuid=$(cat /proc/sys/kernel/random/uuid)
-echo "$1" "$2" "$3" "$4" "$5"
+#uuid=$(cat /proc/sys/kernel/random/uuid)
+echo "$1" "$2" "$3" "$4" "$5" "$6" "$7" "$8"
 
 curl -s https://api.github.com/repos/fastfetch-cli/fastfetch/releases/latest | grep "browser_download_url.*fastfetch-linux-amd64.deb\"$" | cut -d '"' -f 4 | xargs curl --connect-timeout 5 -fSL -o /root/fastfetch-linux-amd64.deb
 dpkg -i /root/fastfetch-linux-amd64.deb
@@ -53,6 +53,8 @@ sed -i "s/trojanpass/$3/g" /usr/local/etc/xray/config.json
 sed -i "s/xxx\@xxx\.xxx/$4/g"   /usr/local/etc/xray/config.json
 sed -i "s/xxxxxxxx\-xxxx\-xxxx\-xxxx\-xxxxxxxxxxxx/$5/g"   /usr/local/etc/xray/config.json
 sed -i "s/realityprivatekey/$6/g"   /usr/local/etc/xray/config.json
+sed -i "s/\$port_grpc\$/$7/g"   /usr/local/etc/xray/config.json
+sed -i "s/\$port_tcp\$/$8/g"   /usr/local/etc/xray/config.json
 
 #chmod -x /etc/systemd/system/xray.service
 \chmod -R 777 /etc/letsencrypt
