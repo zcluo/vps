@@ -19,8 +19,8 @@
             "0": {
                 "statsUserUplink": true,
                 "statsUserDownlink": true,
-                "handshake": 2, 
-                "connIdle": 120 
+                "handshake": 2,
+                "connIdle": 120
             }
         },
         "system": {
@@ -40,158 +40,6 @@
             },
             "tag": "api",
             "sniffing": null
-        },
-        {
-            "tag": "Vless-TCP-XTLS",
-            "port": 5017,
-            "protocol": "vless",
-            "settings": {
-                "clients": [
-                    {
-                        "email": "xxx@xxx.xxx",
-                        "id": "xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx",
-                        "flow": "xtls-rprx-vision",
-                        "level": 0
-                    }
-                ],
-                "decryption": "none",
-                "fallbacks": [
-                    {
-                        "name": "xxx.xxxxxx.xxx",
-                        "alpn": "h2",
-                        "dest": "@vmess-h2"
-                    },
-                    {
-                        "path": "/vlws",
-                        "dest": "@vless-ws",
-                        "xver": 2
-                    },
-                    {
-                        "path": "/home",
-                        "dest": "@vmess-ws",
-                        "xver": 2
-                    },
-                    {
-                        "dest": "/dev/shm/h1.sock",
-                        "xver": 2
-                    }
-                ]
-            },
-            "streamSettings": {
-                "network": "tcp",
-                "security": "tls",
-                "tlsSettings": {
-                    "certificates": [
-                        {
-                            "ocspStapling": 3600,
-                            "certificateFile": "/etc/letsencrypt/live/xxx.xxxxxx.xxx/fullchain.pem",
-                            "keyFile": "/etc/letsencrypt/live/xxx.xxxxxx.xxx/privkey.pem"
-                        }
-                    ],
-                    "minVersion": "1.2",
-                    "cipherSuites": "TLS_ECDHE_ECDSA_WITH_CHACHA20_POLY1305_SHA256:TLS_ECDHE_RSA_WITH_CHACHA20_POLY1305_SHA256:TLS_ECDHE_ECDSA_WITH_AES_256_GCM_SHA384:TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384:TLS_ECDHE_ECDSA_WITH_AES_128_GCM_SHA256:TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256",
-                    "alpn": [
-                        "h2",
-                        "http/1.1"
-                    ]
-                }
-            },
-            "sniffing": {
-                "enabled": true,
-                "destOverride": [
-                    "http",
-                    "tls",
-                    "quic"
-                ]
-            }
-        },
-        {
-            "listen": "@vless-ws",
-            "protocol": "vless",
-            "settings": {
-                "clients": [
-                    {
-                        "email": "xxx@xxx.xxx",
-                        "id": "xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx",
-                        "level": 0
-                    }
-                ],
-                "decryption": "none"
-            },
-            "streamSettings": {
-                "network": "ws",
-                "security": "none",
-                "wsSettings": {
-                    "acceptProxyProtocol": true,
-                    "path": "/vlws"
-                }
-            },
-            "sniffing": {
-                "enabled": true,
-                "destOverride": [
-                    "http",
-                    "tls",
-                    "quic"
-                ]
-            }
-        },
-        {
-            "listen": "@vmess-ws",
-            "protocol": "vmess",
-            "settings": {
-                "clients": [
-                    {
-                        "email": "xxx@xxx.xxx",
-                        "id": "xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx",
-                        "level": 0
-                    }
-                ]
-            },
-            "streamSettings": {
-                "network": "ws",
-                "security": "none",
-                "wsSettings": {
-                    "acceptProxyProtocol": true,
-                    "path": "/home"
-                }
-            },
-            "sniffing": {
-                "enabled": true,
-                "destOverride": [
-                    "http",
-                    "tls",
-                    "quic"
-                ]
-            }
-        },
-        
-        {
-            "listen": "@vmess-h2",
-            "protocol": "vmess",
-            "settings": {
-                "clients": [
-                    {
-                        "email": "xxx@xxx.xxx",
-                        "id": "xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx",
-                        "level": 0
-                    }
-                ]
-            },
-            "streamSettings": {
-                "network": "h2",
-                "security": "none",
-                "httpSettings": {
-                    "path": "/vmh2"
-                }
-            },
-            "sniffing": {
-                "enabled": true,
-                "destOverride": [
-                    "http",
-                    "tls",
-                    "quic"
-                ]
-            }
         },
         {
             "listen": "0.0.0.0",
@@ -219,7 +67,6 @@
                         "amzn.com",
                         "us.amazon.com",
                         "www.m.amazon.com"
-                        
                     ],
                     "privateKey": "realityprivatekey",
                     "shortIds": [
@@ -268,7 +115,6 @@
                         "amzn.com",
                         "us.amazon.com",
                         "www.m.amazon.com"
-                        
                     ],
                     "privateKey": "realityprivatekey",
                     "shortIds": [
@@ -287,7 +133,11 @@
             },
             "sniffing": {
                 "enabled": true,
-                "destOverride": ["http", "tls", "quic"]
+                "destOverride": [
+                    "http",
+                    "tls",
+                    "quic"
+                ]
             }
         }
     ],
