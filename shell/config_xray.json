@@ -139,6 +139,71 @@
                     "quic"
                 ]
             }
+        },
+        {
+            "listen": "@xhttp",
+            "protocol": "vless",
+            "settings": {
+                "decryption": "none",
+                "clients": [
+                    {
+                        "id": "xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx"
+                    }
+                ]
+            },
+            "streamSettings": {
+                "network": "xhttp",
+                "xhttpSettings": {
+                    "path": "/xhttp"
+                }
+            },
+            "sniffing": {
+                "enabled": true,
+                "destOverride": [
+                    "http",
+                    "tls",
+                    "quic"
+                ]
+            }
+        },
+        {
+            "listen": "0.0.0.0",
+            "port": 9443,
+            "protocol": "vless",
+            "settings": {
+                "decryption": "none",
+                "fallbacks": [
+                    {
+                        "dest": "@xhttp"
+                    }
+                ]
+            },
+            "streamSettings": {
+                "network": "tcp",
+                "security": "reality",
+                "realitySettings": {
+                    "target": "www.amazon.com:443",
+                    "xver": 1, 
+                    "serverNames": [
+                        "www.amazon.com",
+                        "amazon.com",
+                        "amzn.com",
+                        "us.amazon.com",
+                        "www.m.amazon.com"
+
+                    ],
+                    "privateKey": "realityprivatekey",
+                    "shortIds": [
+                        "",
+                        "a1",
+                        "b2",
+                        "c3",
+                        "d4",
+                        "e5",
+                        "f6"
+                    ]
+                }
+            }
         }
     ],
     "outbounds": [
