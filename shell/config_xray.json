@@ -179,11 +179,10 @@
                 ]
             },
             "streamSettings": {
-                "network": "tcp",
+                "network": "raw",
                 "security": "reality",
                 "realitySettings": {
                     "target": "www.amazon.com:443",
-                    "xver": 1, 
                     "serverNames": [
                         "www.amazon.com",
                         "amazon.com",
