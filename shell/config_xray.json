@@ -168,7 +168,7 @@
         },
         {
             "listen": "0.0.0.0",
-            "port": 9443,
+            "port": port_xhttp,
             "protocol": "vless",
             "settings": {
                 "decryption": "none",
