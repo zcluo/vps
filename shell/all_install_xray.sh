@@ -1,7 +1,7 @@
 #!/bin/bash
 if [ $# != 8 ] ; then
-echo "USAGE: $0 domain_name username password emailaddress uuid realityprivkey grpc_port tcp_port"
-echo " e.g.: $0 domain_name username password emailaddress uuid realityprivkey  grpc_port tcp_port"
+echo "USAGE: $0 domain_name username password emailaddress uuid realityprivkey grpc_port tcp_port xhttp_port"
+echo " e.g.: $0 domain_name username password emailaddress uuid realityprivkey  grpc_port tcp_port xhttp_port"
 exit 1;
 fi
 
@@ -55,6 +55,8 @@ sed -i "s/xxxxxxxx\-xxxx\-xxxx\-xxxx\-xxxxxxxxxxxx/$5/g"   /usr/local/etc/xray/c
 sed -i "s/realityprivatekey/$6/g"   /usr/local/etc/xray/config.json
 sed -i "s/port_grpc/$7/g"   /usr/local/etc/xray/config.json
 sed -i "s/port_tcp/$8/g"   /usr/local/etc/xray/config.json
+sed -i "s/port_xhttp/$9/g"   /usr/local/etc/xray/config.json
+
 
 #chmod -x /etc/systemd/system/xray.service
 \chmod -R 777 /etc/letsencrypt
