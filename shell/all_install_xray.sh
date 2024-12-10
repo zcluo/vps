@@ -1,5 +1,5 @@
 #!/bin/bash
-if [ $# != 8 ] ; then
+if [ $# != 9 ] ; then
 echo "USAGE: $0 domain_name username password emailaddress uuid realityprivkey grpc_port tcp_port xhttp_port"
 echo " e.g.: $0 domain_name username password emailaddress uuid realityprivkey  grpc_port tcp_port xhttp_port"
 exit 1;
