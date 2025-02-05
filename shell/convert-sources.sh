@@ -5,7 +5,7 @@ set -euo pipefail
 DEFAULT_SIGNED_BY=""
 INPUT_FILE=""
 OUTPUT_FILE=""
-# 使用示例： ./convert-deb822.sh --default-signed-by /path/to/default.key 输入文件 输出文件
+# 使用示例： ./convert-sources.sh --default-signed-by /path/to/default.key 输入文件 输出文件
 # 解析命令行参数
 while [[ $# -gt 0 ]]; do
     case "$1" in
