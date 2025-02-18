@@ -151,7 +151,7 @@ cd ~ || exit
 wget https://github.com/JanDeDobbeleer/oh-my-posh/releases/latest/download/posh-linux-amd64 -O /usr/local/bin/oh-my-posh
 chmod +x /usr/local/bin/oh-my-posh
 
-mkdir ~/themes
+mkdir -p ~/themes
 wget https://github.com/JanDeDobbeleer/oh-my-posh/releases/latest/download/themes.zip -O ~/themes/themes.zip
 unzip -o ~/themes/themes.zip -d  ~/themes
 chmod u+rw ~/themes/*.omp.*
