@@ -356,6 +356,15 @@ apply_cert() {
     chmod -R 777 /etc/letsencrypt
 }
 
+fake_website() {
+  cd ~ || exit
+  mkdir -p /var/www/html
+  wget  -N --no-check-certificate  https://raw.githubusercontent.com/zcluo/vps/master/shell/html1.zip
+  unzip -o html1.zip -d /var/www/html
+
+  dd if=/dev/urandom of=/var/www/html/test bs=100M count=1 iflag=fullblock
+}
+
 usage() {
   echo "USAGE: $0 domain_name username password emailaddress uuid realityprivkey grpc_port tcp_port xhttp_port"
   echo " e.g.: $0 abbc.com user_a password aa@abbc.com $(uuidgen) realityprivkey 8001 9001 7001"
@@ -383,6 +392,9 @@ main() {
   
   log "证书申请..."
   apply_cert "$@"
+
+  log "假网站..."
+  fake_website
   
   log "重启服务..."
   restart_service
