@@ -59,6 +59,7 @@ detect_pkg_mgr() {
     [dnf]="/etc/fedora-release"
     [dnf]="/etc/almalinux-release"
     [dnf]="/etc/rocky-release"
+    [dnf]="/etc/centos-release"
     [zypper]="/etc/SuSE-release"
     [pacman]="/etc/arch-release"
   )
