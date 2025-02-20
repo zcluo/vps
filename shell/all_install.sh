@@ -76,6 +76,9 @@ detect_pkg_mgr() {
       if [[ $ID == "ubuntu" ]]; then
           PKG_MGR="apt"
       fi
+      if [[ $ID == *"suse"* ]]; then
+          PKG_MGR="zypper"
+      fi
   fi
 
   [[ -n "$PKG_MGR" ]] || die "无法检测包管理器"
@@ -100,15 +103,9 @@ install_deps() {
       /opt/certbot/bin/pip install certbot certbot-nginx
       ln -sf /opt/certbot/bin/certbot /usr/bin/certbot
       ;;
-    apk)
-      apk add --no-cache wget vim bash curl tar gzip jq openssl nginx unzip python3 augeas-libs
-      python3 -m venv /opt/certbot/
-      /opt/certbot/bin/pip install --upgrade pip
-      /opt/certbot/bin/pip install certbot certbot-nginx
-      ln -sf /opt/certbot/bin/certbot /usr/bin/certbot
-      ;;
     zypper)
-      zypper in -y wget vim curl tar gzip jq openssl ca-certificates nginx unzip python3 augeas-libs
+      zypper refresh && zypper update -y
+      zypper in -y wget vim curl tar gzip jq openssl ca-certificates nginx unzip python3 augeas
       python3 -m venv /opt/certbot/
       /opt/certbot/bin/pip install --upgrade pip
       /opt/certbot/bin/pip install certbot certbot-nginx
@@ -154,24 +151,7 @@ install_fastfetch() {
 # 安装Xray核心
 install_xray() {
   log "获取Xray最新版本..."
-  local TAG_URL="https://api.github.com/repos/XTLS/Xray-core/releases/latest"
-  local VERSION=$(curl -sSL "$TAG_URL" | jq -r '.tag_name') || die "获取版本失败"
   
-  local URL="https://github.com/XTLS/Xray-core/releases/download/${VERSION}/Xray-linux-${ARCH_XRAY}.zip"
-  
-  log "下载Xray: $URL"
-  curl -fSL "$URL" -o "$TMP_DIR/Xray.zip" || die "下载失败"
-  # curl -fSL "${URL}.dgst" -o "$TMP_DIR/Xray.zip.dgst" || die "下载签名失败"
-  
-  # GPG验证
-  # curl -sSL https://raw.githubusercontent.com/XTLS/Xray-core/main/Release/PublicKey/ReleaseKey.pem | gpg --import
-  # gpg --verify "$TMP_DIR/Xray.zip.dgst" "$TMP_DIR/Xray.zip" || die "签名验证失败"
-  
-  # 安装文件
-  unzip -q "$TMP_DIR/Xray.zip" -d "$TMP_DIR/xray"
-  install -m 755 "$TMP_DIR/xray/xray" /usr/local/bin/
-  install -d /usr/local/etc/xray/
-  # install -m 644 "$TMP_DIR/xray/*.json" /usr/local/etc/xray/
   
   # 服务配置
   detect_init_system() {
@@ -190,20 +170,7 @@ install_xray() {
 
   case $INIT_SYSTEM in
     systemd)
-      cat > /etc/systemd/system/xray.service <<EOF
-[Unit]
-Description=Xray Service
-After=network.target
-
-[Service]
-ExecStart=/usr/local/bin/xray run -config /usr/local/etc/xray/config.json
-Restart=on-failure
-RestartSec=3
-LimitNOFILE=4096
-
-[Install]
-WantedBy=multi-user.target
-EOF
+      bash -c "$(curl -L https://github.com/XTLS/Xray-install/raw/main/install-release.sh)" @ install  --beta
       systemctl daemon-reload
       systemctl enable --now xray
       ;;
@@ -211,58 +178,18 @@ EOF
     
 
     sysvinit)
-      cat > /etc/init.d/xray <<EOF
-#!/bin/sh
-### BEGIN INIT INFO
-# Provides:          xray
-# Required-Start:    \$network \$local_fs \$remote_fs
-# Required-Stop:     \$network \$local_fs \$remote_fs
-# Default-Start:     2 3 4 5
-# Default-Stop:      0 1 6
-# Short-Description: Xray proxy service
-### END INIT INFO
-
-DAEMON=/usr/local/bin/xray
-CONFIG=/usr/local/etc/xray/config.json
-PIDFILE=/var/run/xray.pid
-
-case "\$1" in
-  start)
-    echo -n "Starting Xray: "
-    start-stop-daemon --start --quiet --background --make-pidfile \\
-      --pidfile \$PIDFILE --exec \$DAEMON -- run -config \$CONFIG
-    echo "OK"
-    ;;
-  stop)
-    echo -n "Stopping Xray: "
-    start-stop-daemon --stop --quiet --pidfile \$PIDFILE --exec \$DAEMON
-    echo "OK"
-    ;;
-  restart)
-    \$0 stop
-    sleep 1
-    \$0 start
-    ;;
-  *)
-    echo "Usage: \$0 {start|stop|restart}"
-    exit 1
-esac
-
-exit 0
-EOF
+      bash -c "$(curl -L https://github.com/XTLS/Xray-install/raw/main/install-release.sh)" @ install  --beta
       chmod +x /etc/init.d/xray
       update-rc.d xray defaults
       service xray start
       ;;
+    *)
+      die "该脚本仅支持systemd的系统安装"
+      ;;
   esac
-  log "Xray 安装geodata"
-  case $INIT_SYSTEM in
-    systemd) bash -c "$(curl -L https://github.com/XTLS/Xray-install/raw/main/install-release.sh)" @ install-geodata ;;
 
-    sysvinit) bash -c "$(curl -L https://github.com/XTLS/Xray-install/raw/main/install-release.sh)" @ install-geodata ;;
-  esac
   
-  log "Xray ${VERSION} 安装成功"
+  log "Xray 安装成功"
 }
 
 # 配置生成
