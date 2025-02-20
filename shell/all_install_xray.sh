@@ -93,7 +93,16 @@ systemctl enable xray && systemctl restart xray
 cd ~ || exit
 wget -N --no-check-certificate https://raw.githubusercontent.com/zcluo/vps/master/shell/xrayud.sh
 chmod +x xrayud.sh
-crontab -l > crontab.bak
+
+crontab_file="/var/spool/cron/crontabs/$(whoami)"
+
+if [[ -f "$crontab_file" ]]; then
+    cp "$crontab_file" crontab.bak
+    
+else
+    echo "" > crontab.bak
+fi
+
 
 #echo "0 1 * * * apt update && apt upgrade -y" >> crontab.bak
 sed -i '/v2rayud/d' crontab.bak
@@ -102,20 +111,14 @@ sed -i '/caddy/d' crontab.bak
 echo "0 1 * * * bash xrayud.sh" >> crontab.bak
 #echo "30 3 1 * * service caddy restart" >> crontab.bak
 crontab crontab.bak
-apt install -y expect
-wget --no-check-certificate -O install_bbr_expect.sh https://raw.githubusercontent.com/zcluo/vps/master/shell/install_bbr_expect.sh
-chmod +x install_bbr_expect.sh
-./install_bbr_expect.sh
+
 
 #cd ~
 #wget --no-check-certificate -O mosdns.sh https://raw.githubusercontent.com/zcluo/vps/master/shell/mosdns.sh
 #chmod +x mosdns.sh
 #bash mosdns.sh $1
 
-cd ~ || exit
-wget --no-check-certificate -O smartdns.sh https://raw.githubusercontent.com/zcluo/vps/master/shell/smartdns.sh
-chmod +x smartdns.sh
-bash smartdns.sh $1
+
 
 # caddy伪装网页
 cd ~ || exit
@@ -177,4 +180,3 @@ if [ "$fastfetch_count" -ge 2 ]; then
     # 删除多余的行
     sed -i "${start_line},${end_line}d" ~/.bashrc
 fi
-
