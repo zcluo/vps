@@ -17,7 +17,7 @@ cleanup() {
         echo "[DEBUG] 捕获退出信号，状态码: $exit_status"
         echo "Start Installed at $startTime failed!" >> ~/install.log
         rm -rf "$TMP_DIR"
-        rm -rf smartdns.tar.gz smartdns.sh smartdns fastfetch-linux-amd64.deb crontab* bbr.sh install-release.sh caddy_install.sh install_bbr_expect.sh all_install.sh all_install_xray.sh install_bbr.log html1.zip v2rayud.sh
+        rm -rf smartdns.tar.gz smartdns.sh smartdns fastfetch-linux-amd64.deb crontab* bbr.sh install-release.sh caddy_install.sh install_bbr_expect.sh all_install_xray.sh install_bbr.log html1.zip v2rayud.sh
         
 
     fi
@@ -54,12 +54,11 @@ detect_arch() {
 detect_pkg_mgr() {
   declare -A managers=(
     [apt]="/etc/debian_version"
-    [apt]="/etc/os-release"
+    # [apt]="/etc/lsb-release"
     [yum]="/etc/redhat-release"
     [dnf]="/etc/fedora-release"
     [dnf]="/etc/almalinux-release"
     [dnf]="/etc/rocky-release"
-    [apk]="/etc/alpine-release"
     [zypper]="/etc/SuSE-release"
     [pacman]="/etc/arch-release"
   )
@@ -71,6 +70,14 @@ detect_pkg_mgr() {
     fi
   done
 
+  # 额外判断是否为 Ubuntu
+  if [[ -f /etc/os-release ]]; then
+      source /etc/os-release
+      if [[ $ID == "ubuntu" ]]; then
+          PKG_MGR="apt"
+      fi
+  fi
+
   [[ -n "$PKG_MGR" ]] || die "无法检测包管理器"
   log "检测到包管理器: $PKG_MGR"
 }
@@ -80,19 +87,40 @@ install_deps() {
   log "安装系统依赖..."
   case $PKG_MGR in
     apt)
-      apt update && apt install -y curl tar gzip jq openssl gnupg2 ca-certificates nginx certbot uuid-runtime
+      apt update && apt install -y wget vim curl tar gzip jq openssl gnupg2 ca-certificates nginx uuid-runtime python3 python3-venv libaugeas-dev unzip
+      python3 -m venv /opt/certbot/
+      /opt/certbot/bin/pip install --upgrade pip
+      /opt/certbot/bin/pip install certbot certbot-nginx
+      ln -sf /opt/certbot/bin/certbot /usr/bin/certbot
       ;;
     yum|dnf)
-      $PKG_MGR install -y curl tar gzip jq openssl ca-certificates nginx certbot
+      $PKG_MGR install -y wget vim curl tar gzip jq openssl ca-certificates nginx unzip python3 augeas-libs
+      python3 -m venv /opt/certbot/
+      /opt/certbot/bin/pip install --upgrade pip
+      /opt/certbot/bin/pip install certbot certbot-nginx
+      ln -sf /opt/certbot/bin/certbot /usr/bin/certbot
       ;;
     apk)
-      apk add --no-cache curl tar gzip jq openssl nginx certbot
+      apk add --no-cache wget vim bash curl tar gzip jq openssl nginx unzip python3 augeas-libs
+      python3 -m venv /opt/certbot/
+      /opt/certbot/bin/pip install --upgrade pip
+      /opt/certbot/bin/pip install certbot certbot-nginx
+      ln -sf /opt/certbot/bin/certbot /usr/bin/certbot
       ;;
     zypper)
-      zypper in -y curl tar gzip jq openssl ca-certificates nginx certbot
+      zypper in -y wget vim curl tar gzip jq openssl ca-certificates nginx unzip python3 augeas-libs
+      python3 -m venv /opt/certbot/
+      /opt/certbot/bin/pip install --upgrade pip
+      /opt/certbot/bin/pip install certbot certbot-nginx
+      ln -sf /opt/certbot/bin/certbot /usr/bin/certbot
       ;;
     pacman)
-      pacman -Sy --noconfirm curl tar gzip jq openssl nginx certbot
+      pacman -Sy
+      pacman -S --noconfirm wget vim curl tar gzip jq openssl nginx unzip python3 augeas
+      python3 -m venv /opt/certbot/
+      /opt/certbot/bin/pip install --upgrade pip
+      /opt/certbot/bin/pip install certbot certbot-nginx
+      ln -sf /opt/certbot/bin/certbot /usr/bin/certbot
       ;;
   esac || die "依赖安装失败"
 }
@@ -149,8 +177,7 @@ install_xray() {
   detect_init_system() {
     if [[ -d /run/systemd/system ]]; then
       INIT_SYSTEM="systemd"
-    elif [[ -x /sbin/openrc-run ]]; then
-      INIT_SYSTEM="openrc"
+
     elif [[ -f /etc/init.d/cron && -x /usr/sbin/update-rc.d ]]; then
       INIT_SYSTEM="sysvinit"
     else
@@ -181,42 +208,7 @@ EOF
       systemctl enable --now xray
       ;;
 
-    openrc)
-      cat > /etc/init.d/xray <<EOF
-#!/sbin/openrc-run
-name="Xray proxy service"
-description="Xray Service"
-
-command="/usr/local/bin/xray"
-command_args="run -config /usr/local/etc/xray/config.json"
-command_background=true
-pidfile="/run/xray.pid"
-start_stop_daemon_args="--background --make-pidfile"
-
-depend() {
-  after net
-}
-
-start() {
-  ebegin "Starting \$name"
-  start-stop-daemon --start \\
-    --exec \$command \\
-    -- \$command_args
-  eend \$?
-}
-
-stop() {
-  ebegin "Stopping \$name"
-  start-stop-daemon --stop \\
-    --exec \$command \\
-    --retry 5
-  eend \$?
-}
-EOF
-      chmod +x /etc/init.d/xray
-      rc-update add xray default
-      service xray start
-      ;;
+    
 
     sysvinit)
       cat > /etc/init.d/xray <<EOF
@@ -263,6 +255,12 @@ EOF
       service xray start
       ;;
   esac
+  log "Xray 安装geodata"
+  case $INIT_SYSTEM in
+    systemd) bash -c "$(curl -L https://github.com/XTLS/Xray-install/raw/main/install-release.sh)" @ install-geodata ;;
+
+    sysvinit) bash -c "$(curl -L https://github.com/XTLS/Xray-install/raw/main/install-release.sh)" @ install-geodata ;;
+  esac
   
   log "Xray ${VERSION} 安装成功"
 }
@@ -280,6 +278,22 @@ generate_config() {
  
 
   log "文件替换..."
+  log "NGINX文件替换..."
+  # 获取 Nginx 版本号
+  nginx_version=$(nginx -v 2>&1 | grep -oP 'nginx/\K[0-9]+\.[0-9]+\.[0-9]+')
+
+  # 定义目标版本
+  target_version="1.25.0"
+
+  # 比较版本
+  if [[ "$(printf '%s\n' "$nginx_version" "$target_version" | sort -V | tail -n 1)" == "$nginx_version" ]]; then
+      log "Nginx 版本 ($nginx_version) 高于或等于 $target_version"
+      sed -i "s/xxx\.xxxxxx\.xxx/$1/g" /etc/nginx/nginx.conf
+  else
+      log "Nginx 版本 ($nginx_version) 低于 $target_version"
+      sed -i "s/xxx\.xxxxxx\.xxx/$1/g" /etc/nginx/nginx.conf
+      sed -i '/http2  on;/ s/^/#/' /etc/nginx/nginx.conf
+  fi
   sed -i "s/xxx\.xxxxxx\.xxx/$1/g" /etc/nginx/nginx.conf
   sed -i "s/xxx\.xxxxxx\.xxx/$1/g" /usr/local/etc/xray/config.json
   sed -i "s/trojanpass/$3/g" /usr/local/etc/xray/config.json
@@ -343,17 +357,34 @@ init_bashrc() {
   fi
 }
 
+enable_service() {
+  case $INIT_SYSTEM in
+    systemd) systemctl enable xray && systemctl enable nginx ;;
+    
+    sysvinit) chkconfig xray on && chkconfig nginx on ;;
+  esac
+}
+
 restart_service() {
   case $INIT_SYSTEM in
     systemd) systemctl restart xray && systemctl restart nginx ;;
-    openrc) rc-service xray restart && rc-service nginx restart ;;
+    
     sysvinit) service xray restart && service nginx restart ;;
   esac
 }
 
+stop_service() {
+  case $INIT_SYSTEM in
+    systemd) systemctl stop xray && systemctl stop nginx ;;
+    
+    sysvinit) service xray stop && service nginx stop ;;
+  esac
+}
+
 apply_cert() {
-    certbot certonly --standalone -d "$1" -m "$4" --agree-tos -n
-    chmod -R 777 /etc/letsencrypt
+  stop_service
+  certbot certonly --standalone -d "$1" -m "$4" --agree-tos -n
+  chmod -R 777 /etc/letsencrypt
 }
 
 fake_website() {
@@ -396,6 +427,9 @@ main() {
   log "假网站..."
   fake_website
   
+  log "开启服务..."
+  enable_service
+
   log "重启服务..."
   restart_service
 
