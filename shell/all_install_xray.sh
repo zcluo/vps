@@ -37,10 +37,12 @@ fi
 #uuid=$(cat /proc/sys/kernel/random/uuid)
 echo "$1" "$2" "$3" "$4" "$5" "$6" "$7" "$8"
 
+apt install wget curl screen net-tools iperf3 ca-certificates git lsof apt-transport-https ca-certificates unzip certbot nginx  -y
+
 curl -s https://api.github.com/repos/fastfetch-cli/fastfetch/releases/latest | grep "browser_download_url.*fastfetch-linux-amd64.deb\"$" | cut -d '"' -f 4 | xargs curl --connect-timeout 5 -fSL -o /root/fastfetch-linux-amd64.deb
 dpkg -i /root/fastfetch-linux-amd64.deb
 
-apt install curl screen net-tools iperf3 ca-certificates git lsof apt-transport-https ca-certificates unzip certbot nginx  -y
+
 #wget -N --no-check-certificate https://raw.githubusercontent.com/zcluo/vps/master/shell/caddy_install.sh && chmod +x caddy_install.sh && bash caddy_install.sh install
 #wget -N --no-check-certificate https://raw.githubusercontent.com/zcluo/across/master/bbr.sh
 systemctl stop nginx
