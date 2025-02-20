@@ -43,25 +43,21 @@ curl -s https://api.github.com/repos/fastfetch-cli/fastfetch/releases/latest | g
 dpkg -i /root/fastfetch-linux-amd64.deb
 
 
-#wget -N --no-check-certificate https://raw.githubusercontent.com/zcluo/vps/master/shell/caddy_install.sh && chmod +x caddy_install.sh && bash caddy_install.sh install
-#wget -N --no-check-certificate https://raw.githubusercontent.com/zcluo/across/master/bbr.sh
+
 systemctl stop nginx
-#rm -f /etc/apt/sources.list.d/caddy-fury.list
+
 chmod -R 777 /var/log/
-wget -N --no-check-certificate https://raw.githubusercontent.com/teddysun/across/master/bbr.sh
-#wget -N --no-check-certificate https://raw.githubusercontent.com/zcluo/vps/master/shell/install_ohmyposh.sh
-#mkdir -p /usr/local/caddy/
+
+
 mkdir -p /var/log/xray/
 mkdir -p /var/log/nginx
 chmod -R 777 /var/log/xray/
 chmod -R 777 /var/log/nginx
 bash -c "$(curl -L https://github.com/XTLS/Xray-install/raw/main/install-release.sh)" @ install  --beta
-#curl -O https://raw.githubusercontent.com/v2fly/fhs-install-v2ray/master/install-release.sh
-#chmod +x install-release.sh
-#bash install-release.sh
+
 sleep 20
 
-#\mkdir -p /etc/caddy/
+
 rm -rf /usr/local/etc/xray/*
 
 
@@ -73,7 +69,7 @@ wget -N --no-check-certificate https://raw.githubusercontent.com/zcluo/vps/maste
 certbot certonly --standalone -d  $1 -m $4 --agree-tos -n
 sed -i "s/xxx\.xxxxxx\.xxx/$1/g" /etc/nginx/nginx.conf
 
-#wget -N --no-check-certificate https://raw.githubusercontent.com/zcluo/vps/master/shell/caddy.service -O /lib/systemd/system/caddy.service
+
 sed -i "s/xxx\.xxxxxx\.xxx/$1/g" /usr/local/etc/xray/config.json
 sed -i "s/trojanpass/$3/g" /usr/local/etc/xray/config.json
 sed -i "s/xxx\@xxx\.xxx/$4/g"   /usr/local/etc/xray/config.json
@@ -84,12 +80,12 @@ sed -i "s/port_tcp/$8/g"   /usr/local/etc/xray/config.json
 sed -i "s/port_xhttp/$9/g"   /usr/local/etc/xray/config.json
 
 
-#chmod -x /etc/systemd/system/xray.service
+
 chmod -R 777 /etc/letsencrypt
 sleep 20
 
 systemctl enable xray && systemctl restart xray
-#systemctl disable v2ray
+
 cd ~ || exit
 wget -N --no-check-certificate https://raw.githubusercontent.com/zcluo/vps/master/shell/xrayud.sh
 chmod +x xrayud.sh
@@ -104,19 +100,16 @@ else
 fi
 
 
-#echo "0 1 * * * apt update && apt upgrade -y" >> crontab.bak
+
 sed -i '/v2rayud/d' crontab.bak
 sed -i '/xrayud/d' crontab.bak
 sed -i '/caddy/d' crontab.bak
 echo "0 1 * * * bash xrayud.sh" >> crontab.bak
-#echo "30 3 1 * * service caddy restart" >> crontab.bak
+
 crontab crontab.bak
 
 
-#cd ~
-#wget --no-check-certificate -O mosdns.sh https://raw.githubusercontent.com/zcluo/vps/master/shell/mosdns.sh
-#chmod +x mosdns.sh
-#bash mosdns.sh $1
+
 
 
 
