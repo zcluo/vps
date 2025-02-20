@@ -17,7 +17,7 @@ cleanup() {
         echo "[DEBUG] 捕获退出信号，状态码: $exit_status"
         echo "Start Installed at $startTime failed!" >> ~/install.log
         rm -rf "$TMP_DIR"
-        rm -rf smartdns.tar.gz smartdns.sh smartdns fastfetch-linux-amd64.deb crontab* bbr.sh install-release.sh caddy_install.sh install_bbr_expect.sh all_install.sh all_install_xray.sh install_bbr.log html1.zip v2rayud.sh
+        rm -rf smartdns.tar.gz smartdns.sh smartdns fastfetch-linux-amd64.deb crontab* bbr.sh install-release.sh caddy_install.sh install_bbr_expect.sh all_install_xray.sh install_bbr.log html1.zip v2rayud.sh
         
 
     fi
@@ -336,24 +336,32 @@ generate_cron() {
 }
 
 init_bashrc() {
-  echo '[ -z "$PS1" ] && return' >> .bashrc
-  echo 'eval "$(oh-my-posh --init --shell bash --config /root/themes/1_shell.omp.json)"' >> .bashrc
-  echo "clear" >> .bashrc
-  echo "fastfetch" >> .bashrc
+  BASHINIT_FILE=~/.bashrc
+  # 额外判断是否为 Ubuntu
+  if [[ -f /etc/os-release ]]; then
+      source /etc/os-release
+      if [[ $ID == "arch" ]]; then
+          BASHINIT_FILE=~/.bash_profile
+      fi
+  fi
+  echo '[ -z "$PS1" ] && return' >> $BASHINIT_FILE
+  echo 'eval "$(oh-my-posh --init --shell bash --config /root/themes/1_shell.omp.json)"' >> $BASHINIT_FILE
+  echo "clear" >> $BASHINIT_FILE
+  echo "fastfetch" >> $BASHINIT_FILE
   # 计算包含 "fastfetch" 的行数
-  fastfetch_count=$(grep -c "fastfetch" ~/.bashrc)
+  fastfetch_count=$(grep -c "fastfetch" $BASHINIT_FILE)
 
   # 判断是否有多余的 "fastfetch" 行
   if [ "$fastfetch_count" -ge 2 ]; then
       # 获取文件总行数
-      total_lines=$(wc -l < ~/.bashrc)
+      total_lines=$(wc -l < $BASHINIT_FILE)
       
       # 计算需要删除的行范围
       start_line=$((total_lines - 4 + 1))
       end_line=$total_lines
       
       # 删除多余的行
-      sed -i "${start_line},${end_line}d" ~/.bashrc
+      sed -i "${start_line},${end_line}d" $BASHINIT_FILE
   fi
 }
 
@@ -422,7 +430,7 @@ main() {
   generate_config "$@"
   
   log "证书申请..."
-  apply_cert "$@"
+  # apply_cert "$@"
 
   log "假网站..."
   fake_website
