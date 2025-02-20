@@ -17,7 +17,7 @@ cleanup() {
         echo "[DEBUG] 捕获退出信号，状态码: $exit_status"
         echo "Start Installed at $startTime failed!" >> ~/install.log
         rm -rf "$TMP_DIR"
-        rm -rf smartdns.tar.gz smartdns.sh smartdns fastfetch-linux-amd64.deb crontab* bbr.sh install-release.sh caddy_install.sh install_bbr_expect.sh all_install_xray.sh install_bbr.log html1.zip v2rayud.sh
+        rm -rf smartdns.tar.gz smartdns.sh smartdns fastfetch-linux-amd64.deb crontab* bbr.sh install-release.sh caddy_install.sh install_bbr_expect.sh all_install.sh all_install_xray.sh install_bbr.log html1.zip v2rayud.sh
         
 
     fi
