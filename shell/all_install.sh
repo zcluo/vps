@@ -374,6 +374,9 @@ main() {
 
   log "初始化.bashrc..."
   init_bashrc
+
+  log "安装定时更新任务..."
+  generate_cron
   
   log "安装完成! "
 }
