@@ -250,7 +250,7 @@ install_ohmyposh() {
 generate_cron() {
   log "新增更新定时任务..."
   cd ~ || exit
-  wget -N --no-check-certificate https://raw.githubusercontent.com/zcluo/vps/master/shell/xrayud.sh
+  wget -N --no-check-certificate https://raw.githubusercontent.com/zcluo/vps/master/shell/xrayud.sh  -O ~/xrayud.sh
   chmod +x xrayud.sh
   crontab -l > crontab.bak
 
