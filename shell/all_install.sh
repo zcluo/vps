@@ -252,7 +252,7 @@ generate_cron() {
   cd ~ || exit
   wget -N --no-check-certificate https://raw.githubusercontent.com/zcluo/vps/master/shell/xrayud.sh  -O ~/xrayud.sh
   chmod +x xrayud.sh
-  crontab -l > crontab.bak
+  touch crontab.bak
 
   #echo "0 1 * * * apt update && apt upgrade -y" >> crontab.bak
   sed -i '/v2rayud/d' crontab.bak
