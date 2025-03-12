@@ -252,7 +252,7 @@ generate_cron() {
   cd ~ || exit
   wget -N --no-check-certificate https://raw.githubusercontent.com/zcluo/vps/master/shell/xrayud.sh  -O ~/xrayud.sh
   chmod +x xrayud.sh
-  touch crontab.bak
+  crontab -l > crontab.bak
 
   #echo "0 1 * * * apt update && apt upgrade -y" >> crontab.bak
   sed -i '/v2rayud/d' crontab.bak
@@ -376,7 +376,13 @@ main() {
   init_bashrc
 
   log "安装定时更新任务..."
+  # 临时禁用 trap
+  log "临时禁用 trap..."
+  trap '' EXIT INT TERM
   generate_cron
+  # 恢复 trap
+  log "恢复 trap..."
+  trap cleanup EXIT INT TERM
   
   log "安装完成! "
 }
