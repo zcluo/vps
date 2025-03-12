@@ -378,7 +378,7 @@ main() {
   log "安装定时更新任务..."
   # 临时禁用 trap
   log "临时禁用 trap..."
-  trap '' EXIT INT TERM
+  trap - EXIT INT TERM
   generate_cron
   # 恢复 trap
   log "恢复 trap..."
