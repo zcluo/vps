@@ -8,26 +8,21 @@ TMP_DIR=$(mktemp -d -t xray-install-XXXXXX)
 startTime=$(date +%Y%m%d-%H:%M)
 cleanup() {
   local exit_status=$?
-  if [[ "$TRAP_ENABLED" -eq 1 ]]; then
-    if [ $exit_status -eq 0 ]; then
-      echo "Start Installed at $startTime successfully!" >>~/install.log
-      rm -rf "$TMP_DIR"
-      rm -rf smartdns.tar.gz smartdns.sh smartdns fastfetch-linux-amd64.deb crontab* bbr.sh install-release.sh caddy_install.sh install_bbr_expect.sh all_install.sh all_install_xray.sh install_bbr.log html1.zip v2rayud.sh
-      reboot
-    else
-      echo "[DEBUG] 捕获退出信号，状态码: $exit_status"
-      echo "Start Installed at $startTime failed!" >>~/install.log
-      rm -rf "$TMP_DIR"
-      rm -rf smartdns.tar.gz smartdns.sh smartdns fastfetch-linux-amd64.deb crontab* bbr.sh install-release.sh caddy_install.sh install_bbr_expect.sh all_install.sh all_install_xray.sh install_bbr.log html1.zip v2rayud.sh
+  if [ $exit_status -eq 0 ]; then
+    echo "Start Installed at $startTime successfully!" >>~/install.log
+    rm -rf "$TMP_DIR"
+    rm -rf smartdns.tar.gz smartdns.sh smartdns fastfetch-linux-amd64.deb crontab* bbr.sh install-release.sh caddy_install.sh install_bbr_expect.sh all_install.sh all_install_xray.sh install_bbr.log html1.zip v2rayud.sh
+    reboot
+  else
+    echo "[DEBUG] 捕获退出信号，状态码: $exit_status"
+    echo "Start Installed at $startTime failed!" >>~/install.log
+    rm -rf "$TMP_DIR"
+    rm -rf smartdns.tar.gz smartdns.sh smartdns fastfetch-linux-amd64.deb crontab* bbr.sh install-release.sh caddy_install.sh install_bbr_expect.sh all_install.sh all_install_xray.sh install_bbr.log html1.zip v2rayud.sh
 
-    fi
-
-    exit $exit_status
   fi
+  exit $exit_status
 
 }
-# 设置 trap
-TRAP_ENABLED=1
 trap cleanup EXIT INT TERM
 
 # 日志记录函数
@@ -245,15 +240,7 @@ generate_cron() {
   cd ~ || exit
   wget -N --no-check-certificate https://raw.githubusercontent.com/zcluo/vps/master/shell/xrayud.sh -O ~/xrayud.sh
   chmod +x xrayud.sh
-  TRAP_ENABLED=0
-  crontab -l >crontab.bak
-
-  #echo "0 1 * * * apt update && apt upgrade -y" >> crontab.bak
-  sed -i '/v2rayud/d' crontab.bak
-  sed -i '/xrayud/d' crontab.bak
-  sed -i '/caddy/d' crontab.bak
-  echo "0 1 * * * bash xrayud.sh" >>crontab.bak
-  #echo "30 3 1 * * service caddy restart" >> crontab.bak
+  echo "0 1 * * * bash xrayud.sh" > crontab.bak
   crontab crontab.bak
 }
 
@@ -369,14 +356,8 @@ main() {
   log "初始化.bashrc..."
   init_bashrc
 
-  # 临时禁用 trap
-  echo "临时禁用 trap..."
-  TRAP_ENABLED=0
   log "安装定时更新任务..."
   generate_cron
-  # 恢复 trap
-  echo "恢复 trap..."
-  TRAP_ENABLED=1
 
   log "安装完成! "
 }
