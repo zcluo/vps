@@ -7,24 +7,27 @@ TMP_DIR=$(mktemp -d -t xray-install-XXXXXX)
 # trap 'rm -rf "$TMP_DIR"' EXIT
 startTime=$(date +%Y%m%d-%H:%M)
 cleanup() {
-    local exit_status=$?
+  local exit_status=$?
+  if [[ "$TRAP_ENABLED" -eq 1 ]]; then
     if [ $exit_status -eq 0 ]; then
-        echo "Start Installed at $startTime successfully!" >>~/install.log
-        rm -rf "$TMP_DIR"
-        rm -rf smartdns.tar.gz smartdns.sh smartdns fastfetch-linux-amd64.deb crontab* bbr.sh install-release.sh caddy_install.sh install_bbr_expect.sh all_install.sh all_install_xray.sh install_bbr.log html1.zip v2rayud.sh
-        reboot
+      echo "Start Installed at $startTime successfully!" >>~/install.log
+      rm -rf "$TMP_DIR"
+      rm -rf smartdns.tar.gz smartdns.sh smartdns fastfetch-linux-amd64.deb crontab* bbr.sh install-release.sh caddy_install.sh install_bbr_expect.sh all_install.sh all_install_xray.sh install_bbr.log html1.zip v2rayud.sh
+      reboot
     else
-        echo "[DEBUG] 捕获退出信号，状态码: $exit_status"
-        echo "Start Installed at $startTime failed!" >> ~/install.log
-        rm -rf "$TMP_DIR"
-        rm -rf smartdns.tar.gz smartdns.sh smartdns fastfetch-linux-amd64.deb crontab* bbr.sh install-release.sh caddy_install.sh install_bbr_expect.sh all_install.sh all_install_xray.sh install_bbr.log html1.zip v2rayud.sh
-        
+      echo "[DEBUG] 捕获退出信号，状态码: $exit_status"
+      echo "Start Installed at $startTime failed!" >>~/install.log
+      rm -rf "$TMP_DIR"
+      rm -rf smartdns.tar.gz smartdns.sh smartdns fastfetch-linux-amd64.deb crontab* bbr.sh install-release.sh caddy_install.sh install_bbr_expect.sh all_install.sh all_install_xray.sh install_bbr.log html1.zip v2rayud.sh
 
     fi
-    exit $exit_status
 
-    
+    exit $exit_status
+  fi
+
 }
+# 设置 trap
+TRAP_ENABLED=1
 trap cleanup EXIT INT TERM
 
 # 日志记录函数
@@ -41,14 +44,12 @@ die() {
 # 架构检测
 detect_arch() {
   case $(uname -m) in
-    x86_64|amd64) ARCH="amd64" ARCH_XRAY="64" ARCH_POSH="amd64" ;;
-    aarch64)      ARCH="aarch64" ARCH_XRAY="arm64-v8a" ARCH_POSH="arm64" ;;
-    *)            die "不支持的架构: $(uname -m)" ;;
+  x86_64 | amd64) ARCH="amd64" ARCH_XRAY="64" ARCH_POSH="amd64" ;;
+  aarch64) ARCH="aarch64" ARCH_XRAY="arm64-v8a" ARCH_POSH="arm64" ;;
+  *) die "不支持的架构: $(uname -m)" ;;
   esac
   log "检测到架构: $ARCH"
 }
-
-
 
 # 包管理器检测
 detect_pkg_mgr() {
@@ -73,13 +74,13 @@ detect_pkg_mgr() {
 
   # 额外判断是否为 Ubuntu
   if [[ -f /etc/os-release ]]; then
-      source /etc/os-release
-      if [[ $ID == "ubuntu" ]]; then
-          PKG_MGR="apt"
-      fi
-      if [[ $ID == *"suse"* ]]; then
-          PKG_MGR="zypper"
-      fi
+    source /etc/os-release
+    if [[ $ID == "ubuntu" ]]; then
+      PKG_MGR="apt"
+    fi
+    if [[ $ID == *"suse"* ]]; then
+      PKG_MGR="zypper"
+    fi
   fi
 
   [[ -n "$PKG_MGR" ]] || die "无法检测包管理器"
@@ -90,59 +91,59 @@ detect_pkg_mgr() {
 install_deps() {
   log "安装系统依赖..."
   case $PKG_MGR in
-    apt)
-      apt update && apt install -y wget vim curl tar gzip jq openssl gnupg2 ca-certificates nginx uuid-runtime python3 python3-venv libaugeas-dev unzip
-      python3 -m venv /opt/certbot/
-      /opt/certbot/bin/pip install --upgrade pip
-      /opt/certbot/bin/pip install certbot certbot-nginx
-      ln -sf /opt/certbot/bin/certbot /usr/bin/certbot
-      ;;
-    yum|dnf)
-      $PKG_MGR install -y wget vim curl tar gzip jq openssl ca-certificates nginx unzip python3 augeas-libs
-      python3 -m venv /opt/certbot/
-      /opt/certbot/bin/pip install --upgrade pip
-      /opt/certbot/bin/pip install certbot certbot-nginx
-      ln -sf /opt/certbot/bin/certbot /usr/bin/certbot
-      ;;
-    zypper)
-      zypper refresh && zypper update -y
-      zypper in -y wget vim curl tar gzip jq openssl ca-certificates nginx unzip python3 augeas
-      python3 -m venv /opt/certbot/
-      /opt/certbot/bin/pip install --upgrade pip
-      /opt/certbot/bin/pip install certbot certbot-nginx
-      ln -sf /opt/certbot/bin/certbot /usr/bin/certbot
-      ;;
-    pacman)
-      pacman -Sy
-      pacman -S --noconfirm wget vim curl tar gzip jq openssl nginx unzip python3 augeas
-      python3 -m venv /opt/certbot/
-      /opt/certbot/bin/pip install --upgrade pip
-      /opt/certbot/bin/pip install certbot certbot-nginx
-      ln -sf /opt/certbot/bin/certbot /usr/bin/certbot
-      ;;
+  apt)
+    apt update && apt install -y wget vim curl tar gzip jq openssl gnupg2 ca-certificates nginx uuid-runtime python3 python3-venv libaugeas-dev unzip
+    python3 -m venv /opt/certbot/
+    /opt/certbot/bin/pip install --upgrade pip
+    /opt/certbot/bin/pip install certbot certbot-nginx
+    ln -sf /opt/certbot/bin/certbot /usr/bin/certbot
+    ;;
+  yum | dnf)
+    $PKG_MGR install -y wget vim curl tar gzip jq openssl ca-certificates nginx unzip python3 augeas-libs
+    python3 -m venv /opt/certbot/
+    /opt/certbot/bin/pip install --upgrade pip
+    /opt/certbot/bin/pip install certbot certbot-nginx
+    ln -sf /opt/certbot/bin/certbot /usr/bin/certbot
+    ;;
+  zypper)
+    zypper refresh && zypper update -y
+    zypper in -y wget vim curl tar gzip jq openssl ca-certificates nginx unzip python3 augeas
+    python3 -m venv /opt/certbot/
+    /opt/certbot/bin/pip install --upgrade pip
+    /opt/certbot/bin/pip install certbot certbot-nginx
+    ln -sf /opt/certbot/bin/certbot /usr/bin/certbot
+    ;;
+  pacman)
+    pacman -Sy
+    pacman -S --noconfirm wget vim curl tar gzip jq openssl nginx unzip python3 augeas
+    python3 -m venv /opt/certbot/
+    /opt/certbot/bin/pip install --upgrade pip
+    /opt/certbot/bin/pip install certbot certbot-nginx
+    ln -sf /opt/certbot/bin/certbot /usr/bin/certbot
+    ;;
   esac || die "依赖安装失败"
 }
 
 init_logdirs() {
-    chmod -R 777 /var/log/
-    mkdir -p /var/log/xray/
-    mkdir -p /var/log/nginx
-    chmod -R 777 /var/log/xray/
-    chmod -R 777 /var/log/nginx
+  chmod -R 777 /var/log/
+  mkdir -p /var/log/xray/
+  mkdir -p /var/log/nginx
+  chmod -R 777 /var/log/xray/
+  chmod -R 777 /var/log/nginx
 }
 
 # 安装Fastfetch
 install_fastfetch() {
   local VERSION TAG_URL="https://api.github.com/repos/fastfetch-cli/fastfetch/releases/latest"
-  
+
   log "获取Fastfetch最新版本..."
   VERSION=$(curl -sSL "$TAG_URL" | jq -r '.tag_name') || die "获取版本失败"
-  
+
   local URL="https://github.com/fastfetch-cli/fastfetch/releases/download/${VERSION}/fastfetch-linux-${ARCH}.tar.gz"
-  
+
   log "下载Fastfetch: $URL"
   curl -fSL "$URL" -o "$TMP_DIR/fastfetch-linux-${ARCH}.tar.gz" || die "下载失败"
-  
+
   tar -xzf "$TMP_DIR/fastfetch-linux-${ARCH}.tar.gz" -C "$TMP_DIR"
   cp "$TMP_DIR/fastfetch-linux-${ARCH}/usr/bin/fastfetch" /usr/bin && chmod +x /usr/bin/fastfetch
   cp -rf "$TMP_DIR/fastfetch-linux-${ARCH}/usr/share/" /usr/share/
@@ -152,8 +153,7 @@ install_fastfetch() {
 # 安装Xray核心
 install_xray() {
   log "获取Xray最新版本..."
-  
-  
+
   # 服务配置
   detect_init_system() {
     if [[ -d /run/systemd/system ]]; then
@@ -170,26 +170,23 @@ install_xray() {
   detect_init_system
 
   case $INIT_SYSTEM in
-    systemd)
-      bash -c "$(curl -L https://github.com/XTLS/Xray-install/raw/main/install-release.sh)" @ install  --beta
-      systemctl daemon-reload
-      systemctl enable --now xray
-      ;;
+  systemd)
+    bash -c "$(curl -L https://github.com/XTLS/Xray-install/raw/main/install-release.sh)" @ install --beta
+    systemctl daemon-reload
+    systemctl enable --now xray
+    ;;
 
-    
-
-    sysvinit)
-      bash -c "$(curl -L https://github.com/XTLS/Xray-install/raw/main/install-release.sh)" @ install  --beta
-      chmod +x /etc/init.d/xray
-      update-rc.d xray defaults
-      service xray start
-      ;;
-    *)
-      die "该脚本仅支持systemd的系统安装"
-      ;;
+  sysvinit)
+    bash -c "$(curl -L https://github.com/XTLS/Xray-install/raw/main/install-release.sh)" @ install --beta
+    chmod +x /etc/init.d/xray
+    update-rc.d xray defaults
+    service xray start
+    ;;
+  *)
+    die "该脚本仅支持systemd的系统安装"
+    ;;
   esac
 
-  
   log "Xray 安装成功"
 }
 
@@ -198,12 +195,8 @@ generate_config() {
   log "生成配置文件..."
   rm -rf /usr/local/etc/xray/*
 
-
   wget -N --no-check-certificate https://raw.githubusercontent.com/zcluo/vps/master/shell/config_xray.json -O /usr/local/etc/xray/config.json
   wget -N --no-check-certificate https://raw.githubusercontent.com/zcluo/vps/master/shell/nginx-xray-template.conf -O /etc/nginx/nginx.conf
-
-
- 
 
   log "文件替换..."
   log "NGINX文件替换..."
@@ -215,22 +208,22 @@ generate_config() {
 
   # 比较版本
   if [[ "$(printf '%s\n' "$nginx_version" "$target_version" | sort -V | tail -n 1)" == "$nginx_version" ]]; then
-      log "Nginx 版本 ($nginx_version) 高于或等于 $target_version"
-      sed -i "s/xxx\.xxxxxx\.xxx/$1/g" /etc/nginx/nginx.conf
+    log "Nginx 版本 ($nginx_version) 高于或等于 $target_version"
+    sed -i "s/xxx\.xxxxxx\.xxx/$1/g" /etc/nginx/nginx.conf
   else
-      log "Nginx 版本 ($nginx_version) 低于 $target_version"
-      sed -i "s/xxx\.xxxxxx\.xxx/$1/g" /etc/nginx/nginx.conf
-      sed -i '/http2  on;/ s/^/#/' /etc/nginx/nginx.conf
+    log "Nginx 版本 ($nginx_version) 低于 $target_version"
+    sed -i "s/xxx\.xxxxxx\.xxx/$1/g" /etc/nginx/nginx.conf
+    sed -i '/http2  on;/ s/^/#/' /etc/nginx/nginx.conf
   fi
   sed -i "s/xxx\.xxxxxx\.xxx/$1/g" /etc/nginx/nginx.conf
   sed -i "s/xxx\.xxxxxx\.xxx/$1/g" /usr/local/etc/xray/config.json
   sed -i "s/trojanpass/$3/g" /usr/local/etc/xray/config.json
-  sed -i "s/xxx\@xxx\.xxx/$4/g"   /usr/local/etc/xray/config.json
-  sed -i "s/xxxxxxxx\-xxxx\-xxxx\-xxxx\-xxxxxxxxxxxx/$5/g"   /usr/local/etc/xray/config.json
-  sed -i "s/realityprivatekey/$6/g"   /usr/local/etc/xray/config.json
-  sed -i "s/port_grpc/$7/g"   /usr/local/etc/xray/config.json
-  sed -i "s/port_tcp/$8/g"   /usr/local/etc/xray/config.json
-  sed -i "s/port_xhttp/$9/g"   /usr/local/etc/xray/config.json
+  sed -i "s/xxx\@xxx\.xxx/$4/g" /usr/local/etc/xray/config.json
+  sed -i "s/xxxxxxxx\-xxxx\-xxxx\-xxxx\-xxxxxxxxxxxx/$5/g" /usr/local/etc/xray/config.json
+  sed -i "s/realityprivatekey/$6/g" /usr/local/etc/xray/config.json
+  sed -i "s/port_grpc/$7/g" /usr/local/etc/xray/config.json
+  sed -i "s/port_tcp/$8/g" /usr/local/etc/xray/config.json
+  sed -i "s/port_xhttp/$9/g" /usr/local/etc/xray/config.json
 
 }
 
@@ -242,7 +235,7 @@ install_ohmyposh() {
 
   mkdir -p ~/themes
   wget https://github.com/JanDeDobbeleer/oh-my-posh/releases/latest/download/themes.zip -O ~/themes/themes.zip
-  unzip -o ~/themes/themes.zip -d  ~/themes
+  unzip -o ~/themes/themes.zip -d ~/themes
   chmod u+rw ~/themes/*.omp.*
   rm ~/themes/themes.zip
 }
@@ -250,15 +243,15 @@ install_ohmyposh() {
 generate_cron() {
   log "新增更新定时任务..."
   cd ~ || exit
-  wget -N --no-check-certificate https://raw.githubusercontent.com/zcluo/vps/master/shell/xrayud.sh  -O ~/xrayud.sh
+  wget -N --no-check-certificate https://raw.githubusercontent.com/zcluo/vps/master/shell/xrayud.sh -O ~/xrayud.sh
   chmod +x xrayud.sh
-  crontab -l > crontab.bak
+  crontab -l >crontab.bak
 
   #echo "0 1 * * * apt update && apt upgrade -y" >> crontab.bak
   sed -i '/v2rayud/d' crontab.bak
   sed -i '/xrayud/d' crontab.bak
   sed -i '/caddy/d' crontab.bak
-  echo "0 1 * * * bash xrayud.sh" >> crontab.bak
+  echo "0 1 * * * bash xrayud.sh" >>crontab.bak
   #echo "30 3 1 * * service caddy restart" >> crontab.bak
   crontab crontab.bak
 }
@@ -267,53 +260,53 @@ init_bashrc() {
   BASHINIT_FILE=~/.bashrc
   # 额外判断是否为 Ubuntu
   if [[ -f /etc/os-release ]]; then
-      source /etc/os-release
-      if [[ $ID == "arch" ]]; then
-          BASHINIT_FILE=~/.bash_profile
-      fi
+    source /etc/os-release
+    if [[ $ID == "arch" ]]; then
+      BASHINIT_FILE=~/.bash_profile
+    fi
   fi
-  echo '[ -z "$PS1" ] && return' >> $BASHINIT_FILE
-  echo 'eval "$(oh-my-posh --init --shell bash --config /root/themes/1_shell.omp.json)"' >> $BASHINIT_FILE
-  echo "clear" >> $BASHINIT_FILE
-  echo "fastfetch" >> $BASHINIT_FILE
+  echo '[ -z "$PS1" ] && return' >>$BASHINIT_FILE
+  echo 'eval "$(oh-my-posh --init --shell bash --config /root/themes/1_shell.omp.json)"' >>$BASHINIT_FILE
+  echo "clear" >>$BASHINIT_FILE
+  echo "fastfetch" >>$BASHINIT_FILE
   # 计算包含 "fastfetch" 的行数
   fastfetch_count=$(grep -c "fastfetch" $BASHINIT_FILE)
 
   # 判断是否有多余的 "fastfetch" 行
   if [ "$fastfetch_count" -ge 2 ]; then
-      # 获取文件总行数
-      total_lines=$(wc -l < $BASHINIT_FILE)
-      
-      # 计算需要删除的行范围
-      start_line=$((total_lines - 4 + 1))
-      end_line=$total_lines
-      
-      # 删除多余的行
-      sed -i "${start_line},${end_line}d" $BASHINIT_FILE
+    # 获取文件总行数
+    total_lines=$(wc -l <$BASHINIT_FILE)
+
+    # 计算需要删除的行范围
+    start_line=$((total_lines - 4 + 1))
+    end_line=$total_lines
+
+    # 删除多余的行
+    sed -i "${start_line},${end_line}d" $BASHINIT_FILE
   fi
 }
 
 enable_service() {
   case $INIT_SYSTEM in
-    systemd) systemctl enable xray && systemctl enable nginx ;;
-    
-    sysvinit) chkconfig xray on && chkconfig nginx on ;;
+  systemd) systemctl enable xray && systemctl enable nginx ;;
+
+  sysvinit) chkconfig xray on && chkconfig nginx on ;;
   esac
 }
 
 restart_service() {
   case $INIT_SYSTEM in
-    systemd) systemctl restart xray && systemctl restart nginx ;;
-    
-    sysvinit) service xray restart && service nginx restart ;;
+  systemd) systemctl restart xray && systemctl restart nginx ;;
+
+  sysvinit) service xray restart && service nginx restart ;;
   esac
 }
 
 stop_service() {
   case $INIT_SYSTEM in
-    systemd) systemctl stop xray && systemctl stop nginx ;;
-    
-    sysvinit) service xray stop && service nginx stop ;;
+  systemd) systemctl stop xray && systemctl stop nginx ;;
+
+  sysvinit) service xray stop && service nginx stop ;;
   esac
 }
 
@@ -326,7 +319,7 @@ apply_cert() {
 fake_website() {
   cd ~ || exit
   mkdir -p /var/www/html
-  wget  -N --no-check-certificate  https://raw.githubusercontent.com/zcluo/vps/master/shell/html1.zip
+  wget -N --no-check-certificate https://raw.githubusercontent.com/zcluo/vps/master/shell/html1.zip
   unzip -o html1.zip -d /var/www/html
 
   dd if=/dev/urandom of=/var/www/html/test bs=100M count=1 iflag=fullblock
@@ -341,7 +334,7 @@ usage() {
 main() {
   usage "$@"
   [[ $# -eq 9 ]] || die "参数数量错误"
-  
+
   log "探测CPU架构..."
   detect_arch
   log "探测安装器..."
@@ -356,13 +349,13 @@ main() {
   install_xray
   log "生成配置文件..."
   generate_config "$@"
-  
+
   log "证书申请..."
   apply_cert "$@"
 
   log "假网站..."
   fake_website
-  
+
   log "开启服务..."
   enable_service
 
@@ -375,15 +368,15 @@ main() {
   log "初始化.bashrc..."
   init_bashrc
 
-  log "安装定时更新任务..."
   # 临时禁用 trap
-  log "临时禁用 trap..."
-  trap - EXIT INT TERM
+  echo "临时禁用 trap..."
+  TRAP_ENABLED=0
+  log "安装定时更新任务..."
   generate_cron
   # 恢复 trap
-  log "恢复 trap..."
-  trap cleanup EXIT INT TERM
-  
+  echo "恢复 trap..."
+  TRAP_ENABLED=1
+
   log "安装完成! "
 }
 
