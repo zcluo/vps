@@ -322,7 +322,7 @@ usage() {
 # 主安装流程
 main() {
   usage "$@"
-  [[ $# -eq 9 ]] || die "参数数量错误"
+  [[ $# -eq 10 ]] || die "参数数量错误"
 
   log "探测CPU架构..."
   detect_arch
