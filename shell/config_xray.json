@@ -145,7 +145,7 @@
             "port": port_xhttp,
             "protocol": "vless",
             "settings": {
-                "decryption": "none",
+                "decryption": "xhttp_decryption"
                 "clients": [
                     {
                         "id": "xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx"
