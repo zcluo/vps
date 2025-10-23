@@ -315,8 +315,8 @@ fake_website() {
 }
 
 usage() {
-  echo "USAGE: $0 domain_name username password emailaddress uuid realityprivkey grpc_port tcp_port xhttp_port"
-  echo " e.g.: $0 abbc.com user_a password aa@abbc.com $(uuidgen) realityprivkey 8001 9001 7001"
+  echo "USAGE: $0 domain_name username password emailaddress uuid realityprivkey grpc_port tcp_port xhttp_port xhttp_decryption"
+  echo " e.g.: $0 abbc.com user_a password aa@abbc.com $(uuidgen) realityprivkey 8001 9001 7001 xxxxxxxx"
 }
 
 # 主安装流程
