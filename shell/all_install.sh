@@ -220,6 +220,7 @@ generate_config() {
   sed -i "s/port_tcp/$8/g" /usr/local/etc/xray/config.json
   sed -i "s/port_xhttp/$9/g" /usr/local/etc/xray/config.json
   sed -i "s/xhttp_decryption/${10}/g" /usr/local/etc/xray/config.json
+  sed -i "s/xhttp_mldsa65seed/${11}/g" /usr/local/etc/xray/config.json
 
 }
 
@@ -315,14 +316,14 @@ fake_website() {
 }
 
 usage() {
-  echo "USAGE: $0 domain_name username password emailaddress uuid realityprivkey grpc_port tcp_port xhttp_port xhttp_decryption"
-  echo " e.g.: $0 abbc.com user_a password aa@abbc.com $(uuidgen) realityprivkey 8001 9001 7001 xxxxxxxx"
+  echo "USAGE: $0 domain_name username password emailaddress uuid realityprivkey grpc_port tcp_port xhttp_port xhttp_decryption xhttp_mldsa65seed"
+  echo " e.g.: $0 abbc.com user_a password aa@abbc.com $(uuidgen) realityprivkey 8001 9001 7001 xhttp_decryption xhttp_mldsa65seed"
 }
 
 # 主安装流程
 main() {
   usage "$@"
-  [[ $# -eq 10 ]] || die "参数数量错误"
+  [[ $# -eq 11 ]] || die "参数数量错误"
 
   log "探测CPU架构..."
   detect_arch
