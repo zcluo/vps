@@ -219,6 +219,7 @@ generate_config() {
   sed -i "s/port_grpc/$7/g" /usr/local/etc/xray/config.json
   sed -i "s/port_tcp/$8/g" /usr/local/etc/xray/config.json
   sed -i "s/port_xhttp/$9/g" /usr/local/etc/xray/config.json
+  sed -i "s/xhttp_decryption/$10/g" /usr/local/etc/xray/config.json
 
 }
 
